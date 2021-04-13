@@ -5,13 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="GetLeaderboards\Handler\" />
-    <Folder Include="GetLeaderboards\Models\" />
-    <Folder Include="GetLeaderboards\Validator\" />
+    <PackageReference Include="MediatR" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="9.0.0" />
+    <ProjectReference Include="..\TheGame.Common\TheGame.Common.csproj" />
+    <ProjectReference Include="..\TheGame.SharedKernel\TheGame.SharedKernel.csproj" />
   </ItemGroup>
 
 </Project>

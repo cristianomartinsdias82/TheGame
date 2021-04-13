@@ -1,0 +1,6 @@
+In powershell, under adm'a account:
+dotnet tool install --global dotnet-ef
+
+Pointing to TheGame.InfrastructureProject:
+dotnet ef migrations add Initial -o Data\Ef\Migrations --project TheGame.Infrastructure
+dotnet ef database update --project TheGame.Infrastructure

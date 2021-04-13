@@ -4,6 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{ECC7DAA6-BB5E-4187-8512-790EA7046387}"
+	ProjectSection(SolutionItems) = preProject
+		Ef executed commands.txt = Ef executed commands.txt
+		Referenced Nuget packages - listed by project.txt = Referenced Nuget packages - listed by project.txt
+		Support urls.txt = Support urls.txt
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{931B87B9-CF51-41D6-8697-EEC12A33E546}"
 EndProject
