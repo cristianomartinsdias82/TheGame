@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using static TheGame.SharedKernel.ExceptionHelper;
 
 namespace TheGame.SharedKernel
 {
@@ -18,7 +19,6 @@ namespace TheGame.SharedKernel
             Message = message;
             OperationCode = operationCode;
             _failureDetails = failureDetails;
-            _failureDetails = new List<FailureDetail>();
         }
 
         public static OperationResult Successful()
@@ -31,12 +31,12 @@ namespace TheGame.SharedKernel
             => new OperationResult(message, default);
 
         public static OperationResult Failure(params FailureDetail[] failureDetails)
-            => new OperationResult(default, default, failureDetails);
+            => new OperationResult(default, default, failureDetails ?? throw ArgNullEx(nameof(failureDetails)));
 
         public static OperationResult Failure(string message, params FailureDetail[] failureDetails)
-            => new OperationResult(message, default, failureDetails);
+            => new OperationResult(message, default, failureDetails ?? throw ArgNullEx(nameof(failureDetails)));
 
         public static OperationResult Failure(string message, string operationCode, params FailureDetail[] failureDetails)
-            => new OperationResult(message, operationCode, failureDetails);
+            => new OperationResult(message, operationCode, failureDetails ?? throw ArgNullEx(nameof(failureDetails)));
     }
 }
