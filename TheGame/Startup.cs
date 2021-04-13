@@ -1,14 +1,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using TheGame.Common.DependencyInjection;
 using TheGame.Infrastructure.DependencyInjection;
 
 namespace TheGame
@@ -26,7 +21,8 @@ namespace TheGame
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-
+            services.AddCommon(Configuration);
+            services.AddSharedKernel(Configuration);
             services.AddInfrastructure(Configuration);
         }
 
