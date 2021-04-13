@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheGame.SharedKernel", "The
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheGame", "TheGame\TheGame.csproj", "{31F14D77-A74E-4A77-A921-3E5EE6878739}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "The.Game.MatchDataFlushingWorker", "The.Game.MatchDataFlushingWorker\The.Game.MatchDataFlushingWorker.csproj", "{0033D402-0507-42DF-8B7B-B038E939E84F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheGame.MatchDataFlushingWorker", "The.Game.MatchDataFlushingWorker\TheGame.MatchDataFlushingWorker.csproj", "{0033D402-0507-42DF-8B7B-B038E939E84F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheGame.Common", "TheGame.Common\TheGame.Common.csproj", "{6A53BDFD-AF10-45EA-B9F6-2C85FAF7EA73}"
 EndProject

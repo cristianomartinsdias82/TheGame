@@ -27,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Data\Ef\Builders\" />
     <Folder Include="SystemClock\" />
   </ItemGroup>
 
