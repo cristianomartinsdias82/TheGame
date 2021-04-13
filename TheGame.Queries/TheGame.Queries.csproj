@@ -5,7 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="GetLeaderboards\" />
+    <Folder Include="GetLeaderboards\Handler\" />
+    <Folder Include="GetLeaderboards\Models\" />
+    <Folder Include="GetLeaderboards\Validator\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="9.0.0" />
   </ItemGroup>
 
 </Project>

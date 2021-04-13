@@ -3,6 +3,27 @@ using static TheGame.SharedKernel.ExceptionHelper;
 
 namespace TheGame.SharedKernel
 {
+    public sealed class OperationResult<T> : OperationResult
+    {
+        public T Data { get; private set; }
+
+        private OperationResult(T data, string message, string operationCode) : this(data, message, operationCode, default) { }
+
+        private OperationResult(T data, string message, string operationCode, params FailureDetail[] failureDetails) : base(message, operationCode, failureDetails)
+        {
+            Data = data;
+        }
+
+        public static OperationResult<T> Successful(T data)
+            => new OperationResult<T>(data, default, default);
+
+        public static OperationResult<T> Successful(T data, string message)
+            => new OperationResult<T>(data, message, default);
+
+        public static OperationResult<T> Successful(T data, string message, string operationCode)
+            => new OperationResult<T>(data, message, operationCode);
+    }
+
     public class OperationResult
     {
         private IList<FailureDetail> _failureDetails;
@@ -12,9 +33,9 @@ namespace TheGame.SharedKernel
         public string OperationCode { get; private set; }
         public IEnumerable<FailureDetail> FailureDetails { get => _failureDetails; }
 
-        private OperationResult(string message, string operationCode) : this(message, operationCode, default) { }
+        protected OperationResult(string message, string operationCode) : this(message, operationCode, default) { }
 
-        private OperationResult(string message, string operationCode, params FailureDetail[] failureDetails)
+        protected OperationResult(string message, string operationCode, params FailureDetail[] failureDetails)
         {
             Message = message;
             OperationCode = operationCode;

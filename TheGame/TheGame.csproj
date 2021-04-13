@@ -6,15 +6,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="MediatR.Extensions.FluentValidation.AspNetCore" Version="1.1.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.13" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\GetLeaderboards\Models\" />
     <Folder Include="Controllers\GetLeaderboards\Mapper\" />
     <Folder Include="Controllers\SaveMatchData\Mapper\" />
-    <Folder Include="Controllers\SaveMatchData\Models\" />
-    <Folder Include="Controllers\SaveMatchData\Validator\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\The.Game.MatchDataFlushingWorker\The.Game.MatchDataFlushingWorker.csproj" />
+    <ProjectReference Include="..\TheGame.Commands\TheGame.Commands.csproj" />
+    <ProjectReference Include="..\TheGame.Common\TheGame.Common.csproj" />
+    <ProjectReference Include="..\TheGame.Domain\TheGame.Domain.csproj" />
+    <ProjectReference Include="..\TheGame.Infrastructure\TheGame.Infrastructure.csproj" />
+    <ProjectReference Include="..\TheGame.Queries\TheGame.Queries.csproj" />
+    <ProjectReference Include="..\TheGame.SharedKernel\TheGame.SharedKernel.csproj" />
   </ItemGroup>
 
 

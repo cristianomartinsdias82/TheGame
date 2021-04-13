@@ -5,7 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="SaveMatchData\" />
+    <Folder Include="SaveMatchData\Handler\" />
+    <Folder Include="SaveMatchData\Models\" />
+    <Folder Include="SaveMatchData\Validator\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="9.0.0" />
   </ItemGroup>
 
 </Project>
