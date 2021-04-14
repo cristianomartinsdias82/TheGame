@@ -4,3 +4,9 @@ dotnet tool install --global dotnet-ef
 Pointing to TheGame.InfrastructureProject:
 dotnet ef migrations add Initial -o Data\Ef\Migrations --project TheGame.Infrastructure
 dotnet ef database update --project TheGame.Infrastructure
+
+dotnet ef migrations add NewMatchDateField -o Data\Ef\Migrations --project TheGame.Infrastructure -- --connectionString="Server=.;Database=TheGame;Integrated security=SSPI;MultipleActiveResultSets=true;Packet size=16384"
+dotnet ef database update --project TheGame.Infrastructure -- --connectionString="Server=.;Database=TheGame;Integrated security=SSPI;MultipleActiveResultSets=true;Packet size=16384"
+
+dotnet ef migrations add PlayerScoreLastUpdateOnDateField -o Data\Ef\Migrations --project TheGame.Infrastructure -- --connectionString="Server=.;Database=TheGame;Integrated security=SSPI;MultipleActiveResultSets=true;Packet size=16384"
+dotnet ef database update --project TheGame.Infrastructure -- --connectionString="Server=.;Database=TheGame;Integrated security=SSPI;MultipleActiveResultSets=true;Packet size=16384"

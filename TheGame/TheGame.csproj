@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -22,6 +22,7 @@
     <ProjectReference Include="..\TheGame.Common\TheGame.Common.csproj" />
     <ProjectReference Include="..\TheGame.Domain\TheGame.Domain.csproj" />
     <ProjectReference Include="..\TheGame.Infrastructure\TheGame.Infrastructure.csproj" />
+    <ProjectReference Include="..\TheGame.MatchDataFlushingWorker\TheGame.MatchDataFlushingWorker.csproj" />
     <ProjectReference Include="..\TheGame.Queries\TheGame.Queries.csproj" />
     <ProjectReference Include="..\TheGame.SharedKernel\TheGame.SharedKernel.csproj" />
   </ItemGroup>

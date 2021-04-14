@@ -30,6 +30,13 @@ namespace TheGame.Infrastructure.Data.Ef.EntityMapping
             builder.HasIndex(x => x.Nickname)
                    .HasDatabaseName($"IX_UN_{nameof(Player)}_{nameof(Player.Nickname)}")
                    .IsUnique();
+
+            builder.Property(x => x.ScoreLastUpdateOn)
+                    .HasColumnType("datetimeoffset")
+                    .IsRequired();
+
+            builder.HasIndex(x => x.ScoreLastUpdateOn)
+                   .HasDatabaseName($"IX_{nameof(Player)}_{nameof(Player.ScoreLastUpdateOn)}");
         }
     }
 }

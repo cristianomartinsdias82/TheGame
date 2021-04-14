@@ -31,7 +31,6 @@
 
   <ItemGroup>
     <Folder Include="Commands\SaveMatchData\" />
-    <Folder Include="Data\Caching\" />
     <Folder Include="Queries\GetLeaderboards\" />
     <Folder Include="SystemClock\" />
   </ItemGroup>

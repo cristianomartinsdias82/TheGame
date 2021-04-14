@@ -1,4 +1,6 @@
-﻿namespace TheGame.Domain
+﻿using System;
+
+namespace TheGame.Domain
 {
     public class GameMatchesPlayers
     {
@@ -7,5 +9,6 @@
         public long PlayerId { get; set; }
         public Player Player { get; set; }
         public long Win { get; set; }
+        public DateTimeOffset MatchDate { get; set; }
     }
 }

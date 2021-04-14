@@ -23,6 +23,8 @@ namespace TheGame
             services.AddControllers();
             services.AddCommon(Configuration);
             services.AddSharedKernel(Configuration);
+            //services.AddQueries(Configuration);
+            //services.AddCommands(Configuration);
             services.AddInfrastructure(Configuration);
         }
 

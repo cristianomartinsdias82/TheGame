@@ -2,7 +2,10 @@
 {
     public class TheGameSettings
     {
-        public int DbConnectionString { get; set; }
+        public string DbConnectionString { get; set; }
         public int TimeBetweenDataFlushingOperationsInSecs { get; set; }
+        public string LeaderboardsCacheKey { get; set; }
+        public string GameMatchesDataCacheKey { get; set; }
+        public string PlayersListCacheKey { get; set; }
     }
 }

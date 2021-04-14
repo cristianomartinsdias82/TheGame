@@ -22,6 +22,18 @@ namespace TheGame.SharedKernel
 
         public static OperationResult<T> Successful(T data, string message, string operationCode)
             => new OperationResult<T>(data, message, operationCode);
+
+        new public static OperationResult<T> Failure(string message)
+            => new OperationResult<T>(default, message, default);
+
+        new public static OperationResult<T> Failure(params FailureDetail[] failureDetails)
+            => new OperationResult<T>(default, default, default, failureDetails ?? throw ArgNullEx(nameof(failureDetails)));
+
+        new public static OperationResult<T> Failure(string message, params FailureDetail[] failureDetails)
+            => new OperationResult<T>(default, message, default, failureDetails ?? throw ArgNullEx(nameof(failureDetails)));
+
+        new public static OperationResult<T> Failure(string message, string operationCode, params FailureDetail[] failureDetails)
+            => new OperationResult<T>(default, message, operationCode, failureDetails ?? throw ArgNullEx(nameof(failureDetails)));
     }
 
     public class OperationResult
@@ -50,6 +62,9 @@ namespace TheGame.SharedKernel
 
         public static OperationResult Successful(string message)
             => new OperationResult(message, default);
+
+        public static OperationResult Failure(string message)
+            => new OperationResult(message, default, default);
 
         public static OperationResult Failure(params FailureDetail[] failureDetails)
             => new OperationResult(default, default, failureDetails ?? throw ArgNullEx(nameof(failureDetails)));

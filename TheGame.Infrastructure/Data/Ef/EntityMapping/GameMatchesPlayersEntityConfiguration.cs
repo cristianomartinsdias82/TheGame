@@ -18,6 +18,10 @@ namespace TheGame.Infrastructure.Data.Ef.EntityMapping
             builder.HasOne(x => x.Player)
                    .WithMany(x => x.GameMatchesPlayers)
                    .HasForeignKey(x => x.PlayerId);
+
+            builder.Property(x => x.MatchDate)
+                   .HasColumnType("datetimeoffset")
+                   .IsRequired();
         }
     }
 }

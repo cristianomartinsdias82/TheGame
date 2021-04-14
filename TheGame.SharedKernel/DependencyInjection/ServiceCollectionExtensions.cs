@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
+using TheGame.SharedKernel;
 
 namespace TheGame.Common.DependencyInjection
 {
@@ -9,6 +8,10 @@ namespace TheGame.Common.DependencyInjection
     {
         public static IServiceCollection AddSharedKernel(this IServiceCollection services, IConfiguration configuration)
         {
+            var settings = new TheGameSettings();
+            configuration.Bind(nameof(TheGameSettings), settings);
+            services.AddSingleton(settings);
+
             return services;
         }
     }

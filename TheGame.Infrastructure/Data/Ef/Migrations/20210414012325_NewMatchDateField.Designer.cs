@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TheGame.Data.Ef;
 
 namespace TheGame.Infrastructure.Data.Ef.Migrations
 {
     [DbContext(typeof(TheGameDbContext))]
-    partial class TheGameDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210414012325_NewMatchDateField")]
+    partial class NewMatchDateField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,9 +85,6 @@ namespace TheGame.Infrastructure.Data.Ef.Migrations
                     b.Property<DateTimeOffset>("RegistrationDate")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<DateTimeOffset>("ScoreLastUpdateOn")
-                        .HasColumnType("datetimeoffset");
-
                     b.HasKey("Id")
                         .IsClustered();
 
@@ -96,9 +95,6 @@ namespace TheGame.Infrastructure.Data.Ef.Migrations
                     b.HasIndex("Nickname")
                         .IsUnique()
                         .HasDatabaseName("IX_UN_Player_Nickname");
-
-                    b.HasIndex("ScoreLastUpdateOn")
-                        .HasDatabaseName("IX_Player_ScoreLastUpdateOn");
 
                     b.ToTable("Players");
                 });
