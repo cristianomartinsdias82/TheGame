@@ -12,10 +12,10 @@ using static TheGame.SharedKernel.ExceptionHelper;
 
 namespace TheGame.MatchDataFlushingWorker
 {
-    public class GameMatchesDataToDbFlushingService : IHostedService
+    public class UpdateLeaderboardsService : IHostedService
     {
         private readonly IConfiguration _configuration;
-        private readonly ILogger<GameMatchesDataToDbFlushingService> _logger;
+        private readonly ILogger<UpdateLeaderboardsService> _logger;
         private readonly ICacheProvider _cacheProvider;
         private readonly TheGameSettings _settings;
         private Timer _timer;
@@ -23,9 +23,9 @@ namespace TheGame.MatchDataFlushingWorker
         private CancellationTokenSource _cancellationTokenSource;
         private Task _ongoingTask;
 
-        public GameMatchesDataToDbFlushingService(
+        public UpdateLeaderboardsService(
             IConfiguration configuration,
-            ILogger<GameMatchesDataToDbFlushingService> logger,
+            ILogger<UpdateLeaderboardsService> logger,
             ICacheProvider cacheProvider,
             TheGameSettings settings)
         {
@@ -41,14 +41,14 @@ namespace TheGame.MatchDataFlushingWorker
 
             ScheduleJobExecution();
 
-            _logger.LogInformation($"{DateTime.UtcNow:O} - {nameof(GameMatchesDataToDbFlushingService)} started.");
+            _logger.LogInformation($"{DateTime.UtcNow:O} - {nameof(GameMatchesDataDbFlushingService)} started.");
 
             await Task.CompletedTask;
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"{DateTime.UtcNow:O} - {nameof(GameMatchesDataToDbFlushingService)} stopped.");
+            _logger.LogInformation($"{DateTime.UtcNow:O} - {nameof(GameMatchesDataDbFlushingService)} stopped.");
 
             _cancellationTokenSource.Cancel();
 
@@ -59,11 +59,11 @@ namespace TheGame.MatchDataFlushingWorker
 
         public async Task ExecuteAsync(object state, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"{DateTime.UtcNow:O} - Flushing data to database...");
+            _logger.LogInformation($"{DateTime.UtcNow:O} - Updating leaderboards...");
 
             var matchData = await _cacheProvider.GetMatchDataAsync(_settings, cancellationToken);
-            //TODO: Bulk insert logic
-            
+            //TODO: Leaderboards update logic
+
             _logger.LogInformation($"{DateTime.UtcNow:O} - Operation successful!");
 
             ScheduleJobExecution();
@@ -76,8 +76,8 @@ namespace TheGame.MatchDataFlushingWorker
             //_timer = new Timer(async (state) => { await ExecuteAsync(state, _cancellationTokenSource.Token); },
             _timer = new Timer((state) => _ongoingTask.Start(),
                                null,
-                               //TimeSpan.FromSeconds(Math.Abs(_settings.TimeBetweenDataFlushingOperationsInSecs)),
-                               TimeSpan.FromMilliseconds(Math.Abs(_settings.TimeBetweenDataFlushingOperationsInSecs)),
+                               //TimeSpan.FromSeconds(Math.Abs(_settings.TimeBetweenLeaderboardsUpdatesInSecs)),
+                               TimeSpan.FromMilliseconds(Math.Abs(_settings.TimeBetweenLeaderboardsUpdatesInSecs)),
                                TimeSpan.FromMilliseconds(-1));
         }
     }

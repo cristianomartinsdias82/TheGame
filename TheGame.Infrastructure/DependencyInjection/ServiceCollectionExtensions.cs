@@ -2,8 +2,10 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TheGame.Common.Caching;
+using TheGame.Common.SystemClock;
 using TheGame.Data.Ef;
 using TheGame.Infrastructure.Data.Caching;
+using TheGame.Infrastructure.SystemClock;
 
 namespace TheGame.Infrastructure.DependencyInjection
 {
@@ -14,6 +16,7 @@ namespace TheGame.Infrastructure.DependencyInjection
             services.AddDbContext<TheGameDbContext>(options => options.UseSqlServer(configuration["TheGameSettings:DbConnectionString"]));
             services.AddMemoryCache();
             services.AddSingleton<ICacheProvider, InMemoryCacheProvider>();
+            services.AddTransient<IDateTimeProvider, DateTimeProvider>();
 
             return services;
         }

@@ -32,7 +32,6 @@
   <ItemGroup>
     <Folder Include="Commands\SaveMatchData\" />
     <Folder Include="Queries\GetLeaderboards\" />
-    <Folder Include="SystemClock\" />
   </ItemGroup>
 
 </Project>

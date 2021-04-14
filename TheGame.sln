@@ -8,6 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{ECC7DAA6-B
 		Ef executed commands.txt = Ef executed commands.txt
 		Referenced Nuget packages - listed by project.txt = Referenced Nuget packages - listed by project.txt
 		Support urls.txt = Support urls.txt
+		C:\Users\TheOwner\Downloads\Teste Técnico_KPMG.docx = C:\Users\TheOwner\Downloads\Teste Técnico_KPMG.docx
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{931B87B9-CF51-41D6-8697-EEC12A33E546}"
@@ -34,7 +35,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheGame.SharedKernel", "The
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheGame", "TheGame\TheGame.csproj", "{31F14D77-A74E-4A77-A921-3E5EE6878739}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheGame.Common", "TheGame.Common\TheGame.Common.csproj", "{6A53BDFD-AF10-45EA-B9F6-2C85FAF7EA73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheGame.Common", "TheGame.Common\TheGame.Common.csproj", "{6A53BDFD-AF10-45EA-B9F6-2C85FAF7EA73}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheGame.MatchDataFlushingWorker", "TheGame.MatchDataFlushingWorker\TheGame.MatchDataFlushingWorker.csproj", "{A1F189ED-0B3D-4B78-874A-C49D6E4E573B}"
 EndProject

@@ -20,7 +20,8 @@ namespace TheGame
                     webBuilder.UseStartup<Startup>();
                 })
                 .ConfigureServices(services => {
-                    services.AddHostedService<GameMatchesDataToDbFlushingService>();
+                    //services.AddHostedService<GameMatchesDataDbFlushingService>()
+                    //        .AddHostedService<UpdateLeaderboardsService>();
                 });
     }
 }

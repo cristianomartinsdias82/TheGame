@@ -1,15 +1,15 @@
 ﻿using FluentValidation;
 using TheGame.SharedKernel.Validation;
 
-namespace TheGame.Queries.GetLeaderboards.Validator
+namespace TheGame.Queries.GetLeaderboards
 {
     internal class GetLeaderboardsValidator : DataInputValidator<GetLeaderboardsRequest>
     {
         public GetLeaderboardsValidator()
         {
-            RuleFor(x => x.MaxRecords)
+            RuleFor(x => x.PlayersMaxQuantity)
                 .GreaterThan(0)
-                .WithMessage("Invalid MaxRecords argument");
+                .WithMessage("Invalid PlayersMaxQuantity argument");
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using TheGame.Common.Caching;
@@ -29,15 +30,24 @@ namespace TheGame.Queries.GetLeaderboards
         public async Task<GetLeaderboardsResponse> Handle(GetLeaderboardsRequest request, CancellationToken cancellationToken)
         {
             if (cancellationToken == CancellationToken.None)
-                return new GetLeaderboardsResponse { Result = OperationResult<IEnumerable<PlayerBalanceDto>>.Failure(new FailureDetail("CancellationToken", "CancellationToken argument cannot be null.")) };
+                return new GetLeaderboardsResponse
+                {
+                    Result = OperationResult<IEnumerable<PlayerBalanceDto>>.Failure(new FailureDetail("CancellationToken", "CancellationToken argument cannot be null."))
+                };
 
             var validationResult = await _requestValidator.TryValidateAsync(request, cancellationToken);
             if (!validationResult.Succeeded)
-                return new GetLeaderboardsResponse { Result = (OperationResult<IEnumerable<PlayerBalanceDto>>)validationResult }; //TODO: TESTAR ESTE PONTO
+                return new GetLeaderboardsResponse
+                {
+                    Result = OperationResult<IEnumerable<PlayerBalanceDto>>.Failure(validationResult.FailureDetails.ToArray())
+                };
 
             var leaderboards = await _cacheProvider.GetAsync<IEnumerable<PlayerBalanceDto>>(_settings.LeaderboardsCacheKey, cancellationToken);
 
-            return new GetLeaderboardsResponse { Result = OperationResult<IEnumerable<PlayerBalanceDto>>.Successful(leaderboards) };
+            return new GetLeaderboardsResponse
+            {
+                Result = OperationResult<IEnumerable<PlayerBalanceDto>>.Successful(leaderboards ?? new PlayerBalanceDto[0])
+            };
         }
     }
 }

@@ -13,11 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\GetLeaderboards\Mapper\" />
-    <Folder Include="Controllers\SaveMatchData\Mapper\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\TheGame.Commands\TheGame.Commands.csproj" />
     <ProjectReference Include="..\TheGame.Common\TheGame.Common.csproj" />
     <ProjectReference Include="..\TheGame.Domain\TheGame.Domain.csproj" />

@@ -4,6 +4,6 @@ namespace TheGame.Queries.GetLeaderboards
 {
     public class GetLeaderboardsRequest : IRequest<GetLeaderboardsResponse>
     {
-        public int MaxRecords { get; set; }
+        public int PlayersMaxQuantity { get; set; }
     }
 }
