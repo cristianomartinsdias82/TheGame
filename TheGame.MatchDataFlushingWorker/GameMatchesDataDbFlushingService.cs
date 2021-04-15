@@ -126,7 +126,6 @@ namespace TheGame.MatchDataFlushingWorker
         {
             _ongoingTask = new Task(async (state) => await ExecuteAsync(state, _cancellationTokenSource.Token), _cancellationTokenSource.Token);
 
-            //_timer = new Timer(async (state) => { await ExecuteAsync(state, _cancellationTokenSource.Token); },
             _timer = new Timer((state) => _ongoingTask.Start(),
                                null,
                                //TimeSpan.FromSeconds(Math.Abs(_settings.TimeBetweenDataFlushingOperationsInSecs)),
