@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\TheGame.Commands\TheGame.Commands.csproj" />
     <ProjectReference Include="..\TheGame.Common\TheGame.Common.csproj" />
+    <ProjectReference Include="..\TheGame.Infrastructure\TheGame.Infrastructure.csproj" />
     <ProjectReference Include="..\TheGame.Queries\TheGame.Queries.csproj" />
     <ProjectReference Include="..\TheGame.SharedKernel\TheGame.SharedKernel.csproj" />
   </ItemGroup>

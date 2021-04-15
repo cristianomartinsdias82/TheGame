@@ -8,12 +8,14 @@ using System.Threading.Tasks;
 using TheGame.Commands.Repositories;
 using TheGame.Common.Caching;
 using TheGame.Common.SystemClock;
+using TheGame.Data.Ef;
 using TheGame.Domain;
+using TheGame.Infrastructure.Data;
+using TheGame.Infrastructure.Data.Ef.Factory;
 using TheGame.MatchDataFlushingWorker.Utilities;
 using TheGame.Queries.GetLeaderboards.Repositories;
 using TheGame.SharedKernel;
 using static TheGame.SharedKernel.ExceptionHelper;
-using TheGame.SharedKernel;
 
 namespace TheGame.MatchDataFlushingWorker
 {
@@ -35,19 +37,21 @@ namespace TheGame.MatchDataFlushingWorker
             IConfiguration configuration,
             ILogger<GameMatchesDataDbFlushingService> logger,
             ICacheProvider cacheProvider,
-            ITheGameCommandsRepository commandsRepository,
-            ITheGameQueriesRepository queriesRepository,
             TheGameSettings settings,
             IDateTimeProvider dateTime)
         {
             _configuration = configuration ?? throw ArgNullEx(nameof(configuration));
             _logger = logger ?? throw ArgNullEx(nameof(logger));
             _cacheProvider = cacheProvider ?? throw ArgNullEx(nameof(cacheProvider));
-            _commandsRepository = commandsRepository ?? throw ArgNullEx(nameof(commandsRepository));
-            _queriesRepository = queriesRepository ?? throw ArgNullEx(nameof(queriesRepository));
             _settings = settings ?? throw ArgNullEx(nameof(settings));
             _dateTime = dateTime ?? throw ArgNullEx(nameof(dateTime));
+
+            _commandsRepository = RepositoryFactory.GetCommandsRepository(GetDbContext());
+            _queriesRepository = RepositoryFactory.GetQueriesRepository(settings);
         }
+
+        private TheGameDbContext GetDbContext()
+            => new TheGameDbContextFactory().CreateDbContext(new string[] { $"connectionString={_settings.DbConnectionString}" });
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {

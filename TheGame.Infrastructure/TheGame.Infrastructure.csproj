@@ -34,4 +34,10 @@
     <Folder Include="Data\InitialDataLoad\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>TheGame.MatchDataFlushingWorker</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+
 </Project>
