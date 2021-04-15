@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TheGame.Controllers.GetLeaderboards
 {
-    public class GetLeaderboardsDto
+    public class LeaderboardsDto
     {
     }
 }

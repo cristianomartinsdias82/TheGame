@@ -7,7 +7,7 @@ namespace TheGame.Domain
     {
         public string Name { get; set; }
         public string Nickname { get; set; }
-        public DateTimeOffset ScoreLastUpdateOn { get; set; }
+        public DateTimeOffset? ScoreLastUpdateOn { get; set; }
         public ICollection<GameMatchesPlayers> GameMatchesPlayers { get; set; }
     }
 }

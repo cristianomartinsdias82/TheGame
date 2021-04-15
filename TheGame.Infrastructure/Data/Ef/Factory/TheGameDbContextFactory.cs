@@ -1,13 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using System;
-using System.IO;
 using System.Linq;
 using TheGame.Data.Ef;
 
 namespace TheGame.Infrastructure.Data.Ef.Factory
 {
-    public class TheGameDbContextFactory : IDesignTimeDbContextFactory<TheGameDbContext>
+    internal class TheGameDbContextFactory : IDesignTimeDbContextFactory<TheGameDbContext>
     {
         public TheGameDbContext CreateDbContext(string[] args)
         {

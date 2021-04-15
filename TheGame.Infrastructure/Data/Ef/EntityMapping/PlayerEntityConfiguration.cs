@@ -32,11 +32,7 @@ namespace TheGame.Infrastructure.Data.Ef.EntityMapping
                    .IsUnique();
 
             builder.Property(x => x.ScoreLastUpdateOn)
-                    .HasColumnType("datetimeoffset")
-                    .IsRequired();
-
-            builder.HasIndex(x => x.ScoreLastUpdateOn)
-                   .HasDatabaseName($"IX_{nameof(Player)}_{nameof(Player.ScoreLastUpdateOn)}");
+                    .HasColumnType("datetimeoffset");
         }
     }
 }

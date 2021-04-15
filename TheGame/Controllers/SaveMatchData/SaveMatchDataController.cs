@@ -9,11 +9,12 @@ using TheGame.SharedKernel;
 
 namespace TheGame.Controllers.SaveMatchData
 {
+    [TheGameRoute("match")]
     public class SaveMatchDataController : TheGameController
     {
         public SaveMatchDataController(IMediator mediator) : base(mediator) { }
 
-        [HttpPost("/api/match")]
+        [HttpPost]
         public async Task<ActionResult<OperationResult>> SaveMatchData(
             [FromBody] SaveMatchDataDto request,
             CancellationToken cancellationToken)

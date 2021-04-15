@@ -10,6 +10,7 @@ namespace TheGame.Infrastructure.Data.Caching
     public class InMemoryCacheProvider : ICacheProvider
     {
         private readonly IMemoryCache _memoryCache;
+        private static readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
 
         public InMemoryCacheProvider(IMemoryCache memoryCache)
         {
@@ -26,19 +27,34 @@ namespace TheGame.Infrastructure.Data.Caching
 
         public async Task SetAsync<T>(T data, string key, DateTimeOffset? absoluteExpiration, CancellationToken cancellationToken)
         {
-            if (absoluteExpiration.HasValue)
-                _memoryCache.Set(key, data, absoluteExpiration.Value);
-            else
-                _memoryCache.Set(key, data);
-
-            await Task.CompletedTask;
+            await SafeUseCache(
+                key,
+                (key) =>
+                {
+                    if (absoluteExpiration.HasValue)
+                        _memoryCache.Set(key, data, absoluteExpiration.Value);
+                    else
+                        _memoryCache.Set(key, data);
+                },
+                cancellationToken);
         }
 
         public async Task ClearAsync(string key, CancellationToken cancellationToken)
         {
-            _memoryCache.Remove(key);
+            await SafeUseCache(key, _memoryCache.Remove, cancellationToken);
+        }
 
-            await Task.CompletedTask;
+        private static async Task SafeUseCache(string key, Action<string> action, CancellationToken cancellationToken)
+        {
+            await _semaphore.WaitAsync(cancellationToken);
+            try
+            {
+                action(key);
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
         }
     }
 }

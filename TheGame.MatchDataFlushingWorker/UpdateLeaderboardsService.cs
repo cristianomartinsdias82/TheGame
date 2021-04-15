@@ -6,7 +6,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using TheGame.Common.Caching;
+using TheGame.Common.SystemClock;
 using TheGame.MatchDataFlushingWorker.Utilities;
+using TheGame.Queries.GetLeaderboards.Repositories;
 using TheGame.SharedKernel;
 using static TheGame.SharedKernel.ExceptionHelper;
 
@@ -17,7 +19,10 @@ namespace TheGame.MatchDataFlushingWorker
         private readonly IConfiguration _configuration;
         private readonly ILogger<UpdateLeaderboardsService> _logger;
         private readonly ICacheProvider _cacheProvider;
+        private readonly ITheGameQueriesRepository _repository;
         private readonly TheGameSettings _settings;
+        private readonly IDateTimeProvider _dateTime;
+
         private Timer _timer;
         private Random _random = new Random();
         private CancellationTokenSource _cancellationTokenSource;
@@ -27,12 +32,16 @@ namespace TheGame.MatchDataFlushingWorker
             IConfiguration configuration,
             ILogger<UpdateLeaderboardsService> logger,
             ICacheProvider cacheProvider,
-            TheGameSettings settings)
+            ITheGameQueriesRepository repository,
+            TheGameSettings settings,
+            IDateTimeProvider dateTime)
         {
             _configuration = configuration ?? throw ArgNullEx(nameof(configuration));
             _logger = logger ?? throw ArgNullEx(nameof(logger));
             _cacheProvider = cacheProvider ?? throw ArgNullEx(nameof(cacheProvider));
+            _repository = repository ?? throw ArgNullEx(nameof(repository));
             _settings = settings ?? throw ArgNullEx(nameof(settings));
+            _dateTime = dateTime ?? throw ArgNullEx(nameof(dateTime));
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
@@ -41,14 +50,14 @@ namespace TheGame.MatchDataFlushingWorker
 
             ScheduleJobExecution();
 
-            _logger.LogInformation($"{DateTime.UtcNow:O} - {nameof(GameMatchesDataDbFlushingService)} started.");
+            _logger.LogInformation($"{_dateTime.DateTime:dd-MM-yyyy hh:mm:ss} - {nameof(GameMatchesDataDbFlushingService)} started.");
 
             await Task.CompletedTask;
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"{DateTime.UtcNow:O} - {nameof(GameMatchesDataDbFlushingService)} stopped.");
+            _logger.LogInformation($"{_dateTime.DateTime:dd-MM-yyyy hh:mm:ss} - {nameof(GameMatchesDataDbFlushingService)} stopped.");
 
             _cancellationTokenSource.Cancel();
 
@@ -59,12 +68,13 @@ namespace TheGame.MatchDataFlushingWorker
 
         public async Task ExecuteAsync(object state, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"{DateTime.UtcNow:O} - Updating leaderboards...");
+            _logger.LogInformation($"{_dateTime.DateTime:dd-MM-yyyy hh:mm:ss} - Updating leaderboards...");
 
             var matchData = await _cacheProvider.GetMatchDataAsync(_settings, cancellationToken);
+            
             //TODO: Leaderboards update logic
 
-            _logger.LogInformation($"{DateTime.UtcNow:O} - Operation successful!");
+            _logger.LogInformation($"{_dateTime.DateTime:dd-MM-yyyy hh:mm:ss} - Operation successful!");
 
             ScheduleJobExecution();
         }

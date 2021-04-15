@@ -3,7 +3,7 @@ using TheGame.Domain;
 
 namespace TheGame.Data.Ef
 {
-    public class TheGameDbContext : DbContext
+    internal class TheGameDbContext : DbContext
     {
         public TheGameDbContext() { }
 
