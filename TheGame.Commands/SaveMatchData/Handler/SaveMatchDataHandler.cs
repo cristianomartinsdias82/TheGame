@@ -23,6 +23,7 @@ namespace TheGame.Commands.SaveMatchData
         private readonly IDataInputValidation<SaveMatchDataRequest> _requestValidator;
         private readonly TheGameSettings _settings;
         private const string PlayerNotFound = "The informed player was not found.";
+        private const string GameNotFound = "The informed game was not found.";
 
         private static readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
 
@@ -52,6 +53,10 @@ namespace TheGame.Commands.SaveMatchData
             var players = await _cacheProvider.GetAsync<IEnumerable<Player>>(_settings.PlayersListCacheKey, cancellationToken);
             if ((players?.Count() ?? 0) == 0 || !players.Any(p => p.Id == request.PlayerId))
                 return new SaveMatchDataResponse { Result = OperationResult.Failure(PlayerNotFound) };
+
+            //var games = await _cacheProvider.GetAsync<IEnumerable<Game>>(_settings.GamesListCacheKey, cancellationToken);
+            //if ((games?.Count() ?? 0) == 0 || !games.Any(p => p.Id == request.PlayerId))
+            //    return new SaveMatchDataResponse { Result = OperationResult.Failure(GameNotFound) };
 
             try
             {

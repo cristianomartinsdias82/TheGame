@@ -2,7 +2,7 @@
 
 namespace TheGame.Controllers.SaveMatchData
 {
-    public class SaveMatchDataDto
+    public class SaveGameMatchDataDto
     {
         public long PlayerId { get; set; }
         public long MatchId { get; set; }

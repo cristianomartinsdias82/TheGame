@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
 using TheGame.Commands.DependencyInjection;
 using TheGame.Commands.SaveMatchData;
 using TheGame.Common.DependencyInjection;
+using TheGame.Extensions.Swagger;
 using TheGame.Infrastructure.DependencyInjection;
 using TheGame.Queries.DependencyInjection;
 using TheGame.Queries.GetLeaderboards;
@@ -27,9 +27,9 @@ namespace TheGame
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddMediatR(typeof(GetLeaderboardsRequest).Assembly, typeof(SaveMatchDataRequest).Assembly);
-            services.AddCommon(Configuration);
             services.AddSharedKernel(Configuration);
+            services.AddSwaggerOpenApi(Configuration);
+            services.AddMediatR(typeof(GetLeaderboardsRequest).Assembly, typeof(SaveMatchDataRequest).Assembly);
             services.AddQueries(Configuration);
             services.AddCommands(Configuration);
             services.AddInfrastructure(Configuration);
@@ -41,6 +41,7 @@ namespace TheGame
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwaggerOpenApi();
             }
 
             app.UseRouting();

@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using TheGame.Controllers.Abstractions;
@@ -21,7 +22,14 @@ namespace TheGame.Controllers.GetLeaderboards
             _settings = settings ?? throw ArgNullEx(nameof(settings));
         }
 
+        /// <summary>
+        /// Leaderboards endpoint
+        /// </summary>
+        /// <response code="200">Retrieves the leaderboards</response>
+        /// <response code="400">Retrieves an error list</response>
         [HttpGet]
+        [ProducesResponseType(typeof(OperationResult<LeaderboardsDto>), (int)HttpStatusCode.OK)]
+        [ProducesErrorResponseType(typeof(OperationResult<LeaderboardsDto>))]
         public async Task<ActionResult<OperationResult<LeaderboardsDto>>> Leaderboards(
             [FromQuery] int? playersMaxQuantity,
             CancellationToken cancellationToken)
@@ -33,7 +41,7 @@ namespace TheGame.Controllers.GetLeaderboards
             if (response.Result.Succeeded)
                 return Ok(response.Result);
 
-            return BadRequest(response.Result.FailureDetails);
+            return BadRequest(response.Result);
         }
     }
 }

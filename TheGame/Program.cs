@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TheGame.MatchDataFlushingWorker;
 using TheGame.Infrastructure.Data.Ef.Migrations;
+using TheGame.Infrastructure.Data.Caching;
 
 namespace TheGame
 {
@@ -13,6 +14,7 @@ namespace TheGame
             CreateHostBuilder(args)
                 .Build()
                 .MigrateDatabase()
+                .PerformInitialCacheLoading()
                 .Run();
         }
 
@@ -22,7 +24,8 @@ namespace TheGame
                 {
                     webBuilder.UseStartup<Startup>();
                 })
-                .ConfigureServices(services => {
+                .ConfigureServices(services =>
+                {
                     services.AddHostedService<GameMatchesDataDbFlushingService>();
                 });
     }

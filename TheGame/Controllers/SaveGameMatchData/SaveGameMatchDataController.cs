@@ -10,13 +10,20 @@ using TheGame.SharedKernel;
 namespace TheGame.Controllers.SaveMatchData
 {
     [TheGameRoute("match")]
-    public class SaveMatchDataController : TheGameController
+    public class SaveGameMatchDataController : TheGameController
     {
-        public SaveMatchDataController(IMediator mediator) : base(mediator) { }
+        public SaveGameMatchDataController(IMediator mediator) : base(mediator) { }
 
+        /// <summary>
+        /// Save game match data endpoint
+        /// </summary>
+        /// <response code="200">Retrieves the leaderboards</response>
+        /// <response code="400">Retrieves an error list</response>
+        [ProducesResponseType(typeof(OperationResult), (int)HttpStatusCode.OK)]
+        [ProducesErrorResponseType(typeof(OperationResult))]
         [HttpPost]
-        public async Task<ActionResult<OperationResult>> SaveMatchData(
-            [FromBody] SaveMatchDataDto request,
+        public async Task<ActionResult<OperationResult>> SaveGameMatchData(
+            [FromBody] SaveGameMatchDataDto request,
             CancellationToken cancellationToken)
         {
             var response = await _mediator.Send(
@@ -30,9 +37,9 @@ namespace TheGame.Controllers.SaveMatchData
                 cancellationToken);
 
             if (response.Result.Succeeded)
-                return StatusCode((int)HttpStatusCode.Created);
+                return StatusCode((int)HttpStatusCode.Created, response.Result);
 
-            return BadRequest(response.Result.FailureDetails);
+            return BadRequest(response.Result);
         }
     }
 }

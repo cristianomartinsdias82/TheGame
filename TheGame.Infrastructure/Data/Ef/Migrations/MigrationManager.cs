@@ -37,7 +37,7 @@ namespace TheGame.Infrastructure.Data.Ef.Migrations
                     }
                     catch (Exception exc)
                     {
-                        logger?.LogError(exc, "Unable seed the database!");
+                        logger?.LogError(exc, "Unable to seed the database!");
 
                         throw;
                     }
@@ -63,6 +63,19 @@ namespace TheGame.Infrastructure.Data.Ef.Migrations
                 saveChanges = true;
             }
 
+            //if (!dbContext.Games.Any())
+            //{
+            //    logger.LogInformation("Seeding database with games data. Please wait...");
+
+            //    var now = DateTimeOffset.UtcNow;
+            //    var games = new List<Game>();
+            //    for (int i = 1; i <= 1000; i++)
+            //        games.Add(new Game { Title = $"Game {i}'s name", RegistrationDate = now  });
+
+            //    dbContext.Games.AddRange(games);
+            //    saveChanges = true;
+            //}
+
             if (!dbContext.GameMatches.Any())
             {
                 logger.LogInformation("Seeding database with game matches data. Please wait...");
@@ -79,7 +92,7 @@ namespace TheGame.Infrastructure.Data.Ef.Migrations
             if (saveChanges)
             {
                 dbContext.SaveChanges();
-                logger.LogInformation("Database seeding successful!");
+                logger.LogInformation("Database seed successful!");
             }
         }
     }
