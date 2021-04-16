@@ -15,6 +15,8 @@ namespace TheGame.Data.Ef
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(TheGameDbContext).Assembly);
         }
     }

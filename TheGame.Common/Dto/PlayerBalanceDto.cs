@@ -6,6 +6,6 @@ namespace TheGame.Common.Dto
     {
         public long PlayerId { get; set; }
         public long Balance { get; set; }
-        public DateTime PlayerScoreLastUpdateOn { get; set; }
+        public DateTime ScoreLastUpdateOn { get; set; }
     }
 }

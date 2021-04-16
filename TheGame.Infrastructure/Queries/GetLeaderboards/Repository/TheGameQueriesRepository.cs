@@ -31,17 +31,14 @@ namespace TheGame.Infrastructure.Queries.GetLeaderboards.Repository
             var parameters = new DynamicParameters();
             parameters.Add("top", playersMaxQuantity, DbType.Int32, ParameterDirection.Input);
 
-            var commandDef = new CommandDefinition(
-                $"SELECT {nameof(PlayerBalanceDto.PlayerId)}, {nameof(PlayerBalanceDto.Balance)}, {nameof(PlayerBalanceDto.PlayerScoreLastUpdateOn)} FROM {_settings.ObjectsSchema}.F_GetLeaderboards(@top)",
-                parameters: new { top = playersMaxQuantity },
-                cancellationToken: cancellationToken);
+            var sql = $"SELECT TOP({playersMaxQuantity}) {nameof(PlayerBalanceDto.PlayerId)}, {nameof(PlayerBalanceDto.Balance)}, {nameof(PlayerBalanceDto.ScoreLastUpdateOn)} FROM dbo.V_Leaderboards ORDER BY Balance DESC";
 
             IEnumerable<PlayerBalanceDto> leaderboards;
             try
             {
                 await connection.OpenAsync(cancellationToken);
 
-                leaderboards = await connection.QueryAsync<PlayerBalanceDto>(commandDef);
+                leaderboards = await connection.QueryAsync<PlayerBalanceDto>(sql);
             }
             finally
             {

@@ -55,22 +55,22 @@ namespace TheGame.MatchDataFlushingWorker
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
+            _logger.LogInformation($"{_dateTime.DateTime:dd-MM-yyyy hh:mm:ss} - {nameof(GameMatchesDataDbFlushingService)} has started.");
+
             _cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
             ScheduleJobExecution();
-
-            _logger.LogInformation($"{_dateTime.DateTime:dd-MM-yyyy hh:mm:ss} - {nameof(GameMatchesDataDbFlushingService)} started.");
 
             await Task.CompletedTask;
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"{_dateTime.DateTime:dd-MM-yyyy hh:mm:ss} - {nameof(GameMatchesDataDbFlushingService)} stopped.");
-
             _cancellationTokenSource.Cancel();
 
             await Task.WhenAny(_ongoingTask, Task.Delay(-1, cancellationToken));
+
+            _logger.LogInformation($"{_dateTime.DateTime:dd-MM-yyyy hh:mm:ss} - {nameof(GameMatchesDataDbFlushingService)} has stopped.");
 
             cancellationToken.ThrowIfCancellationRequested();
         }
@@ -91,7 +91,7 @@ namespace TheGame.MatchDataFlushingWorker
 
             if (matchData?.Any() ?? false)
             {
-                var now = _dateTime.DateTimeOffset.ConvertUtcToLocalDateTime(_settings);
+                var now = _dateTime.DateTimeOffset.LocalDateTime;
                 var gameMatchesPlayers = matchData.Select(it => GameMatchesPlayers.Create(it.PlayerId, it.MatchId, it.MatchDate, it.Win).Data)
                                                   .ToList();
 

@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{ECC7DAA6-B
 		Referenced Nuget packages - listed by project.txt = Referenced Nuget packages - listed by project.txt
 		Support urls.txt = Support urls.txt
 		C:\Users\TheOwner\Downloads\teste.docx = C:\Users\TheOwner\Downloads\teste.docx
+		V_Leaderboards.sql = V_Leaderboards.sql
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{931B87B9-CF51-41D6-8697-EEC12A33E546}"

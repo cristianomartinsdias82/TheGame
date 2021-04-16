@@ -4,7 +4,7 @@ using TheGame.Domain;
 
 namespace TheGame.Infrastructure.Data.Ef.EntityMapping
 {
-    public class GameMatchesPlayersEntityConfiguration : IEntityTypeConfiguration<GameMatchesPlayers>
+    internal class GameMatchesPlayersEntityConfiguration : IEntityTypeConfiguration<GameMatchesPlayers>
     {
         public void Configure(EntityTypeBuilder<GameMatchesPlayers> builder)
         {

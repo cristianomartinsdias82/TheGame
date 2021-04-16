@@ -7,8 +7,6 @@ namespace TheGame.SharedKernel
     {
         public static DateTime ConvertUtcToLocalDateTime(this DateTimeOffset dateTime, TheGameSettings settings)
         {
-            //return dateTime.LocalDateTime; TODO:COMPARE RESULTS FROM BOTH LOGIC!
-
             if (settings == null)
                 throw ArgNullEx(nameof(settings));
 

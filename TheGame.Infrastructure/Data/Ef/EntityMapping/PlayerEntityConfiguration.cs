@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
+using System.Collections.Generic;
 using TheGame.Domain;
 
 namespace TheGame.Infrastructure.Data.Ef.EntityMapping
 {
-    public class PlayerEntityConfiguration : IEntityTypeConfiguration<Player>
+    internal class PlayerEntityConfiguration : IEntityTypeConfiguration<Player>
     {
         public void Configure(EntityTypeBuilder<Player> builder)
         {
@@ -33,6 +35,18 @@ namespace TheGame.Infrastructure.Data.Ef.EntityMapping
 
             builder.Property(x => x.ScoreLastUpdateOn)
                     .HasColumnType("datetimeoffset");
+
+            Seed(builder);
+        }
+
+        private void Seed(EntityTypeBuilder<Player> builder)
+        {
+            var now = DateTimeOffset.UtcNow;
+            var players = new List<Player>();
+            for (int i = 1; i <= 1000; i++)
+                players.Add(new Player { Id = i, Name = $"Player {i}'s name", Nickname = $"player{i}", RegistrationDate = now, GameMatchesPlayers = new List<GameMatchesPlayers>() });
+
+            builder.HasData(players);
         }
     }
 }
