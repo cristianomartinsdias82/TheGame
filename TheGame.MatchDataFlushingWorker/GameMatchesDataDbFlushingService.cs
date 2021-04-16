@@ -29,7 +29,6 @@ namespace TheGame.MatchDataFlushingWorker
         private readonly TheGameSettings _settings;
         private readonly IDateTimeProvider _dateTime;
         private Timer _timer;
-        private Random _random = new Random();
         private CancellationTokenSource _cancellationTokenSource;
         private Task _ongoingTask;
 
