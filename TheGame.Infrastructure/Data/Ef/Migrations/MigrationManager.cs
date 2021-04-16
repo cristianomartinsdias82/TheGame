@@ -17,7 +17,7 @@ namespace TheGame.Infrastructure.Data.Ef.Migrations
             using (var scope = host.Services.CreateScope())
             {
                 var provider = scope.ServiceProvider;
-                var logger = provider.GetService<ILogger>();
+                var logger = provider.GetService<ILogger<IHost>>();
                 using (var dbContext = provider.GetRequiredService<TheGameDbContext>())
                 {
                     try

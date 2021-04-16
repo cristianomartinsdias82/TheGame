@@ -10,7 +10,6 @@
         public int BatchOperationsTimeout { get; set; }
         public string Timezone { get; set; }
         public int TimeBetweenDataFlushingOperationsInSecs { get; set; }
-        public int TimeBetweenLeaderboardsUpdatesInSecs { get; set; }
         public string LeaderboardsCacheKey { get; set; }
         public string GameMatchesDataCacheKey { get; set; }
         public string PlayersListCacheKey { get; set; }

@@ -19,7 +19,7 @@ namespace TheGame.Infrastructure.Data.Caching
             using (var scope = host.Services.CreateScope())
             {
                 var provider = scope.ServiceProvider;
-                var logger = provider.GetService<ILogger>();
+                var logger = provider.GetService<ILogger<IHost>>();
                 var cacheProvider = provider.GetRequiredService<ICacheProvider>();
                 var settings = provider.GetRequiredService<TheGameSettings>();
 
@@ -37,42 +37,44 @@ namespace TheGame.Infrastructure.Data.Caching
             string sql;
 
             logger.LogInformation("Loading cache with player data. Please wait...");
+            sql = $"SELECT {nameof(Player.Id)} FROM dbo.{nameof(Player)}s";
             try
             {
-                sql = $"SELECT {nameof(Player.Id)} FROM dbo.{nameof(Player)}s";
-
                 connection.Open();
 
                 var players = connection.Query<long>(sql);
 
-                cacheProvider.SetAsync(players, settings.PlayersListCacheKey, null, CancellationToken.None).Wait();
+                cacheProvider.SetAsync(players, settings.PlayersListCacheKey, null, CancellationToken.None).GetAwaiter().GetResult();
             }
             catch (Exception exc)
             {
                 logger?.LogError(exc, "Unable to load cache with player data!");
             }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+            }
 
             logger.LogInformation("Loading cache with game data. Please wait...");
+            sql = $"SELECT {nameof(Game.Id)} FROM dbo.{nameof(Game)}s";
             try
             {
-                sql = $"SELECT {nameof(Game.Id)} FROM dbo.{nameof(Game)}";
-
                 connection.Open();
 
                 var games = connection.Query<long>(sql);
 
-                cacheProvider.SetAsync(games, settings.GamesListCacheKey, null, CancellationToken.None).Wait();
+                cacheProvider.SetAsync(games, settings.GamesListCacheKey, null, CancellationToken.None).GetAwaiter().GetResult();
             }
             catch (Exception exc)
             {
                 logger?.LogError(exc, "Unable to load cache with game data!");
             }
-
-            if (connection == null)
-                return;
-            
-            if (connection.State == ConnectionState.Open)
-                connection.Close();
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+            }
         }
     }
 }
