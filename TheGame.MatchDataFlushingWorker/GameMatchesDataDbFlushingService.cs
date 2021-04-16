@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
@@ -21,7 +20,6 @@ namespace TheGame.MatchDataFlushingWorker
 {
     public class GameMatchesDataDbFlushingService : IHostedService
     {
-        private readonly IConfiguration _configuration;
         private readonly ILogger<GameMatchesDataDbFlushingService> _logger;
         private readonly ITheGameCacheProvider _cacheProvider;
         private readonly ITheGameCommandsRepository _commandsRepository;
@@ -33,18 +31,15 @@ namespace TheGame.MatchDataFlushingWorker
         private Task _ongoingTask;
 
         public GameMatchesDataDbFlushingService(
-            IConfiguration configuration,
             ILogger<GameMatchesDataDbFlushingService> logger,
             ITheGameCacheProvider cacheProvider,
             TheGameSettings settings,
             IDateTimeProvider dateTime)
         {
-            _configuration = configuration ?? throw ArgNullEx(nameof(configuration));
             _logger = logger ?? throw ArgNullEx(nameof(logger));
             _cacheProvider = cacheProvider ?? throw ArgNullEx(nameof(cacheProvider));
             _settings = settings ?? throw ArgNullEx(nameof(settings));
             _dateTime = dateTime ?? throw ArgNullEx(nameof(dateTime));
-
             _commandsRepository = RepositoryFactory.GetCommandsRepository(GetDbContext());
             _queriesRepository = RepositoryFactory.GetQueriesRepository(settings);
         }
