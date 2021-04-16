@@ -17,7 +17,7 @@ namespace TheGame.Infrastructure.Data.Ef.Migrations
             using (var scope = host.Services.CreateScope())
             {
                 var provider = scope.ServiceProvider;
-                var logger = provider.GetService<ILogger<IHost>>();
+                var logger = provider.GetService<ILogger>();
                 using (var dbContext = provider.GetRequiredService<TheGameDbContext>())
                 {
                     try
@@ -46,13 +46,13 @@ namespace TheGame.Infrastructure.Data.Ef.Migrations
             return host;
         }
 
-        private static void SeedDatabase(TheGameDbContext dbContext, ILogger<IHost> logger)
+        private static void SeedDatabase(TheGameDbContext dbContext, ILogger logger)
         {
             bool hasPendingData = false;
 
             if (!dbContext.Players.Any())
             {
-                logger.LogInformation("Seeding database with players data. Please wait...");
+                logger.LogInformation("Seeding database with player data. Please wait...");
 
                 var now = DateTimeOffset.UtcNow;
                 var players = new List<Player>();
@@ -65,7 +65,7 @@ namespace TheGame.Infrastructure.Data.Ef.Migrations
 
             if (!dbContext.Games.Any())
             {
-                logger.LogInformation("Seeding database with games data. Please wait...");
+                logger.LogInformation("Seeding database with game data. Please wait...");
 
                 var now = DateTimeOffset.UtcNow;
                 var games = new List<Game>();

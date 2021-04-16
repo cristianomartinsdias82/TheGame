@@ -9,7 +9,7 @@ namespace TheGame.Infrastructure.Data.Caching
 {
     public class InMemoryCacheProvider : ICacheProvider
     {
-        private readonly IMemoryCache _memoryCache;
+        protected readonly IMemoryCache _memoryCache;
         private static readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
 
         public InMemoryCacheProvider(IMemoryCache memoryCache)
@@ -17,7 +17,7 @@ namespace TheGame.Infrastructure.Data.Caching
             _memoryCache = memoryCache ?? throw ArgNullEx(nameof(memoryCache));
         }
 
-        public async Task<T> GetAsync<T>(string key, CancellationToken cancellationToken)
+        public virtual async Task<T> GetAsync<T>(string key, CancellationToken cancellationToken)
         {
             T data;
             _memoryCache.TryGetValue(key, out data);
@@ -25,7 +25,7 @@ namespace TheGame.Infrastructure.Data.Caching
             return await Task.FromResult(data);
         }
 
-        public async Task SetAsync<T>(T data, string key, DateTimeOffset? absoluteExpiration, CancellationToken cancellationToken)
+        public virtual async Task SetAsync<T>(T data, string key, DateTimeOffset? absoluteExpiration, CancellationToken cancellationToken)
         {
             await SafeUseCache(
                 key,
@@ -39,12 +39,7 @@ namespace TheGame.Infrastructure.Data.Caching
                 cancellationToken);
         }
 
-        public async Task ClearAsync(string key, CancellationToken cancellationToken)
-        {
-            await SafeUseCache(key, _memoryCache.Remove, cancellationToken);
-        }
-
-        private static async Task SafeUseCache(string key, Action<string> action, CancellationToken cancellationToken)
+        protected virtual async Task SafeUseCache(string key, Action<string> action, CancellationToken cancellationToken)
         {
             await _semaphore.WaitAsync(cancellationToken);
             try

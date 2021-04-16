@@ -6,8 +6,7 @@ namespace TheGame.Common.Caching
 {
     public interface ICacheProvider
     {
-        Task SetAsync<T>(T data, string key, DateTimeOffset? absoluteExpiration, CancellationToken cancellationToken);
+        Task SetAsync<T>(T item, string key, DateTimeOffset? absoluteExpiration, CancellationToken cancellationToken);
         Task<T> GetAsync<T>(string key, CancellationToken cancellationToken);
-        Task ClearAsync(string key, CancellationToken cancellationToken);
     }
 }

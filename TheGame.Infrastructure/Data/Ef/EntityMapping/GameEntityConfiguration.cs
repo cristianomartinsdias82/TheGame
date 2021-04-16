@@ -32,8 +32,8 @@ namespace TheGame.Infrastructure.Data.Ef.EntityMapping
         {
             var now = DateTimeOffset.UtcNow;
             var gameMatches = new List<Game>();
-            for (int i = 1; i <= 100; i++)
-                gameMatches.Add(new Game { Id = i, Title = $"Match {i}", RegistrationDate = now });
+            for (int i = 1; i <= 20; i++)
+                gameMatches.Add(new Game { Id = i, Title = $"Game {i}", RegistrationDate = now });
 
             builder.HasData(gameMatches);
         }

@@ -19,7 +19,7 @@ namespace TheGame.Infrastructure.Data.Caching
             using (var scope = host.Services.CreateScope())
             {
                 var provider = scope.ServiceProvider;
-                var logger = provider.GetService<ILogger<IHost>>();
+                var logger = provider.GetService<ILogger>();
                 var cacheProvider = provider.GetRequiredService<ICacheProvider>();
                 var settings = provider.GetRequiredService<TheGameSettings>();
 
@@ -29,13 +29,14 @@ namespace TheGame.Infrastructure.Data.Caching
             return host;
         }
 
-        private static void LoadCache(ICacheProvider cacheProvider, TheGameSettings settings, ILogger<IHost> logger)
+        private static void LoadCache(ICacheProvider cacheProvider, TheGameSettings settings, ILogger logger)
         {
             var factory = DbProviderFactories.GetFactory(settings.DataProviderName);
             var connection = factory.CreateConnection();
             connection.ConnectionString = settings.DbConnectionString;
             string sql;
 
+            logger.LogInformation("Loading cache with player data. Please wait...");
             try
             {
                 sql = $"SELECT {nameof(Player.Id)} FROM dbo.{nameof(Player)}s";
@@ -48,27 +49,24 @@ namespace TheGame.Infrastructure.Data.Caching
             }
             catch (Exception exc)
             {
-                logger?.LogError(exc, "Unable to load cache with players data!");
-
-                throw;
+                logger?.LogError(exc, "Unable to load cache with player data!");
             }
 
-            //try
-            //{
-            //    sql = $"SELECT {nameof(Game.Id)} FROM dbo.{nameof(Game)}";
+            logger.LogInformation("Loading cache with game data. Please wait...");
+            try
+            {
+                sql = $"SELECT {nameof(Game.Id)} FROM dbo.{nameof(Game)}";
 
-            //    connection.Open();
+                connection.Open();
 
-            //    var games = connection.Query<long>(sql);
+                var games = connection.Query<long>(sql);
 
-            //    cacheProvider.SetAsync(games, settings.GamesListCacheKey, null, CancellationToken.None).Wait();
-            //}
-            //catch (Exception exc)
-            //{
-            //    logger?.LogError(exc, "Unable to load cache with games data!");
-
-            //    throw;
-            //}
+                cacheProvider.SetAsync(games, settings.GamesListCacheKey, null, CancellationToken.None).Wait();
+            }
+            catch (Exception exc)
+            {
+                logger?.LogError(exc, "Unable to load cache with game data!");
+            }
 
             if (connection == null)
                 return;

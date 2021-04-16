@@ -7,12 +7,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using TheGame.Commands.SaveMatchData;
 using TheGame.Common.Caching;
+using TheGame.Common.Dto;
 using TheGame.Common.SystemClock;
 using TheGame.Data.Ef;
 using TheGame.Domain;
 using TheGame.Infrastructure.Data;
 using TheGame.Infrastructure.Data.Ef.Factory;
-using TheGame.MatchDataFlushingWorker.Utilities;
 using TheGame.Queries.GetLeaderboards;
 using TheGame.SharedKernel;
 using static TheGame.SharedKernel.ExceptionHelper;
@@ -23,7 +23,7 @@ namespace TheGame.MatchDataFlushingWorker
     {
         private readonly IConfiguration _configuration;
         private readonly ILogger<GameMatchesDataDbFlushingService> _logger;
-        private readonly ICacheProvider _cacheProvider;
+        private readonly ITheGameCacheProvider _cacheProvider;
         private readonly ITheGameCommandsRepository _commandsRepository;
         private readonly ITheGameQueriesRepository _queriesRepository;
         private readonly TheGameSettings _settings;
@@ -36,7 +36,7 @@ namespace TheGame.MatchDataFlushingWorker
         public GameMatchesDataDbFlushingService(
             IConfiguration configuration,
             ILogger<GameMatchesDataDbFlushingService> logger,
-            ICacheProvider cacheProvider,
+            ITheGameCacheProvider cacheProvider,
             TheGameSettings settings,
             IDateTimeProvider dateTime)
         {
@@ -87,15 +87,20 @@ namespace TheGame.MatchDataFlushingWorker
         private async Task<bool> PerformBulkOperationsAsync(CancellationToken cancellationToken)
         {
             var dataFlushingSuccessful = false;
-            var matchData = await _cacheProvider.GetMatchDataAsync(_settings, cancellationToken);
+            var matchData = (await _cacheProvider.GetGameMatchesAsync(cancellationToken))?.ToList();
 
             if (matchData?.Any() ?? false)
             {
                 var now = _dateTime.DateTimeOffset.LocalDateTime;
-                var gameMatchesPlayers = matchData.Select(it => GameMatchesPlayers.Create(it.GameId, it.PlayerId, it.Win, it.MatchDate).Data)
-                                                  .ToList();
+                var gameMatchesPlayers = matchData
+                                            .Select(it => GameMatchesPlayers.Create(
+                                                            it.Item.GameId,
+                                                            it.Item.PlayerId,
+                                                            it.Item.Win,
+                                                            it.Item.MatchDate).Data)
+                                            .ToList();
 
-                var players = await _queriesRepository.FetchPlayersByIdsAsync(matchData.Select(x => x.PlayerId).Distinct(), cancellationToken);
+                var players = await _queriesRepository.FetchPlayersByIdsAsync(matchData.Select(x => x.Item.PlayerId).Distinct(), cancellationToken);
                 players.ToList().ForEach(it => it.ScoreLastUpdateOn = now);
 
                 dataFlushingSuccessful = await TransactionContextHelper.Execute(async (matchData) =>
@@ -106,9 +111,38 @@ namespace TheGame.MatchDataFlushingWorker
 
                     await _commandsRepository.BulkUpdatePlayersAsync(players, cancellationToken);
 
-                    await _cacheProvider.ClearAsync(_settings.GameMatchesDataCacheKey, cancellationToken);
-
                     _logger.LogInformation($"{_dateTime.DateTime:dd-MM-yyyy hh:mm:ss} - Data flushing executed successfully!");
+
+                    var lockTaken = false;
+                    try
+                    {
+                        //Monitor.Enter(typeof(ITheGameCacheProvider), ref lockTaken);
+                        //if (lockTaken)
+                        if (lockTaken = Monitor.TryEnter(typeof(ITheGameCacheProvider), 10000))
+                        {
+                            _logger.LogInformation($"{_dateTime.DateTime:dd-MM-yyyy hh:mm:ss} - Removing flushed data from cache...");
+
+                            var gameMatchDataCurrentSnapshot = _cacheProvider.GetGameMatchesAsync(cancellationToken).GetAwaiter().GetResult();
+                            var pendingGameMatchData = gameMatchDataCurrentSnapshot.Except(matchData, new CachedMatchGameDataComparer());
+
+                            _cacheProvider.StoreGameMatchesAsync(pendingGameMatchData, null, cancellationToken).GetAwaiter().GetResult();
+
+                            _logger.LogInformation($"{_dateTime.DateTime:dd-MM-yyyy hh:mm:ss} - Flushed data successfully removed from cache!");
+                        }
+                    }
+                    finally
+                    {
+                        if (lockTaken)
+                            Monitor.Exit(typeof(ITheGameCacheProvider));
+                    }
+
+                    //lock (typeof(ITheGameCacheProvider))
+                    //{
+                    //    var gameMatchDataCurrentSnapshot = _cacheProvider.GetGameMatchesAsync(cancellationToken).GetAwaiter().GetResult();
+                    //    var pendingGameMatchData = gameMatchDataCurrentSnapshot.Except(matchData, new CacheItemComparer());
+
+                    //    _cacheProvider.StoreGameMatchesAsync(pendingGameMatchData, null, cancellationToken).GetAwaiter().GetResult();
+                    //}
 
                     return true;
                 },

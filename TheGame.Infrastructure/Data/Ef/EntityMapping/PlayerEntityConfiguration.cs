@@ -43,7 +43,7 @@ namespace TheGame.Infrastructure.Data.Ef.EntityMapping
             var now = DateTimeOffset.UtcNow;
             var players = new List<Player>();
             for (int i = 1; i <= 1000; i++)
-                players.Add(new Player { Id = i, Name = $"Player {i}'s name", Nickname = $"player{i}", RegistrationDate = now, GameMatchesPlayers = new List<GameMatchesPlayers>() });
+                players.Add(new Player { Id = i, Name = $"Player {i}", Nickname = $"player{i}", RegistrationDate = now });
 
             builder.HasData(players);
         }

@@ -22,6 +22,7 @@ namespace TheGame.Infrastructure.DependencyInjection
             services.AddDbContext<TheGameDbContext>(options => options.UseSqlServer(configuration["TheGameSettings:DbConnectionString"]));
             services.AddMemoryCache();
             services.AddSingleton<ICacheProvider, InMemoryCacheProvider>();
+            services.AddSingleton<ITheGameCacheProvider, TheGameCacheProvider>();
             DbProviderFactories.RegisterFactory(configuration["TheGameSettings:DataProviderName"], SqlClientFactory.Instance);
             services.AddScoped<ITheGameCommandsRepository, TheGameCommandsRepository>();
             services.AddScoped<ITheGameQueriesRepository, TheGameQueriesRepository>();
