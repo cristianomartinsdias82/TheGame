@@ -3,10 +3,10 @@ using System;
 
 namespace TheGame.Commands.SaveMatchData
 {
-    public class SaveMatchDataRequest : IRequest<SaveMatchDataResponse>
+    public class SaveGameMatchDataRequest : IRequest<SaveGameMatchDataResponse>
     {
+        public long GameId { get; set; }
         public long PlayerId { get; set; }
-        public long MatchId { get; set; }
         public long Win { get; set; }
         public DateTimeOffset MatchDate { get; set; }
     }

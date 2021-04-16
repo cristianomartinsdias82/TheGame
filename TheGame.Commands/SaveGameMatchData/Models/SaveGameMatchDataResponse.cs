@@ -2,7 +2,7 @@
 
 namespace TheGame.Commands.SaveMatchData
 {
-    public class SaveMatchDataResponse
+    public class SaveGameMatchDataResponse
     {
         public OperationResult Result { get; set; }
     }

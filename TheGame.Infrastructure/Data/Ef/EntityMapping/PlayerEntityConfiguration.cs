@@ -33,8 +33,7 @@ namespace TheGame.Infrastructure.Data.Ef.EntityMapping
                    .HasDatabaseName($"IX_UN_{nameof(Player)}_{nameof(Player.Nickname)}")
                    .IsUnique();
 
-            builder.Property(x => x.ScoreLastUpdateOn)
-                    .HasColumnType("datetimeoffset");
+            builder.Property(x => x.ScoreLastUpdateOn);
 
             Seed(builder);
         }

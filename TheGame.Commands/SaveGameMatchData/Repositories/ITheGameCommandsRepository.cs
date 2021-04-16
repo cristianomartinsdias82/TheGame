@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using TheGame.Domain;
 
-namespace TheGame.Commands.Repositories
+namespace TheGame.Commands.SaveMatchData
 {
     public interface ITheGameCommandsRepository
     {

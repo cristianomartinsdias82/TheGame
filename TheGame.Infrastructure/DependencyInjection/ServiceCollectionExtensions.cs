@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Data.Common;
 using System.Data.SqlClient;
-using TheGame.Commands.Repositories;
+using TheGame.Commands.SaveMatchData;
 using TheGame.Common.Caching;
 using TheGame.Common.SystemClock;
 using TheGame.Data.Ef;
@@ -11,7 +11,7 @@ using TheGame.Infrastructure.Commands.SaveMatchData.Repository;
 using TheGame.Infrastructure.Data.Caching;
 using TheGame.Infrastructure.Queries.GetLeaderboards.Repository;
 using TheGame.Infrastructure.SystemClock;
-using TheGame.Queries.GetLeaderboards.Repositories;
+using TheGame.Queries.GetLeaderboards;
 
 namespace TheGame.Infrastructure.DependencyInjection
 {

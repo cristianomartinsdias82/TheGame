@@ -2,7 +2,7 @@
 
 namespace TheGame.Domain
 {
-    public class GameMatch : Entity<long>
+    public class Game : Entity<long>
     {
         public string Title { get; set; }
         public ICollection<GameMatchesPlayers> GameMatchesPlayers { get; set; }

@@ -48,7 +48,7 @@ namespace TheGame.Infrastructure.Data.Ef.Migrations
 
         private static void SeedDatabase(TheGameDbContext dbContext, ILogger<IHost> logger)
         {
-            bool saveChanges = false;
+            bool hasPendingData = false;
 
             if (!dbContext.Players.Any())
             {
@@ -57,39 +57,26 @@ namespace TheGame.Infrastructure.Data.Ef.Migrations
                 var now = DateTimeOffset.UtcNow;
                 var players = new List<Player>();
                 for (int i = 1; i <= 1000; i++)
-                    players.Add(new Player { Name = $"Player {i}'s name", Nickname = $"player{i}", RegistrationDate = now, GameMatchesPlayers = new List<GameMatchesPlayers>() });
+                    players.Add(new Player { Name = $"Player {i}", Nickname = $"player{i}", RegistrationDate = now, GameMatchesPlayers = new List<GameMatchesPlayers>() });
 
                 dbContext.Players.AddRange(players);
-                saveChanges = true;
+                hasPendingData = true;
             }
 
-            //if (!dbContext.Games.Any())
-            //{
-            //    logger.LogInformation("Seeding database with games data. Please wait...");
-
-            //    var now = DateTimeOffset.UtcNow;
-            //    var games = new List<Game>();
-            //    for (int i = 1; i <= 1000; i++)
-            //        games.Add(new Game { Title = $"Game {i}'s name", RegistrationDate = now  });
-
-            //    dbContext.Games.AddRange(games);
-            //    saveChanges = true;
-            //}
-
-            if (!dbContext.GameMatches.Any())
+            if (!dbContext.Games.Any())
             {
-                logger.LogInformation("Seeding database with game matches data. Please wait...");
+                logger.LogInformation("Seeding database with games data. Please wait...");
 
                 var now = DateTimeOffset.UtcNow;
-                var gameMatches = new List<GameMatch>();
-                for (int i = 1; i <= 100; i++)
-                    gameMatches.Add(new GameMatch { Title = $"Match {i}", RegistrationDate = now, GameMatchesPlayers = new List<GameMatchesPlayers>() });
+                var games = new List<Game>();
+                for (int i = 1; i <= 20; i++)
+                    games.Add(new Game { Title = $"Game {i}", RegistrationDate = now });
 
-                dbContext.GameMatches.AddRange(gameMatches);
-                saveChanges = true;
+                dbContext.Games.AddRange(games);
+                hasPendingData = true;
             }
 
-            if (saveChanges)
+            if (hasPendingData)
             {
                 dbContext.SaveChanges();
                 logger.LogInformation("Database seed successful!");

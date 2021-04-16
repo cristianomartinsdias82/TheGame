@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using TheGame.Common.Dto;
 using TheGame.Domain;
 
-namespace TheGame.Queries.GetLeaderboards.Repositories
+namespace TheGame.Queries.GetLeaderboards
 {
     public interface ITheGameQueriesRepository
     {

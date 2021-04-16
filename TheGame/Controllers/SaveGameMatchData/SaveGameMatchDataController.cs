@@ -17,9 +17,9 @@ namespace TheGame.Controllers.SaveMatchData
         /// <summary>
         /// Save game match data endpoint
         /// </summary>
-        /// <response code="200">Retrieves the leaderboards</response>
-        /// <response code="400">Retrieves an error list</response>
-        [ProducesResponseType(typeof(OperationResult), (int)HttpStatusCode.OK)]
+        /// <response code="201">Retrieves the Created status code</response>
+        /// <response code="400">Retrieves the Bad Request status code along with a failed operation result object</response>
+        [ProducesResponseType(typeof(OperationResult), (int)HttpStatusCode.Created)]
         [ProducesErrorResponseType(typeof(OperationResult))]
         [HttpPost]
         public async Task<ActionResult<OperationResult>> SaveGameMatchData(
@@ -27,10 +27,10 @@ namespace TheGame.Controllers.SaveMatchData
             CancellationToken cancellationToken)
         {
             var response = await _mediator.Send(
-                new SaveMatchDataRequest
+                new SaveGameMatchDataRequest
                 {
                     MatchDate = request.MatchDate,
-                    MatchId = request.MatchId,
+                    GameId = request.GameId,
                     PlayerId = request.PlayerId,
                     Win = request.Win
                 },

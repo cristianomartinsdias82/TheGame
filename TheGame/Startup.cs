@@ -29,7 +29,7 @@ namespace TheGame
             services.AddControllers();
             services.AddSharedKernel(Configuration);
             services.AddSwaggerOpenApi(Configuration);
-            services.AddMediatR(typeof(GetLeaderboardsRequest).Assembly, typeof(SaveMatchDataRequest).Assembly);
+            services.AddMediatR(typeof(GetLeaderboardsRequest).Assembly, typeof(SaveGameMatchDataRequest).Assembly);
             services.AddQueries(Configuration);
             services.AddCommands(Configuration);
             services.AddInfrastructure(Configuration);

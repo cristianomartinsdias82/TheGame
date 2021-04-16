@@ -9,10 +9,10 @@ namespace TheGame.MatchDataFlushingWorker.Utilities
 {
     internal static class CachingExtensions
     {
-        public async static Task<IEnumerable<MatchDataDto>> GetMatchDataAsync(
+        public async static Task<IEnumerable<GameMatchDataDto>> GetMatchDataAsync(
             this ICacheProvider cacheProvider,
             TheGameSettings settings,
             CancellationToken cancellationToken)
-            => await cacheProvider.GetAsync<IEnumerable<MatchDataDto>>(settings.GameMatchesDataCacheKey, cancellationToken);
+            => await cacheProvider.GetAsync<IEnumerable<GameMatchDataDto>>(settings.GameMatchesDataCacheKey, cancellationToken);
     }
 }

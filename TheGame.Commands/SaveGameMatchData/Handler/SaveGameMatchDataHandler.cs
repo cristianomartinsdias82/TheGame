@@ -15,23 +15,23 @@ using static TheGame.SharedKernel.ExceptionHelper;
 
 namespace TheGame.Commands.SaveMatchData
 {
-    internal class SaveMatchDataHandler : IRequestHandler<SaveMatchDataRequest, SaveMatchDataResponse>
+    internal class SaveGameMatchDataHandler : IRequestHandler<SaveGameMatchDataRequest, SaveGameMatchDataResponse>
     {
         private readonly ICacheProvider _cacheProvider;
-        private readonly ILogger<SaveMatchDataHandler> _logger;
+        private readonly ILogger<SaveGameMatchDataHandler> _logger;
         private readonly IDateTimeProvider _dateTimeProvider;
-        private readonly IDataInputValidation<SaveMatchDataRequest> _requestValidator;
+        private readonly IDataInputValidation<SaveGameMatchDataRequest> _requestValidator;
         private readonly TheGameSettings _settings;
         private const string PlayerNotFound = "The informed player was not found.";
         private const string GameNotFound = "The informed game was not found.";
 
         private static readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
 
-        public SaveMatchDataHandler(
+        public SaveGameMatchDataHandler(
             ICacheProvider cacheProvider,
-            ILogger<SaveMatchDataHandler> logger,
+            ILogger<SaveGameMatchDataHandler> logger,
             IDateTimeProvider dateTimeProvider,
-            IDataInputValidation<SaveMatchDataRequest> requestValidator,
+            IDataInputValidation<SaveGameMatchDataRequest> requestValidator,
             TheGameSettings settings)
         {
             _cacheProvider = cacheProvider ?? throw ArgNullEx(nameof(cacheProvider));
@@ -41,38 +41,38 @@ namespace TheGame.Commands.SaveMatchData
             _settings = settings ?? throw ArgNullEx(nameof(settings));
         }
 
-        public async Task<SaveMatchDataResponse> Handle(SaveMatchDataRequest request, CancellationToken cancellationToken)
+        public async Task<SaveGameMatchDataResponse> Handle(SaveGameMatchDataRequest request, CancellationToken cancellationToken)
         {
             if (cancellationToken == CancellationToken.None)
-                return new SaveMatchDataResponse { Result = OperationResult.Failure(new FailureDetail("CancellationToken", "CancellationToken argument cannot be null.")) };
+                return new SaveGameMatchDataResponse { Result = OperationResult.Failure(new FailureDetail("CancellationToken", "CancellationToken argument cannot be null.")) };
 
             var validationResult = await _requestValidator.TryValidateAsync(request, cancellationToken);
             if (!validationResult.Succeeded)
-                return new SaveMatchDataResponse { Result = validationResult };
+                return new SaveGameMatchDataResponse { Result = validationResult };
 
             var players = await _cacheProvider.GetAsync<IEnumerable<Player>>(_settings.PlayersListCacheKey, cancellationToken);
             if ((players?.Count() ?? 0) == 0 || !players.Any(p => p.Id == request.PlayerId))
-                return new SaveMatchDataResponse { Result = OperationResult.Failure(PlayerNotFound) };
+                return new SaveGameMatchDataResponse { Result = OperationResult.Failure(PlayerNotFound) };
 
-            //var games = await _cacheProvider.GetAsync<IEnumerable<Game>>(_settings.GamesListCacheKey, cancellationToken);
-            //if ((games?.Count() ?? 0) == 0 || !games.Any(p => p.Id == request.PlayerId))
-            //    return new SaveMatchDataResponse { Result = OperationResult.Failure(GameNotFound) };
+            var games = await _cacheProvider.GetAsync<IEnumerable<Game>>(_settings.GamesListCacheKey, cancellationToken);
+            if ((games?.Count() ?? 0) == 0 || !games.Any(p => p.Id == request.PlayerId))
+                return new SaveGameMatchDataResponse { Result = OperationResult.Failure(GameNotFound) };
 
             try
             {
                 await _semaphore.WaitAsync(cancellationToken);
 
-                var cachedMatches = await _cacheProvider.GetAsync<IList<MatchDataDto>>(_settings.GameMatchesDataCacheKey, cancellationToken);
-                if (cachedMatches == null)
+                var cachedGameMatches = await _cacheProvider.GetAsync<IList<GameMatchDataDto>>(_settings.GameMatchesDataCacheKey, cancellationToken);
+                if (cachedGameMatches == null)
                 {
-                    var matches = new List<MatchDataDto>();
+                    var matches = new List<GameMatchDataDto>();
                     matches.Add(MapFrom(request));
                     await _cacheProvider.SetAsync(matches, _settings.GameMatchesDataCacheKey, null, cancellationToken);
                 }
                 else
                 {
-                    cachedMatches.Add(MapFrom(request));
-                    await _cacheProvider.SetAsync(cachedMatches, _settings.GameMatchesDataCacheKey, null, cancellationToken);
+                    cachedGameMatches.Add(MapFrom(request));
+                    await _cacheProvider.SetAsync(cachedGameMatches, _settings.GameMatchesDataCacheKey, null, cancellationToken);
                 }
             }
             catch(Exception exc)
@@ -80,7 +80,7 @@ namespace TheGame.Commands.SaveMatchData
                 var errorMessage = $"{_dateTimeProvider.DateTime:o} - Error while attempting to save match data";
                 _logger.LogError(exc, errorMessage);
 
-                return new SaveMatchDataResponse
+                return new SaveGameMatchDataResponse
                 {
                     Result = OperationResult.Failure(errorMessage)
                 };
@@ -90,19 +90,19 @@ namespace TheGame.Commands.SaveMatchData
                 _semaphore.Release();
             }
 
-            return new SaveMatchDataResponse
+            return new SaveGameMatchDataResponse
             {
                 Result = OperationResult.Successful()
             };
         }
 
-        private static MatchDataDto MapFrom(SaveMatchDataRequest request)
-            => new MatchDataDto
+        private static GameMatchDataDto MapFrom(SaveGameMatchDataRequest request)
+            => new GameMatchDataDto
             {
-                MatchId = request.MatchId,
-                MatchDate = request.MatchDate,
                 PlayerId = request.PlayerId,
-                Win = request.Win
+                GameId = request.GameId,
+                Win = request.Win,
+                MatchDate = request.MatchDate
             };
     }
 }

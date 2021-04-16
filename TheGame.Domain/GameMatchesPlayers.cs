@@ -3,23 +3,23 @@ using TheGame.SharedKernel;
 
 namespace TheGame.Domain
 {
-    public class GameMatchesPlayers
+    public class GameMatchesPlayers : Entity<long>
     {
-        public long GameMatchId { get; set; }
-        public GameMatch GameMatch { get; set; }
+        public long GameId { get; set; }
+        public Game Game { get; set; }
         public long PlayerId { get; set; }
         public Player Player { get; set; }
         public long Win { get; set; }
         public DateTimeOffset MatchDate { get; set; }
 
-        public static OperationResult<GameMatchesPlayers> Create(long playerId, long matchId, DateTimeOffset matchDate, long win)
+        public static OperationResult<GameMatchesPlayers> Create(long gameId, long playerId, long win, DateTimeOffset matchDate)
         => OperationResult<GameMatchesPlayers>.Successful
             (new GameMatchesPlayers
-                {
-                    GameMatchId = matchId,
-                    PlayerId = playerId,
-                    MatchDate = matchDate,
-                    Win = win
-                });
+            {
+                GameId = gameId,
+                PlayerId = playerId,
+                Win = win,
+                MatchDate = matchDate
+            });
     }
 }

@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using TheGame.Commands.Repositories;
+using TheGame.Commands.SaveMatchData;
 using TheGame.Common.Caching;
 using TheGame.Common.SystemClock;
 using TheGame.Data.Ef;
@@ -13,7 +13,7 @@ using TheGame.Domain;
 using TheGame.Infrastructure.Data;
 using TheGame.Infrastructure.Data.Ef.Factory;
 using TheGame.MatchDataFlushingWorker.Utilities;
-using TheGame.Queries.GetLeaderboards.Repositories;
+using TheGame.Queries.GetLeaderboards;
 using TheGame.SharedKernel;
 using static TheGame.SharedKernel.ExceptionHelper;
 
@@ -92,7 +92,7 @@ namespace TheGame.MatchDataFlushingWorker
             if (matchData?.Any() ?? false)
             {
                 var now = _dateTime.DateTimeOffset.LocalDateTime;
-                var gameMatchesPlayers = matchData.Select(it => GameMatchesPlayers.Create(it.PlayerId, it.MatchId, it.MatchDate, it.Win).Data)
+                var gameMatchesPlayers = matchData.Select(it => GameMatchesPlayers.Create(it.GameId, it.PlayerId, it.Win, it.MatchDate).Data)
                                                   .ToList();
 
                 var players = await _queriesRepository.FetchPlayersByIdsAsync(matchData.Select(x => x.PlayerId).Distinct(), cancellationToken);

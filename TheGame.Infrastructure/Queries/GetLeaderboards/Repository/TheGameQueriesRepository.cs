@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using TheGame.Common.Dto;
 using TheGame.Domain;
-using TheGame.Queries.GetLeaderboards.Repositories;
+using TheGame.Queries.GetLeaderboards;
 using TheGame.SharedKernel;
 using static TheGame.SharedKernel.ExceptionHelper;
 

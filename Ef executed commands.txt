@@ -12,7 +12,12 @@ dotnet ef migrations add PlayerScoreLastUpdateOnDateField -o Data\Ef\Migrations 
 dotnet ef database update --project TheGame.Infrastructure -- --connectionString="Server=.;Database=TheGame;Integrated security=SSPI;MultipleActiveResultSets=true;Packet size=16384"
 
 dotnet ef migrations add PlayerScoreLastUpdateOnDateFieldFix -o Data\Ef\Migrations --project TheGame.Infrastructure -- --connectionString="Server=.;Database=TheGame;Integrated security=SSPI;MultipleActiveResultSets=true;Packet size=16384"
+
+Whenever you wish to commit the migration, run the following command
 dotnet ef database update --project TheGame.Infrastructure -- --connectionString="Server=.;Database=TheGame;Integrated security=SSPI;MultipleActiveResultSets=true;Packet size=16384"
 
 I ran this command after I have implemented a IHost method extension that automates the migrations as well as the data seeding operations during manual migration applications(refer to MigrationManager.cs and XxxEntityConfiguration class files)
 dotnet ef database drop --force --project TheGame.Infrastructure -- --connectionString="Server=.;Database=TheGame;Integrated security=SSPI;MultipleActiveResultSets=true;Packet size=16384"
+
+Whenever you wish to erase the just-created migration, run the following command
+dotnet ef migrations remove --project TheGame.Infrastructure -- --connectionString="Server=.;Database=TheGame;Integrated security=SSPI;MultipleActiveResultSets=true;Packet size=16384"

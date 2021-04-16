@@ -9,7 +9,7 @@ namespace TheGame.Controllers.SaveMatchData
         => new SaveGameMatchDataDto()
             {
                 MatchDate = DateTimeOffset.UtcNow,
-                MatchId = 1,
+                GameId = 1,
                 PlayerId = 1,
                 Win = 326845
             };

@@ -6,9 +6,9 @@ using TheGame.Domain;
 
 namespace TheGame.Infrastructure.Data.Ef.EntityMapping
 {
-    internal class GameMatchEntityConfiguration : IEntityTypeConfiguration<GameMatch>
+    internal class GameEntityConfiguration : IEntityTypeConfiguration<Game>
     {
-        public void Configure(EntityTypeBuilder<GameMatch> builder)
+        public void Configure(EntityTypeBuilder<Game> builder)
         {
             builder.HasKey(x => x.Id)
                    .IsClustered();
@@ -22,18 +22,18 @@ namespace TheGame.Infrastructure.Data.Ef.EntityMapping
                     .IsRequired();
 
             builder.HasIndex(x => x.Title)
-                   .HasDatabaseName($"IX_UN_{nameof(GameMatch)}_{nameof(GameMatch.Title)}")
+                   .HasDatabaseName($"IX_UN_{nameof(Game)}_{nameof(Game.Title)}")
                    .IsUnique();
 
             Seed(builder);
         }
 
-        private void Seed(EntityTypeBuilder<GameMatch> builder)
+        private void Seed(EntityTypeBuilder<Game> builder)
         {
             var now = DateTimeOffset.UtcNow;
-            var gameMatches = new List<GameMatch>();
+            var gameMatches = new List<Game>();
             for (int i = 1; i <= 100; i++)
-                gameMatches.Add(new GameMatch { Id = i, Title = $"Match {i}", RegistrationDate = now, GameMatchesPlayers = new List<GameMatchesPlayers>() });
+                gameMatches.Add(new Game { Id = i, Title = $"Match {i}", RegistrationDate = now });
 
             builder.HasData(gameMatches);
         }

@@ -1,8 +1,8 @@
-﻿using TheGame.Commands.Repositories;
+﻿using TheGame.Commands.SaveMatchData;
 using TheGame.Data.Ef;
 using TheGame.Infrastructure.Commands.SaveMatchData.Repository;
 using TheGame.Infrastructure.Queries.GetLeaderboards.Repository;
-using TheGame.Queries.GetLeaderboards.Repositories;
+using TheGame.Queries.GetLeaderboards;
 using TheGame.SharedKernel;
 
 namespace TheGame.Infrastructure.Data

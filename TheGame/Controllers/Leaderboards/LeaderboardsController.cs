@@ -25,8 +25,8 @@ namespace TheGame.Controllers.GetLeaderboards
         /// <summary>
         /// Leaderboards endpoint
         /// </summary>
-        /// <response code="200">Retrieves the leaderboards</response>
-        /// <response code="400">Retrieves an error list</response>
+        /// <response code="200">Retrieves the OK status code along with the leaderboards</response>
+        /// <response code="400">Retrieves the Bad Request status code along with a failed operation result object</response>
         [HttpGet]
         [ProducesResponseType(typeof(OperationResult<LeaderboardsDto>), (int)HttpStatusCode.OK)]
         [ProducesErrorResponseType(typeof(OperationResult<LeaderboardsDto>))]
