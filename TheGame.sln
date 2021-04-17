@@ -40,6 +40,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheGame.Common", "TheGame.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheGame.MatchDataFlushingWorker", "TheGame.MatchDataFlushingWorker\TheGame.MatchDataFlushingWorker.csproj", "{A1F189ED-0B3D-4B78-874A-C49D6E4E573B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2DA3325B-2748-468F-A14A-985BAF992801}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheGame.Tests", "TheGame.Tests\TheGame.Tests.csproj", "{35482CA1-D7F4-4BE4-8A2A-E04C1FA98176}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,6 +82,10 @@ Global
 		{A1F189ED-0B3D-4B78-874A-C49D6E4E573B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1F189ED-0B3D-4B78-874A-C49D6E4E573B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1F189ED-0B3D-4B78-874A-C49D6E4E573B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35482CA1-D7F4-4BE4-8A2A-E04C1FA98176}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35482CA1-D7F4-4BE4-8A2A-E04C1FA98176}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35482CA1-D7F4-4BE4-8A2A-E04C1FA98176}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35482CA1-D7F4-4BE4-8A2A-E04C1FA98176}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -96,6 +104,7 @@ Global
 		{31F14D77-A74E-4A77-A921-3E5EE6878739} = {3E85DF54-2E06-4501-8F30-535B72C5C948}
 		{6A53BDFD-AF10-45EA-B9F6-2C85FAF7EA73} = {0B570477-1418-4E04-9636-8C16AEAD2A26}
 		{A1F189ED-0B3D-4B78-874A-C49D6E4E573B} = {3E85DF54-2E06-4501-8F30-535B72C5C948}
+		{35482CA1-D7F4-4BE4-8A2A-E04C1FA98176} = {2DA3325B-2748-468F-A14A-985BAF992801}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2443E320-1A39-4C4D-BDE3-61A10FB3DC89}

@@ -29,7 +29,3 @@ https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware/write?view=
 https://stackoverflow.com/questions/7982525/visual-studio-disabling-missing-xml-comment-warning#:~:text=Suppress%20the%20warning%20by%20changing,checkbox%20in%20project%20Properties%20%3E%20Build%20%3E
 https://dapper-tutorial.net/bulk-insert
 https://markheath.net/post/roundtrip-serialization-of-datetimes-in
-
-Microservice patterns YT
-https://www.youtube.com/watch?v=zW4INO353Xg
-My OpenWeatherAPI Key = 25cd52f1f8165d2ffd069c862f9e7ad7 (https://home.openweathermap.org/api_keys)
