@@ -8,10 +8,8 @@ using TheGame.Commands.SaveMatchData;
 using TheGame.Common.Caching;
 using TheGame.Common.Dto;
 using TheGame.Common.SystemClock;
-using TheGame.Data.Ef;
 using TheGame.Domain;
 using TheGame.Infrastructure.Data;
-using TheGame.Infrastructure.Data.Ef.Factory;
 using TheGame.Queries.GetLeaderboards;
 using TheGame.SharedKernel;
 using static TheGame.SharedKernel.ExceptionHelper;
@@ -40,12 +38,9 @@ namespace TheGame.MatchDataFlushingWorker
             _cacheProvider = cacheProvider ?? throw ArgNullEx(nameof(cacheProvider));
             _settings = settings ?? throw ArgNullEx(nameof(settings));
             _dateTime = dateTime ?? throw ArgNullEx(nameof(dateTime));
-            _commandsRepository = RepositoryFactory.GetCommandsRepository(GetDbContext());
+            _commandsRepository = RepositoryFactory.GetCommandsRepository(_settings);
             _queriesRepository = RepositoryFactory.GetQueriesRepository(settings);
         }
-
-        private TheGameDbContext GetDbContext()
-            => new TheGameDbContextFactory().CreateDbContext(new string[] { $"connectionString={_settings.DbConnectionString}" });
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
@@ -85,17 +80,18 @@ namespace TheGame.MatchDataFlushingWorker
 
             if (matchData?.Any() ?? false)
             {
-                var now = _dateTime.DateTimeOffset.LocalDateTime;
+                var now = _dateTime.DateTimeOffset;
                 var gameMatchesPlayers = matchData
                                             .Select(it => GameMatchesPlayers.Create(
                                                             it.Item.GameId,
                                                             it.Item.PlayerId,
                                                             it.Item.Win,
-                                                            it.Item.MatchDate).Data)
+                                                            it.Item.MatchDate,
+                                                            now).Data)
                                             .ToList();
 
                 var players = await _queriesRepository.FetchPlayersByIdsAsync(matchData.Select(x => x.Item.PlayerId).Distinct(), cancellationToken);
-                players.ToList().ForEach(it => it.ScoreLastUpdateOn = now);
+                players.ToList().ForEach(it => it.ScoreLastUpdateOn = now.LocalDateTime);
 
                 dataFlushingSuccessful = await TransactionContextHelper.Execute(async (matchData) =>
                 {
@@ -110,8 +106,6 @@ namespace TheGame.MatchDataFlushingWorker
                     var lockTaken = false;
                     try
                     {
-                        //Monitor.Enter(typeof(ITheGameCacheProvider), ref lockTaken);
-                        //if (lockTaken)
                         if (lockTaken = Monitor.TryEnter(typeof(ITheGameCacheProvider), 10000))
                         {
                             _logger.LogInformation($"{_dateTime.DateTime:dd-MM-yyyy hh:mm:ss} - Removing flushed data from cache...");
@@ -130,18 +124,10 @@ namespace TheGame.MatchDataFlushingWorker
                             Monitor.Exit(typeof(ITheGameCacheProvider));
                     }
 
-                    //lock (typeof(ITheGameCacheProvider))
-                    //{
-                    //    var gameMatchDataCurrentSnapshot = _cacheProvider.GetGameMatchesAsync(cancellationToken).GetAwaiter().GetResult();
-                    //    var pendingGameMatchData = gameMatchDataCurrentSnapshot.Except(matchData, new CacheItemComparer());
-
-                    //    _cacheProvider.StoreGameMatchesAsync(pendingGameMatchData, null, cancellationToken).GetAwaiter().GetResult();
-                    //}
-
                     return true;
                 },
                 matchData,
-                fromSecondsTransactionTimeout: Math.Abs(_settings.BatchOperationsTimeout),
+                fromSecondsTransactionTimeout: Math.Abs(_settings.BatchOperationsTimeoutInSecs),
                 throwOnError: false);
             }
 
@@ -160,8 +146,7 @@ namespace TheGame.MatchDataFlushingWorker
 
             _timer = new Timer((state) => _ongoingTask.Start(),
                                null,
-                               //TimeSpan.FromSeconds(Math.Abs(_settings.TimeBetweenDataFlushingOperationsInSecs)),
-                               TimeSpan.FromMilliseconds(Math.Abs(_settings.TimeBetweenDataFlushingOperationsInSecs)),
+                               TimeSpan.FromSeconds(Math.Abs(_settings.TimeBetweenDataFlushingOperationsInSecs)),
                                TimeSpan.FromMilliseconds(-1));
         }
     }

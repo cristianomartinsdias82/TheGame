@@ -5,6 +5,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using TheGame.Common.Caching;
+using TheGame.Common.Dto;
 using TheGame.Controllers.Abstractions;
 using TheGame.SharedKernel;
 using static TheGame.SharedKernel.ExceptionHelper;
@@ -31,11 +32,11 @@ namespace TheGame.Controllers
         /// </summary>
         /// <response code="200">Retrieves a list of players</response>
         /// <response code="400">Retrieves the Bad Request status code along with a failed operation result object</response>
-        [Route("players-list")]
+        [Route("players")]
         [ProducesResponseType(typeof(OperationResult<IEnumerable<long>>), (int)HttpStatusCode.OK)]
         [ProducesErrorResponseType(typeof(OperationResult<IEnumerable<long>>))]
         [HttpGet]
-        public async Task<ActionResult<OperationResult<IEnumerable<long>>>> GetPlayersList(CancellationToken cancellationToken)
+        public async Task<ActionResult<OperationResult<IEnumerable<long>>>> Players(CancellationToken cancellationToken)
         {
             return Ok(OperationResult<IEnumerable<long>>.Successful(await _cache.GetAsync<IEnumerable<long>>(_settings.PlayersListCacheKey, cancellationToken)));
         }
@@ -45,13 +46,27 @@ namespace TheGame.Controllers
         /// </summary>
         /// <response code="200">Retrieves a list of games</response>
         /// <response code="400">Retrieves the Bad Request status code along with a failed operation result object</response>
-        [Route("games-list")]
+        [Route("games")]
         [ProducesResponseType(typeof(OperationResult<IEnumerable<long>>), (int)HttpStatusCode.OK)]
         [ProducesErrorResponseType(typeof(OperationResult<IEnumerable<long>>))]
         [HttpGet]
-        public async Task<ActionResult<OperationResult<IEnumerable<long>>>> GetGamesList(CancellationToken cancellationToken)
+        public async Task<ActionResult<OperationResult<IEnumerable<long>>>> Games(CancellationToken cancellationToken)
         {
             return Ok(OperationResult<IEnumerable<long>>.Successful(await _cache.GetAsync<IEnumerable<long>>(_settings.GamesListCacheKey, cancellationToken)));
+        }
+
+        /// <summary>
+        /// Retrieves a list of game matches
+        /// </summary>
+        /// <response code="200">Retrieves a list of game matches</response>
+        /// <response code="400">Retrieves the Bad Request status code along with a failed operation result object</response>
+        [Route("game-matches")]
+        [ProducesResponseType(typeof(OperationResult<IEnumerable<CacheItem<GameMatchDataDto>>>), (int)HttpStatusCode.OK)]
+        [ProducesErrorResponseType(typeof(OperationResult<IEnumerable<CacheItem<GameMatchDataDto>>>))]
+        [HttpGet]
+        public async Task<ActionResult<OperationResult<IEnumerable<CacheItem<GameMatchDataDto>>>>> GameMatches(CancellationToken cancellationToken)
+        {
+            return Ok(OperationResult<IEnumerable<CacheItem<GameMatchDataDto>>>.Successful(await _cache.GetAsync<IEnumerable<CacheItem<GameMatchDataDto>>>(_settings.GameMatchesDataCacheKey, cancellationToken)));
         }
     }
 }

@@ -12,14 +12,15 @@ namespace TheGame.Domain
         public long Win { get; set; }
         public DateTimeOffset MatchDate { get; set; }
 
-        public static OperationResult<GameMatchesPlayers> Create(long gameId, long playerId, long win, DateTimeOffset matchDate)
+        public static OperationResult<GameMatchesPlayers> Create(long gameId, long playerId, long win, DateTimeOffset matchDate, DateTimeOffset registrationDate)
         => OperationResult<GameMatchesPlayers>.Successful
             (new GameMatchesPlayers
             {
                 GameId = gameId,
                 PlayerId = playerId,
                 Win = win,
-                MatchDate = matchDate
+                MatchDate = matchDate,
+                RegistrationDate = registrationDate
             });
     }
 }

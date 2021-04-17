@@ -1,5 +1,4 @@
 ﻿using TheGame.Commands.SaveMatchData;
-using TheGame.Data.Ef;
 using TheGame.Infrastructure.Commands.SaveMatchData.Repository;
 using TheGame.Infrastructure.Queries.GetLeaderboards.Repository;
 using TheGame.Queries.GetLeaderboards;
@@ -12,7 +11,7 @@ namespace TheGame.Infrastructure.Data
         public static ITheGameQueriesRepository GetQueriesRepository(TheGameSettings settings)
         => new TheGameQueriesRepository(settings);
 
-        public static ITheGameCommandsRepository GetCommandsRepository(TheGameDbContext dbContext)
-        => new TheGameCommandsRepository(dbContext);
+        public static ITheGameCommandsRepository GetCommandsRepository(TheGameSettings settings)
+        => new TheGameCommandsRepository(settings);
     }
 }
