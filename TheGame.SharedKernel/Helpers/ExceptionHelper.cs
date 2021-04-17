@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Threading;
 
-namespace TheGame.SharedKernel
+namespace TheGame.SharedKernel.Helpers
 {
     public static class ExceptionHelper
     {

@@ -3,7 +3,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using TheGame.Common.Caching;
-using static TheGame.SharedKernel.ExceptionHelper;
+using static TheGame.SharedKernel.Helpers.ExceptionHelper;
 
 namespace TheGame.Infrastructure.Data.Caching
 {

@@ -7,7 +7,7 @@ using TheGame.Commands.SaveMatchData;
 using TheGame.Domain;
 using TheGame.SharedKernel;
 using Z.Dapper.Plus;
-using static TheGame.SharedKernel.ExceptionHelper;
+using static TheGame.SharedKernel.Helpers.ExceptionHelper;
 
 namespace TheGame.Infrastructure.Commands.SaveMatchData.Repository
 {

@@ -12,7 +12,8 @@ using TheGame.Domain;
 using TheGame.Infrastructure.Data;
 using TheGame.Queries.GetLeaderboards;
 using TheGame.SharedKernel;
-using static TheGame.SharedKernel.ExceptionHelper;
+using TheGame.SharedKernel.Helpers;
+using static TheGame.SharedKernel.Helpers.ExceptionHelper;
 
 namespace TheGame.MatchDataFlushingWorker
 {
@@ -108,14 +109,14 @@ namespace TheGame.MatchDataFlushingWorker
                     {
                         if (lockTaken = Monitor.TryEnter(typeof(ITheGameCacheProvider), 10000))
                         {
-                            _logger.LogInformation($"{_dateTime.DateTime:dd-MM-yyyy hh:mm:ss} - Removing flushed data from cache...");
+                            _logger.LogInformation($"{_dateTime.DateTime:dd-MM-yyyy hh:mm:ss} - Removing data from cache...");
 
                             var gameMatchDataCurrentSnapshot = _cacheProvider.GetGameMatchesAsync(cancellationToken).GetAwaiter().GetResult();
                             var pendingGameMatchData = gameMatchDataCurrentSnapshot.Except(matchData, new CachedMatchGameDataComparer());
 
                             _cacheProvider.StoreGameMatchesAsync(pendingGameMatchData, null, cancellationToken).GetAwaiter().GetResult();
 
-                            _logger.LogInformation($"{_dateTime.DateTime:dd-MM-yyyy hh:mm:ss} - Flushed data successfully removed from cache!");
+                            _logger.LogInformation($"{_dateTime.DateTime:dd-MM-yyyy hh:mm:ss} - Data successfully removed from cache!");
                         }
                     }
                     finally

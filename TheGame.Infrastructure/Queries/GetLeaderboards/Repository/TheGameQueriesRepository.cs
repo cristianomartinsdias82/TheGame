@@ -9,7 +9,7 @@ using TheGame.Common.Dto;
 using TheGame.Domain;
 using TheGame.Queries.GetLeaderboards;
 using TheGame.SharedKernel;
-using static TheGame.SharedKernel.ExceptionHelper;
+using static TheGame.SharedKernel.Helpers.ExceptionHelper;
 
 namespace TheGame.Infrastructure.Queries.GetLeaderboards.Repository
 {

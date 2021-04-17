@@ -1,5 +1,5 @@
 ﻿using System;
-using static TheGame.SharedKernel.ExceptionHelper;
+using static TheGame.SharedKernel.Helpers.ExceptionHelper;
 
 namespace TheGame.SharedKernel
 {

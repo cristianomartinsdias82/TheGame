@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using TheGame.Common.Caching;
 using TheGame.Common.Dto;
 using TheGame.SharedKernel;
-using static TheGame.SharedKernel.ExceptionHelper;
+using static TheGame.SharedKernel.Helpers.ExceptionHelper;
 
 namespace TheGame.Infrastructure.Data.Caching
 {

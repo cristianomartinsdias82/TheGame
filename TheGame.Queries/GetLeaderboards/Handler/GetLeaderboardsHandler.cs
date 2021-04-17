@@ -7,8 +7,7 @@ using TheGame.Common.Caching;
 using TheGame.Common.Dto;
 using TheGame.SharedKernel;
 using TheGame.SharedKernel.Validation;
-using static TheGame.SharedKernel.ExceptionHelper;
-
+using static TheGame.SharedKernel.Helpers.ExceptionHelper;
 namespace TheGame.Queries.GetLeaderboards
 {
     internal class GetLeaderboardsHandler : IRequestHandler<GetLeaderboardsRequest, GetLeaderboardsResponse>

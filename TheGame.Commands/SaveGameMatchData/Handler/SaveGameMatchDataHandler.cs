@@ -9,7 +9,7 @@ using TheGame.Common.Dto;
 using TheGame.Common.SystemClock;
 using TheGame.SharedKernel;
 using TheGame.SharedKernel.Validation;
-using static TheGame.SharedKernel.ExceptionHelper;
+using static TheGame.SharedKernel.Helpers.ExceptionHelper;
 
 namespace TheGame.Commands.SaveMatchData
 {

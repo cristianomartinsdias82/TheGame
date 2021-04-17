@@ -27,6 +27,8 @@ https://stackoverflow.com/questions/60116577/how-to-seed-in-entity-framework-cor
 https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware/?view=aspnetcore-5.0
 https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware/write?view=aspnetcore-5.0
 https://stackoverflow.com/questions/7982525/visual-studio-disabling-missing-xml-comment-warning#:~:text=Suppress%20the%20warning%20by%20changing,checkbox%20in%20project%20Properties%20%3E%20Build%20%3E
+https://dapper-tutorial.net/bulk-insert
+https://markheath.net/post/roundtrip-serialization-of-datetimes-in
 
 Microservice patterns YT
 https://www.youtube.com/watch?v=zW4INO353Xg
