@@ -1,0 +1,51 @@
+src
+	application
+		TheGame.Commands
+		-> FluentValidation
+		-> MediatR
+		-> Microsoft.Extensions.DependencyInjection.Abstractions
+		-> Microsoft.Extensions.Logging.Abstractions
+		TheGame.Common
+		-> No package dependencies
+		TheGame.Queries
+		-> MediatR
+		-> Microsoft.Extensions.DependencyInjection.Abstractions
+	common
+		TheGame.SharedKernel
+		-> FluentValidation
+		-> Microsoft.Extensions.Configurations.Abstractions
+		-> Microsoft.Extensions.Configurations.Binder
+		-> Microsoft.Extensions.DependencyInjection.Abstractions
+	core
+		TheGame.Domain
+		-> No package dependencies
+	hosts
+		TheGame
+		-> MediatR
+		-> MediatR.Extensions.Microsoft.DependencyInjection
+		-> Microsoft.VisualStudio.Azure.Containers.Tools.Targets
+		-> Swashbuckle.AspNetCore
+		-> Swashbuckle.AspNetCore.Filters
+		TheGame.MatchDataFlushingWorker
+		-> Microsoft.Extensions.DependencyInjection
+		-> Microsoft.Extensions.Hosting.Abstractions
+		-> Microsoft.Extensions.Logging.Abstractions
+	infrastructure
+		TheGame.Infrastructure
+		-> Dapper
+		-> Microsoft.EntityFrameworkCore
+		-> Microsoft.EntityFrameworkCore.Design
+		-> Microsoft.EntityFrameworkCore.SqlServer
+		-> Microsoft.EntityFrameworkCore.Tools
+		-> Microsoft.Extensions.Caching.Memory
+		-> Microsoft.Extensions.DependencyInjection
+		-> Microsoft.Extensions.Hosting.Abstractions
+		-> System.Data.SqlClient
+		-> Z.Dapper.Plus
+tests
+	TheGame.Tests
+	-> coverlet.collector
+	-> Microsoft.NET.Test.Sdk
+	-> Moq
+	-> xunit
+	-> xunit.runner.visualstudio

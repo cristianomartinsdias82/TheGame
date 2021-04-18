@@ -5,12 +5,12 @@ GO
 CREATE VIEW dbo.V_Leaderboards
 AS
 	SELECT
-		 PL.Id PlayerId
+		 PL.Nickname PlayerId
 		,SUM(GMP.Win) Balance
 		,PL.ScoreLastUpdateOn
 	FROM dbo.Players PL
 	INNER JOIN dbo.GameMatchesPlayers GMP ON PL.Id = GMP.PlayerId
 	GROUP BY
-		 PL.Id
+		 PL.Nickname
 		,PL.ScoreLastUpdateOn
 GO
