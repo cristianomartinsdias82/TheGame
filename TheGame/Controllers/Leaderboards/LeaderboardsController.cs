@@ -1,8 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using TheGame.Common.Dto;
 using TheGame.Controllers.Abstractions;
 using TheGame.Queries.GetLeaderboards;
 using TheGame.SharedKernel;
@@ -28,9 +30,9 @@ namespace TheGame.Controllers.GetLeaderboards
         /// <response code="200">Retrieves the OK status code along with the leaderboards</response>
         /// <response code="400">Retrieves the Bad Request status code along with a failed operation result object</response>
         [HttpGet]
-        [ProducesResponseType(typeof(OperationResult<LeaderboardsDto>), (int)HttpStatusCode.OK)]
-        [ProducesErrorResponseType(typeof(OperationResult<LeaderboardsDto>))]
-        public async Task<ActionResult<OperationResult<LeaderboardsDto>>> Leaderboards(
+        [ProducesResponseType(typeof(OperationResult<IEnumerable<PlayerBalanceDto>>), (int)HttpStatusCode.OK)]
+        [ProducesErrorResponseType(typeof(OperationResult<IEnumerable<PlayerBalanceDto>>))]
+        public async Task<ActionResult<OperationResult<IEnumerable<PlayerBalanceDto>>>> Leaderboards(
             [FromQuery] int? playersMaxQuantity,
             CancellationToken cancellationToken)
         {

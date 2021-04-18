@@ -20,7 +20,7 @@ namespace TheGame.Infrastructure.Data.Caching
             {
                 var provider = scope.ServiceProvider;
                 var logger = provider.GetService<ILogger<IHost>>();
-                var cacheProvider = provider.GetRequiredService<ICacheProvider>();
+                var cacheProvider = provider.GetRequiredService<ITheGameCacheProvider>();
                 var settings = provider.GetRequiredService<TheGameSettings>();
 
                 LoadCache(cacheProvider, settings, logger);
@@ -29,7 +29,7 @@ namespace TheGame.Infrastructure.Data.Caching
             return host;
         }
 
-        private static void LoadCache(ICacheProvider cacheProvider, TheGameSettings settings, ILogger logger)
+        private static void LoadCache(ITheGameCacheProvider cacheProvider, TheGameSettings settings, ILogger logger)
         {
             var factory = DbProviderFactories.GetFactory(settings.DataProviderName);
             var connection = factory.CreateConnection();
@@ -44,7 +44,7 @@ namespace TheGame.Infrastructure.Data.Caching
 
                 var players = connection.Query<long>(sql);
 
-                cacheProvider.SetAsync(players, settings.PlayersListCacheKey, null, CancellationToken.None).GetAwaiter().GetResult();
+                cacheProvider.StorePlayersListAsync(players, null, CancellationToken.None).GetAwaiter().GetResult();
             }
             catch (Exception exc)
             {
@@ -64,7 +64,7 @@ namespace TheGame.Infrastructure.Data.Caching
 
                 var games = connection.Query<long>(sql);
 
-                cacheProvider.SetAsync(games, settings.GamesListCacheKey, null, CancellationToken.None).GetAwaiter().GetResult();
+                cacheProvider.StoreGamesListAsync(games, null, CancellationToken.None).GetAwaiter().GetResult();
             }
             catch (Exception exc)
             {

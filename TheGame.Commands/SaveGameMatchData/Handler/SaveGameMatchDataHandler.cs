@@ -6,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using TheGame.Common.Caching;
 using TheGame.Common.Dto;
-using TheGame.Common.SystemClock;
 using TheGame.SharedKernel;
 using TheGame.SharedKernel.Validation;
 using static TheGame.SharedKernel.Helpers.ExceptionHelper;
@@ -17,24 +16,18 @@ namespace TheGame.Commands.SaveMatchData
     {
         private readonly ITheGameCacheProvider _cacheProvider;
         private readonly ILogger<SaveGameMatchDataHandler> _logger;
-        private readonly IDateTimeProvider _dateTimeProvider;
         private readonly IDataInputValidation<SaveGameMatchDataRequest> _requestValidator;
-        private readonly TheGameSettings _settings;
         private const string PlayerNotFound = "The informed player was not found.";
         private const string GameNotFound = "The informed game was not found.";
 
         public SaveGameMatchDataHandler(
             ITheGameCacheProvider cacheProvider,
             ILogger<SaveGameMatchDataHandler> logger,
-            IDateTimeProvider dateTimeProvider,
-            IDataInputValidation<SaveGameMatchDataRequest> requestValidator,
-            TheGameSettings settings)
+            IDataInputValidation<SaveGameMatchDataRequest> requestValidator)
         {
             _cacheProvider = cacheProvider ?? throw ArgNullEx(nameof(cacheProvider));
             _logger = logger ?? throw ArgNullEx(nameof(logger));
-            _dateTimeProvider = dateTimeProvider ?? throw ArgNullEx(nameof(dateTimeProvider));
             _requestValidator = requestValidator ?? throw ArgNullEx(nameof(requestValidator));
-            _settings = settings ?? throw ArgNullEx(nameof(settings));
         }
 
         public async Task<SaveGameMatchDataResponse> Handle(SaveGameMatchDataRequest request, CancellationToken cancellationToken)
@@ -46,11 +39,11 @@ namespace TheGame.Commands.SaveMatchData
             if (!validationResult.Succeeded)
                 return new SaveGameMatchDataResponse { Result = validationResult };
 
-            var players = await _cacheProvider.GetAsync<IEnumerable<long>>(_settings.PlayersListCacheKey, cancellationToken);
+            var players = await _cacheProvider.GetPlayersListAsync(cancellationToken);
             if ((players?.Count() ?? 0) == 0 || !players.Any(p => p == request.PlayerId))
                 return new SaveGameMatchDataResponse { Result = OperationResult.Failure(PlayerNotFound) };
 
-            var games = await _cacheProvider.GetAsync<IEnumerable<long>>(_settings.GamesListCacheKey, cancellationToken);
+            var games = await _cacheProvider.GetGamesListAsync(cancellationToken);
             if ((games?.Count() ?? 0) == 0 || !games.Any(p => p == request.GameId))
                 return new SaveGameMatchDataResponse { Result = OperationResult.Failure(GameNotFound) };
 

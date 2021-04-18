@@ -7,6 +7,6 @@ namespace TheGame.Controllers.SaveMatchData
         public long PlayerId { get; set; }
         public long GameId { get; set; }
         public long Win { get; set; }
-        public DateTimeOffset MatchDate { get; set; }
+        public DateTimeOffset Timestamp { get; set; }
     }
 }

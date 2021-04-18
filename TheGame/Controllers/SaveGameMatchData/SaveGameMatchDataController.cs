@@ -30,7 +30,7 @@ namespace TheGame.Controllers.SaveMatchData
             var response = await _mediator.Send(
                 new SaveGameMatchDataRequest
                 {
-                    MatchDate = request.MatchDate,
+                    MatchDate = request.Timestamp,
                     GameId = request.GameId,
                     PlayerId = request.PlayerId,
                     Win = request.Win

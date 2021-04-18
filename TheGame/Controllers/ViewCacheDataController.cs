@@ -13,17 +13,18 @@ using static TheGame.SharedKernel.Helpers.ExceptionHelper;
 namespace TheGame.Controllers
 {
     [TheGameRoute("cache-data")]
+    //[Microsoft.AspNetCore.Authorization.Authorize]
     public class ViewCacheDataController : TheGameController
     {
-        private readonly ICacheProvider _cache;
+        private readonly ITheGameCacheProvider _cacheProvider;
         private readonly TheGameSettings _settings;
 
         public ViewCacheDataController(
-            ICacheProvider cache,
+            ITheGameCacheProvider cacheProvider,
             TheGameSettings settings,
             IMediator mediator) : base(mediator)
         {
-            _cache = cache ?? throw ArgNullEx(nameof(cache));
+            _cacheProvider = cacheProvider ?? throw ArgNullEx(nameof(cacheProvider));
             _settings = settings ?? throw ArgNullEx(nameof(settings));
         }
 
@@ -38,7 +39,7 @@ namespace TheGame.Controllers
         [HttpGet]
         public async Task<ActionResult<OperationResult<IEnumerable<long>>>> Players(CancellationToken cancellationToken)
         {
-            return Ok(OperationResult<IEnumerable<long>>.Successful(await _cache.GetAsync<IEnumerable<long>>(_settings.PlayersListCacheKey, cancellationToken)));
+            return Ok(OperationResult<IEnumerable<long>>.Successful(await _cacheProvider.GetPlayersListAsync(cancellationToken)));
         }
 
         /// <summary>
@@ -52,7 +53,7 @@ namespace TheGame.Controllers
         [HttpGet]
         public async Task<ActionResult<OperationResult<IEnumerable<long>>>> Games(CancellationToken cancellationToken)
         {
-            return Ok(OperationResult<IEnumerable<long>>.Successful(await _cache.GetAsync<IEnumerable<long>>(_settings.GamesListCacheKey, cancellationToken)));
+            return Ok(OperationResult<IEnumerable<long>>.Successful(await _cacheProvider.GetGamesListAsync(cancellationToken)));
         }
 
         /// <summary>
@@ -66,7 +67,7 @@ namespace TheGame.Controllers
         [HttpGet]
         public async Task<ActionResult<OperationResult<IEnumerable<CacheItem<GameMatchDataDto>>>>> GameMatches(CancellationToken cancellationToken)
         {
-            return Ok(OperationResult<IEnumerable<CacheItem<GameMatchDataDto>>>.Successful(await _cache.GetAsync<IEnumerable<CacheItem<GameMatchDataDto>>>(_settings.GameMatchesDataCacheKey, cancellationToken)));
+            return Ok(OperationResult<IEnumerable<CacheItem<GameMatchDataDto>>>.Successful(await _cacheProvider.GetGameMatchesAsync(cancellationToken)));
         }
     }
 }
