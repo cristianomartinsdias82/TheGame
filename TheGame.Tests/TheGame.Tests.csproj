@@ -7,6 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.1.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.5" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
     <PackageReference Include="Moq" Version="4.16.1" />
     <PackageReference Include="xunit" Version="2.4.0" />
@@ -15,12 +18,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TheGame.Common\TheGame.Common.csproj" />
+    <ProjectReference Include="..\TheGame.Domain\TheGame.Domain.csproj" />
+    <ProjectReference Include="..\TheGame.Infrastructure\TheGame.Infrastructure.csproj" />
     <ProjectReference Include="..\TheGame.Queries\TheGame.Queries.csproj" />
     <ProjectReference Include="..\TheGame.SharedKernel\TheGame.SharedKernel.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="IntegrationTests\Hosts\TheGame\" />
+    <ProjectReference Include="..\TheGame\TheGame.csproj" />
   </ItemGroup>
 
 </Project>

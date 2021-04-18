@@ -26,10 +26,10 @@ namespace TheGame.Tests.UnitTests.Application.Queries.GetLeaderboards
         public async Task Should_fail_when_no_cancellation_token_is_invalid()
         {
             //Arrange
-            var handler = new GetLeaderboardsHandler(_cacheProviderMock.Object, _dataInputValidatorMock.Object);
+            var sut = new GetLeaderboardsHandler(_cacheProviderMock.Object, _dataInputValidatorMock.Object);
 
             //Act
-            var response = await handler.Handle(new GetLeaderboardsRequest(), CancellationToken.None);
+            var response = await sut.Handle(new GetLeaderboardsRequest(), CancellationToken.None);
 
             //Assert
             Assert.NotNull(response);
@@ -46,7 +46,7 @@ namespace TheGame.Tests.UnitTests.Application.Queries.GetLeaderboards
             {
                 //Arrange
                 var token = cts.Token;
-                var handler = new GetLeaderboardsHandler(_cacheProviderMock.Object, _dataInputValidatorMock.Object);
+                var sut = new GetLeaderboardsHandler(_cacheProviderMock.Object, _dataInputValidatorMock.Object);
                 var request = new GetLeaderboardsRequest();
                 
                 _dataInputValidatorMock
@@ -54,7 +54,7 @@ namespace TheGame.Tests.UnitTests.Application.Queries.GetLeaderboards
                     .ReturnsAsync(OperationResult.Failure(It.IsAny<FailureDetail>()));
                 
                 //Act
-                var response = await handler.Handle(request, token);
+                var response = await sut.Handle(request, token);
 
                 //Assert
                 Assert.NotNull(response);
@@ -72,7 +72,7 @@ namespace TheGame.Tests.UnitTests.Application.Queries.GetLeaderboards
             {
                 //Arrange
                 var token = cts.Token;
-                var handler = new GetLeaderboardsHandler(_cacheProviderMock.Object, _dataInputValidatorMock.Object);
+                var sut = new GetLeaderboardsHandler(_cacheProviderMock.Object, _dataInputValidatorMock.Object);
                 var request = new GetLeaderboardsRequest();
 
                 _dataInputValidatorMock
@@ -83,7 +83,7 @@ namespace TheGame.Tests.UnitTests.Application.Queries.GetLeaderboards
                     .ReturnsAsync(It.IsAny<IEnumerable<PlayerBalanceDto>>());
 
                 //Act
-                var response = await handler.Handle(request, token);
+                var response = await sut.Handle(request, token);
 
                 //Assert
                 Assert.NotNull(response);

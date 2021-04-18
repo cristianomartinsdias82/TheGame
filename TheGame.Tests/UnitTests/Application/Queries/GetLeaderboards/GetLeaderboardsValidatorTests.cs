@@ -9,11 +9,11 @@ namespace TheGame.Tests.UnitTests.Application.Queries.GetLeaderboards
 {
     public class GetLeaderboardsValidatorTests
     {
-        private readonly IDataInputValidation<GetLeaderboardsRequest> _validator;
+        private readonly IDataInputValidation<GetLeaderboardsRequest> _sut;
 
         public GetLeaderboardsValidatorTests()
         {
-            _validator = new GetLeaderboardsValidator();
+            _sut = new GetLeaderboardsValidator();
         }
 
         [Theory]
@@ -24,7 +24,7 @@ namespace TheGame.Tests.UnitTests.Application.Queries.GetLeaderboards
             using (var cts = new CancellationTokenSource())
             {
                 //Act
-                var result = await _validator.TryValidateAsync(new GetLeaderboardsRequest { PlayersMaxQuantity = playersMaxQuantity }, cts.Token);
+                var result = await _sut.TryValidateAsync(new GetLeaderboardsRequest { PlayersMaxQuantity = playersMaxQuantity }, cts.Token);
 
                 //Assert
                 Assert.NotNull(result);
@@ -42,7 +42,7 @@ namespace TheGame.Tests.UnitTests.Application.Queries.GetLeaderboards
             using (var cts = new CancellationTokenSource())
             {
                 //Act
-                var result = await _validator.TryValidateAsync(new GetLeaderboardsRequest { PlayersMaxQuantity = playersMaxQuantity }, cts.Token);
+                var result = await _sut.TryValidateAsync(new GetLeaderboardsRequest { PlayersMaxQuantity = playersMaxQuantity }, cts.Token);
 
                 //Assert
                 Assert.NotNull(result);

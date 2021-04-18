@@ -76,13 +76,13 @@ namespace TheGame.Infrastructure.Data.Ef.Migrations
             dbContext.Database.ExecuteSqlRaw($"CREATE VIEW {viewName} AS {sql}");
         }
 
-        private static void SeedDatabase(TheGameDbContext dbContext, ILogger<IHost> logger)
+        internal static void SeedDatabase(TheGameDbContext dbContext, ILogger<IHost> logger)
         {
-            bool hasPendingData = false;
+            bool commitChanges = false;
 
             if (!dbContext.Players.Any())
             {
-                logger.LogInformation("Seeding database with player data. Please wait...");
+                logger?.LogInformation("Seeding database with player data. Please wait...");
 
                 var now = DateTimeOffset.UtcNow;
                 var players = new List<Player>();
@@ -90,12 +90,12 @@ namespace TheGame.Infrastructure.Data.Ef.Migrations
                     players.Add(new Player { Name = $"Player {i}", Nickname = $"player{i}", RegistrationDate = now, GameMatchesPlayers = new List<GameMatchesPlayers>() });
 
                 dbContext.Players.AddRange(players);
-                hasPendingData = true;
+                commitChanges = true;
             }
 
             if (!dbContext.Games.Any())
             {
-                logger.LogInformation("Seeding database with game data. Please wait...");
+                logger?.LogInformation("Seeding database with game data. Please wait...");
 
                 var now = DateTimeOffset.UtcNow;
                 var games = new List<Game>();
@@ -103,13 +103,13 @@ namespace TheGame.Infrastructure.Data.Ef.Migrations
                     games.Add(new Game { Title = $"Game {i}", RegistrationDate = now });
 
                 dbContext.Games.AddRange(games);
-                hasPendingData = true;
+                commitChanges = true;
             }
 
-            if (hasPendingData)
+            if (commitChanges)
             {
                 dbContext.SaveChanges();
-                logger.LogInformation("Database seed successful!");
+                logger?.LogInformation("Database seed successful!");
             }
         }
     }

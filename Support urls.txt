@@ -30,3 +30,5 @@ https://stackoverflow.com/questions/7982525/visual-studio-disabling-missing-xml-
 https://dapper-tutorial.net/bulk-insert
 https://markheath.net/post/roundtrip-serialization-of-datetimes-in
 https://stefried.medium.com/sql-views-for-entity-framework-core-code-first-c07bfe607fa1 -> https://github.com/StefanRiedmann/EFCoreWithViews/blob/master/Program.cs
+https://docs.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-5.0
+https://xunit.net/docs/shared-context
