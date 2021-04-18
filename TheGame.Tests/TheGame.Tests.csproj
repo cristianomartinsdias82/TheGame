@@ -20,8 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Commands\" />
-    <Folder Include="Application\Commands\SaveGameMatchData\" />
+    <Folder Include="IntegrationTests\Hosts\TheGame\" />
   </ItemGroup>
 
 </Project>

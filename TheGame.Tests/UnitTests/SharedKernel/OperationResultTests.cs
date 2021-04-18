@@ -2,7 +2,7 @@
 using TheGame.SharedKernel;
 using Xunit;
 
-namespace TheGame.Tests.SharedKernel
+namespace TheGame.Tests.UnitTests.SharedKernel
 {
     public class OperationResultTests
     {
@@ -36,5 +36,7 @@ namespace TheGame.Tests.SharedKernel
             //Assert
             Assert.Throws<ArgumentNullException>(() => OperationResult.Failure((FailureDetail[])null));
         }
+
+        //And so on...
     }
 }
