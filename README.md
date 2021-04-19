@@ -110,11 +110,11 @@ Request body example:<br/>
 (GET)  http://localhost:5000/api/v1/cache-data/game-matches -> This endpoint displays all pending match data that has been posted for later persistence.
 
 3. FETCH A LIST WITH AVAILABLE GAMES IDS (EXTRA endpoint)<br/>
-(GET)  http://localhost:5000/api/v1/cache-data/games -> This endpoint displays all games ids registered in the system
+(GET)  http://localhost:5000/api/v1/cache-data/games -> This endpoint displays all games ids registered in the system<br/>
 Useful for creating requests when using the endpoint explained in item 1
 
 4. FETCH A LIST WITH AVAILABLE PLAYERS IDS  (EXTRA endpoint)<br/>
-(GET)  http://localhost:5000/api/v1/cache-data/players -> This endpoint displays all players ids registered ine th system
+(GET)  http://localhost:5000/api/v1/cache-data/players -> This endpoint displays all players ids registered in the system<br/>
 Useful for creating requests when using the endpoint explained in item 1
 
 5. LEADERBOARDS<br/>
