@@ -81,7 +81,7 @@ How to run this solution<br/>
 
 (This will create the database along with all tables, relationships, the leaderboards view and will ultimately perform initial data seeds)<br/>
 
-You can test the application at this point by opening a web browser and then reaching out to the following url's:
+You can test the application at this point by opening a web browser and then reaching out to the following url's:<br/>
 http://localhost:5000/swagger<br/>
 http://localhost:5000/api/v1/leaderboards<br/>
 
