@@ -73,23 +73,23 @@ It's worth to mention that Visual Studio 2017 or later is desirable but not requ
 Getting started<br/>
 First things first, download this solution to your machine.
 
-How to run this solution
-1. Open command prompt and go to "TheGame" web project directory.
-2. Next, type the following:
-   set ASPNETCORE_ENVIRONMENT=Development [HIT ENTER]
-   dotnet run [HIT ENTER]
+How to run this solution<br/>
+1. Open command prompt and go to "TheGame" web project directory.<br/>
+2. Next, type the following:<br/>
+   set ASPNETCORE_ENVIRONMENT=Development [HIT ENTER]<br/>
+   dotnet run [HIT ENTER]<br/>
 
-(This will create the database along with all tables, relationships, the leaderboards view and will ultimately perform initial data seeds)
+(This will create the database along with all tables, relationships, the leaderboards view and will ultimately perform initial data seeds)<br/>
 
 You can test the application at this point by opening a web browser and then reaching out to the following url's:
 http://localhost:5000/swagger
 http://localhost:5000/api/v1/leaderboards
 
-3. Now, to switch to a production environment:
-Open command prompt and go to "TheGame" solution directory the type the following:
- dotnet build -c release [HIT ENTER]
- set ASPNETCORE_ENVIRONMENT=Production [HIT ENTER]
- dotnet run --no-launch-profile [HIT ENTER]
+3. Now, to switch to a production environment:<br/>
+Open command prompt and go to "TheGame" solution directory the type the following:<br/>
+ dotnet build -c release [HIT ENTER]<br/>
+ set ASPNETCORE_ENVIRONMENT=Production [HIT ENTER]<br/>
+ dotnet run --no-launch-profile [HIT ENTER]<br/>
 
 With this setup, the application does not include the Open API Swagger documentation.
 It only accepts requests from the relevant application endpoints.
