@@ -1,6 +1,6 @@
 # TheGame
 
-Contexto
+Contexto<br/>
 Você está trabalhando para uma empresa de jogos online que opera vários servidores de jogos. Cada jogo resulta em ganho ou perda de pontos
 para o jogador.
 Os dados são mantidos em memória por cada servidor e periodicamente esses dados são persistidos. Sua tarefa é implementar um serviço que
