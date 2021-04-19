@@ -64,11 +64,11 @@ The steps described below assume you are in a Windows operating system.
 For more information about how to run in other operating systems, pelase refer to the following url:
 https://docs.microsoft.com/en-us/aspnet/core/fundamentals/environments?view=aspnetcore-5.0
 
-Prerequisites
-
-Please make sure the Sql Server is up and running on your machine.
-Also, .Net Core 3.1 SDK must be installed.
-It's worth to mention that Visual Studio 2017 or later is desirable but not required
+Prerequisites<br/>
+Please make sure the Sql Server is up and running on your machine.<br/>
+Also, .Net Core 3.1 SDK must be installed.<br/>
+Tools like Postman or Advanced REST Client may also come in handy to make requests to the solution endpoints<br/>
+It's worth to mention that Visual Studio 2017 or later is desirable but not required<br/>
 
 Getting started
 First things first, download this solution to your machine.
