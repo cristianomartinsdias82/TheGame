@@ -1,0 +1,24 @@
+USE TheGame
+GO
+
+IF (OBJECT_ID('dbo.V_Leaderboards') IS NOT NULL)
+	DROP VIEW dbo.V_Leaderboards
+GO
+
+BEGIN TRY
+	BEGIN TRANSACTION
+
+	DELETE [dbo].[__EFMigrationsHistory]
+
+	DROP TABLE dbo.GameMatchesPlayers
+	DROP TABLE dbo.Games
+	DROP TABLE dbo.Players
+
+	COMMIT
+END TRY
+BEGIN CATCH
+
+	ROLLBACK
+	SELECT ERROR_MESSAGE()
+
+END CATCH

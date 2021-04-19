@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Data;
 using System.Data.Common;
+using System.Linq;
 using System.Threading;
 using TheGame.Common.Caching;
 using TheGame.Domain;
@@ -29,51 +30,57 @@ namespace TheGame.Infrastructure.Data.Caching
             return host;
         }
 
-        private static void LoadCache(ITheGameCacheProvider cacheProvider, TheGameSettings settings, ILogger logger)
+        private static void LoadCache(ITheGameCacheProvider cacheProvider, TheGameSettings settings, ILogger<IHost> logger)
         {
             var factory = DbProviderFactories.GetFactory(settings.DataProviderName);
             var connection = factory.CreateConnection();
             connection.ConnectionString = settings.DbConnectionString;
             string sql;
 
-            logger.LogInformation("Loading cache with player data. Please wait...");
-            sql = $"SELECT {nameof(Player.Id)} FROM dbo.{nameof(Player)}s";
-            try
+            if (!cacheProvider.GetPlayersListAsync(CancellationToken.None).GetAwaiter().GetResult()?.Any() ?? true)
             {
-                connection.Open();
+                logger.LogInformation("Loading cache with player data. Please wait...");
+                sql = $"SELECT {nameof(Player.Id)} FROM dbo.{nameof(Player)}s";
+                try
+                {
+                    connection.Open();
 
-                var players = connection.Query<long>(sql);
+                    var players = connection.Query<long>(sql);
 
-                cacheProvider.StorePlayersListAsync(players, null, CancellationToken.None).GetAwaiter().GetResult();
-            }
-            catch (Exception exc)
-            {
-                logger?.LogError(exc, "Unable to load cache with player data!");
-            }
-            finally
-            {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
+                    cacheProvider.StorePlayersListAsync(players, null, CancellationToken.None).GetAwaiter().GetResult();
+                }
+                catch (Exception exc)
+                {
+                    logger?.LogError(exc, "Unable to load cache with player data!");
+                }
+                finally
+                {
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+                }
             }
 
-            logger.LogInformation("Loading cache with game data. Please wait...");
-            sql = $"SELECT {nameof(Game.Id)} FROM dbo.{nameof(Game)}s";
-            try
+            if (!cacheProvider.GetGamesListAsync(CancellationToken.None).GetAwaiter().GetResult()?.Any() ?? true)
             {
-                connection.Open();
+                logger.LogInformation("Loading cache with game data. Please wait...");
+                sql = $"SELECT {nameof(Game.Id)} FROM dbo.{nameof(Game)}s";
+                try
+                {
+                    connection.Open();
 
-                var games = connection.Query<long>(sql);
+                    var games = connection.Query<long>(sql);
 
-                cacheProvider.StoreGamesListAsync(games, null, CancellationToken.None).GetAwaiter().GetResult();
-            }
-            catch (Exception exc)
-            {
-                logger?.LogError(exc, "Unable to load cache with game data!");
-            }
-            finally
-            {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
+                    cacheProvider.StoreGamesListAsync(games, null, CancellationToken.None).GetAwaiter().GetResult();
+                }
+                catch (Exception exc)
+                {
+                    logger?.LogError(exc, "Unable to load cache with game data!");
+                }
+                finally
+                {
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+                }
             }
         }
     }

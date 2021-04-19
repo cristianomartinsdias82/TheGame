@@ -1,0 +1,36 @@
+Execution and deployment instructions
+
+The steps described below assume you are in a Windows operating system.
+
+For more information about how to run in other operating systems, pelase refer to the following url:
+https://docs.microsoft.com/en-us/aspnet/core/fundamentals/environments?view=aspnetcore-5.0
+
+Prerequisites: please make sure the Sql Server is up and running on your machine. Also, .Net Core 3.1 SDK must be installed.
+
+1. Open command prompt and go to "TheGame" web project directory.
+Next, type the following:
+dotnet run [HIT ENTER]
+(This will create the database along with all tables, relationships, the leaderboards view will ultimately perform initial data seeds.
+
+You can test the application at this point by opening a web browser and then reaching out to the following url's:
+http://localhost:5000/swagger
+http://localhost:5000/api/v1/leaderboards
+
+2. Now, to switch to a production environment:
+Open command prompt and go to "TheGame" web project directory
+set ASPNETCORE_ENVIRONMENT=Production [HIT ENTER]
+dotnet run --no-launch-profile [HIT ENTER]
+
+With this setup, the application does not include the Open API Swagger documentation. It only accepts requests from the relevant application endpoints
+(GET)  http://localhost:5000/api/v1/leaderboards
+(GET)  http://localhost:5000/api/v1/cache-data/game-matches
+(GET)  http://localhost:5000/api/v1/cache-data/games
+(GET)  http://localhost:5000/api/v1/cache-data/players
+(POST) http://localhost:5000/api/v1/match
+Request body example:
+{
+    "gameId" : 1,
+    "playerId" : 1,
+    "win" : 68000000,
+    "timestamp" : "2021-04-17T14:28:34Z"   
+}

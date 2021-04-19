@@ -20,50 +20,58 @@ namespace TheGame.Infrastructure.Data.Ef.Migrations
             using (var scope = host.Services.CreateScope())
             {
                 var provider = scope.ServiceProvider;
-                var logger = provider.GetService<ILogger<IHost>>();
-                var settings = provider.GetService<TheGameSettings>();
-                using (var dbContext = provider.GetRequiredService<TheGameDbContext>())
+                var hostEnvironment = provider.GetRequiredService<IHostEnvironment>();
+
+                if (!hostEnvironment.IsProduction())
                 {
-                    try
+                    var logger = provider.GetService<ILogger<IHost>>();
+                    var settings = provider.GetRequiredService<TheGameSettings>();
+                    using (var dbContext = provider.GetRequiredService<TheGameDbContext>())
                     {
-                        dbContext.Database.Migrate();
-                    }
-                    catch (Exception exc)
-                    {
-                        logger?.LogError(exc, "Unable to migrate database!");
+                        try
+                        {
+                            dbContext.Database.Migrate();
+                        }
+                        catch (Exception exc)
+                        {
+                            logger?.LogError(exc, "Unable to migrate database!");
 
-                        throw;
-                    }
+                            throw;
+                        }
 
-                    try
-                    {
-                        SeedDatabase(dbContext, logger);
-                    }
-                    catch (Exception exc)
-                    {
-                        logger?.LogError(exc, "Unable to seed the database!");
+                        try
+                        {
+                            SeedDatabase(dbContext, logger);
+                        }
+                        catch (Exception exc)
+                        {
+                            logger?.LogError(exc, "Unable to seed the database!");
 
-                        throw;
-                    }
+                            throw;
+                        }
 
-                    const string viewName = "V_Leaderboards";
-                    try
-                    {
-                        CreateLeaderboardsView(dbContext, viewName, settings.ObjectsSchema, $"{viewName}.sql", logger);
-                    }
-                    catch (Exception exc)
-                    {
-                        logger?.LogError(exc, "Unable to create Leaderboards view object!");
+                        const string viewName = "V_Leaderboards";
+                        try
+                        {
+                            CreateLeaderboardsView(dbContext, viewName, settings.ObjectsSchema, $"{viewName}.sql", logger);
+                        }
+                        catch (Exception exc)
+                        {
+                            logger?.LogError(exc, "Unable to create Leaderboards view object!");
 
-                        throw;
+                            throw;
+                        }
                     }
                 }
             }
+
             return host;
         }
 
         private static void CreateLeaderboardsView(TheGameDbContext dbContext, string viewName, string schemaName, string resourceFileName, ILogger<IHost> logger)
         {
+            logger?.LogInformation("Creating Leaderboards view object in the database. Please wait...");
+
             var assembly = Assembly.GetEntryAssembly();
             var assemblyName = assembly.FullName.Substring(0, assembly.FullName.IndexOf(','));
             var resource = assembly.GetManifestResourceStream($"{assemblyName}.Resources.{resourceFileName}");
@@ -74,6 +82,8 @@ namespace TheGame.Infrastructure.Data.Ef.Migrations
 
             dbContext.Database.ExecuteSqlRaw($"IF OBJECT_ID('{schemaName}.{viewName}') IS NOT NULL BEGIN DROP VIEW {schemaName}.{viewName} END");
             dbContext.Database.ExecuteSqlRaw($"CREATE VIEW {viewName} AS {sql}");
+
+            logger?.LogInformation("Leaderboards view object creation successful!");
         }
 
         internal static void SeedDatabase(TheGameDbContext dbContext, ILogger<IHost> logger)
