@@ -96,7 +96,7 @@ It only accepts requests from the relevant application endpoints.
 Also, neither migrations nor database load are performed.
 
 Application endpoints
-1. SAVE GAME DATA ENDPOINT
+1. SAVE GAME DATA ENDPOINT<br/>
 (POST) http://localhost:5000/api/v1/match -> This is the entry point for receiving game match data
 Request body example:
 {
@@ -106,18 +106,18 @@ Request body example:
     "timestamp" : "2021-04-17T14:28:34Z"
 }
 
-2. FETCH GAME DATA ENDPOINT (EXTRA endpoint)
+2. FETCH GAME DATA ENDPOINT (EXTRA endpoint)<br/>
 (GET)  http://localhost:5000/api/v1/cache-data/game-matches -> This endpoint displays all pending match data that has been posted for later persistence.
 
-3. FETCH A LIST WITH AVAILABLE GAMES IDS (EXTRA endpoint)
+3. FETCH A LIST WITH AVAILABLE GAMES IDS (EXTRA endpoint)<br/>
 (GET)  http://localhost:5000/api/v1/cache-data/games -> This endpoint displays all games ids registered in the system
 Useful for creating requests when using the endpoint explained in item 1
 
-4. FETCH A LIST WITH AVAILABLE PLAYERS IDS  (EXTRA endpoint)
+4. FETCH A LIST WITH AVAILABLE PLAYERS IDS  (EXTRA endpoint)<br/>
 (GET)  http://localhost:5000/api/v1/cache-data/players -> This endpoint displays all players ids registered ine th system
 Useful for creating requests when using the endpoint explained in item 1
 
-5. LEADERBOARDS
+5. LEADERBOARDS<br/>
 (GET)  http://localhost:5000/api/v1/leaderboards -> This endpoint displays the leaderboards after the database flushing background service
 has been executed at least once.
 
