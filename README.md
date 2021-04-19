@@ -86,7 +86,8 @@ http://localhost:5000/swagger<br/>
 http://localhost:5000/api/v1/leaderboards<br/>
 
 3. Now, to switch to a production environment:<br/>
-Open command prompt and go to "TheGame" solution directory the type the following:<br/>
+Open command prompt and go to "TheGame" solution directory.<br/>
+4. Next, type the following:<br/>
  dotnet build -c release [HIT ENTER]<br/>
  set ASPNETCORE_ENVIRONMENT=Production [HIT ENTER]<br/>
  dotnet run --no-launch-profile [HIT ENTER]<br/>
