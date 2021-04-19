@@ -61,7 +61,7 @@ Execution and deployment instructions
 
 The steps described below assume you are in a Windows operating system.
 
-For more information about how to run in other operating systems, pelase refer to the following url:
+For more information about how to run in other operating systems, pelase refer to the following url:<br/>
 https://docs.microsoft.com/en-us/aspnet/core/fundamentals/environments?view=aspnetcore-5.0
 
 Prerequisites<br/>
