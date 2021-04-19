@@ -49,6 +49,7 @@ explicar o porquê das suas escolhas claramente.
 É esperado também que a aplicação esteja publicada no github e seja entregue funcional, então se houver qualquer condição especial para
 que ela seja configurada, como endereço de banco de dados, utilização de migration, entre outros... por favor providencie as dentro do
 arquivo README.MD dentro do repositório git criado e documentando detalhadamente o processo a ser realizado.
+
 É esperado que o código seja de qualidade, seguindo boas práticas de desenvolvimento, patterns, clean code, estrutura de projetos do tipo
 DDD / TDD... então não o escreva como 'é só uma demo' mas como você o faria para um produto real. Você deve considerar a tarefa completa
 quando você considera o seu código 'pronto para produção/implantação'.
