@@ -70,7 +70,7 @@ Also, .Net Core 3.1 SDK must be installed.<br/>
 Tools like Postman or Advanced REST Client may also come in handy to make requests to the solution endpoints<br/>
 It's worth to mention that Visual Studio 2017 or later is desirable but not required<br/>
 
-Getting started
+Getting started<br/>
 First things first, download this solution to your machine.
 
 How to run this solution
