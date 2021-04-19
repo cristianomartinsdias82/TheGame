@@ -91,7 +91,7 @@ Open command prompt and go to "TheGame" solution directory the type the followin
  set ASPNETCORE_ENVIRONMENT=Production [HIT ENTER]<br/>
  dotnet run --no-launch-profile [HIT ENTER]<br/>
 
-With this setup, the application does not include the Open API Swagger documentation.
+With this setup, the application no longer includes the Open API Swagger documentation.
 It only accepts requests from the relevant application endpoints.
 Also, neither migrations nor database load are performed.
 
