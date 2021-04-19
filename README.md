@@ -49,6 +49,7 @@ explicar o porquê das suas escolhas claramente.
 É esperado também que a aplicação esteja publicada no github e seja entregue funcional, então se houver qualquer condição especial para
 que ela seja configurada, como endereço de banco de dados, utilização de migration, entre outros... por favor providencie as dentro do
 arquivo README.MD dentro do repositório git criado e documentando detalhadamente o processo a ser realizado.
+
 É esperado que o código seja de qualidade, seguindo boas práticas de desenvolvimento, patterns, clean code, estrutura de projetos do tipo
 DDD / TDD... então não o escreva como 'é só uma demo' mas como você o faria para um produto real. Você deve considerar a tarefa completa
 quando você considera o seu código 'pronto para produção/implantação'.
@@ -64,9 +65,9 @@ For more information about how to run in other operating systems, pelase refer t
 https://docs.microsoft.com/en-us/aspnet/core/fundamentals/environments?view=aspnetcore-5.0
 
 Prerequisites
-1. Please make sure the Sql Server is up and running on your machine.
-2. Also, .Net Core 3.1 SDK must be installed.
 
+Please make sure the Sql Server is up and running on your machine.
+Also, .Net Core 3.1 SDK must be installed.
 It's worth to mention that Visual Studio 2017 or later is desirable but not required
 
 Getting started
@@ -95,7 +96,7 @@ It only accepts requests from the relevant application endpoints.
 Also, neither migrations nor database load are performed.
 
 Application endpoints
-1. SAVE GAME DATA ENDPOINT
+1. SAVE GAME DATA ENDPOINT<br/>
 (POST) http://localhost:5000/api/v1/match -> This is the entry point for receiving game match data
 Request body example:
 {
@@ -105,29 +106,29 @@ Request body example:
     "timestamp" : "2021-04-17T14:28:34Z"
 }
 
-2. FETCH GAME DATA ENDPOINT (EXTRA endpoint)
+2. FETCH GAME DATA ENDPOINT (EXTRA endpoint)<br/>
 (GET)  http://localhost:5000/api/v1/cache-data/game-matches -> This endpoint displays all pending match data that has been posted for later persistence.
 
-3. FETCH A LIST WITH AVAILABLE GAMES IDS (EXTRA endpoint)
+3. FETCH A LIST WITH AVAILABLE GAMES IDS (EXTRA endpoint)<br/>
 (GET)  http://localhost:5000/api/v1/cache-data/games -> This endpoint displays all games ids registered in the system
 Useful for creating requests when using the endpoint explained in item 1
 
-4. FETCH A LIST WITH AVAILABLE PLAYERS IDS  (EXTRA endpoint)
+4. FETCH A LIST WITH AVAILABLE PLAYERS IDS  (EXTRA endpoint)<br/>
 (GET)  http://localhost:5000/api/v1/cache-data/players -> This endpoint displays all players ids registered ine th system
 Useful for creating requests when using the endpoint explained in item 1
 
-5. LEADERBOARDS
+5. LEADERBOARDS<br/>
 (GET)  http://localhost:5000/api/v1/leaderboards -> This endpoint displays the leaderboards after the database flushing background service
 has been executed at least once.
 
-How to play with this solution
-1.Invoke a couple times the endpoint 1. You can use a tool like Postman or Advanced REST Client to send some requests as per explained in item 1.
+How to play with this solution<br/>
+1.Invoke a couple of times the endpoint 1. You can use a tool like Postman or Advanced REST Client to send some requests as per explained in item 1.<br/>
 2.In this moment, invoke the endpoint 2 to check that match data is in the cache. These are data waiting to be flushed to the database.
 From this moment on, you can keep inserting data and, after approximately 40 seconds, the database flushing service starts its job to persist all match data
 it can get from cache in that moment, without losing new posted match data.
 Everytime the background service runs, the leaderboards is automatically refreshed and its data is stored in cache for performance.
 As soon as the game match data is flushed to the database, all processed data are removed from the cache preserving the ones that weren't processed yet,
-waiting for the next service execution.
+waiting for the next service execution.<br/>
 3. Invoke the endpoint 5 for leaderboards
 
 Running the solution automated tests (both unit and integration ones)
