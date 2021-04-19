@@ -98,7 +98,7 @@ Also, neither migrations nor database loads are performed.
 Application endpoints
 1. SAVE GAME DATA ENDPOINT<br/>
 (POST) http://localhost:5000/api/v1/match -> This is the entry point for receiving game match data<br/>
-Request body example:
+Request body example:<br/>
 {
     "gameId" : 1,
     "playerId" : 1,
