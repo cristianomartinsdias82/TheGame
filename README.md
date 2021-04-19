@@ -64,36 +64,36 @@ The steps described below assume you are in a Windows operating system.
 For more information about how to run in other operating systems, pelase refer to the following url:
 https://docs.microsoft.com/en-us/aspnet/core/fundamentals/environments?view=aspnetcore-5.0
 
-Prerequisites
+Prerequisites<br/>
+Please make sure the Sql Server is up and running on your machine.<br/>
+Also, .Net Core 3.1 SDK must be installed.<br/>
+Tools like Postman or Advanced REST Client may also come in handy to make requests to the solution endpoints<br/>
+It's worth to mention that Visual Studio 2017 or later is desirable but not required<br/>
 
-Please make sure the Sql Server is up and running on your machine.
-Also, .Net Core 3.1 SDK must be installed.
-It's worth to mention that Visual Studio 2017 or later is desirable but not required
-
-Getting started
+Getting started<br/>
 First things first, download this solution to your machine.
 
-How to run this solution
-1. Open command prompt and go to "TheGame" web project directory.
-2. Next, type the following:
-   set ASPNETCORE_ENVIRONMENT=Development [HIT ENTER]
-   dotnet run [HIT ENTER]
+How to run this solution<br/>
+1. Open command prompt and go to "TheGame" web project directory.<br/>
+2. Next, type the following:<br/>
+   set ASPNETCORE_ENVIRONMENT=Development [HIT ENTER]<br/>
+   dotnet run [HIT ENTER]<br/>
 
-(This will create the database along with all tables, relationships, the leaderboards view and will ultimately perform initial data seeds)
+(This will create the database along with all tables, relationships, the leaderboards view and will ultimately perform initial data seeds)<br/>
 
 You can test the application at this point by opening a web browser and then reaching out to the following url's:
 http://localhost:5000/swagger
 http://localhost:5000/api/v1/leaderboards
 
-3. Now, to switch to a production environment:
-Open command prompt and go to "TheGame" solution directory the type the following:
- dotnet build -c release [HIT ENTER]
- set ASPNETCORE_ENVIRONMENT=Production [HIT ENTER]
- dotnet run --no-launch-profile [HIT ENTER]
+3. Now, to switch to a production environment:<br/>
+Open command prompt and go to "TheGame" solution directory the type the following:<br/>
+ dotnet build -c release [HIT ENTER]<br/>
+ set ASPNETCORE_ENVIRONMENT=Production [HIT ENTER]<br/>
+ dotnet run --no-launch-profile [HIT ENTER]<br/>
 
-With this setup, the application does not include the Open API Swagger documentation.
+With this setup, the application no longer includes the Open API Swagger documentation.
 It only accepts requests from the relevant application endpoints.
-Also, neither migrations nor database load are performed.
+Also, neither migrations nor database loads are performed.
 
 Application endpoints
 1. SAVE GAME DATA ENDPOINT<br/>
@@ -122,8 +122,8 @@ Useful for creating requests when using the endpoint explained in item 1
 has been executed at least once.
 
 How to play with this solution<br/>
-1.Invoke a couple of times the endpoint 1. You can use a tool like Postman or Advanced REST Client to send some requests as per explained in item 1.<br/>
-2.In this moment, invoke the endpoint 2 to check that match data is in the cache. These are data waiting to be flushed to the database.
+1. Invoke a couple of times the endpoint 1. You can use a tool like Postman or Advanced REST Client to send some requests as per explained in item 1.<br/>
+2. In this moment, invoke the endpoint 2 to check that match data is in the cache. These are data waiting to be flushed to the database.
 From this moment on, you can keep inserting data and, after approximately 40 seconds, the database flushing service starts its job to persist all match data
 it can get from cache in that moment, without losing new posted match data.
 Everytime the background service runs, the leaderboards is automatically refreshed and its data is stored in cache for performance.
