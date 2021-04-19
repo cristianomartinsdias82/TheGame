@@ -66,7 +66,11 @@ https://docs.microsoft.com/en-us/aspnet/core/fundamentals/environments?view=aspn
 Prerequisites
 1. Please make sure the Sql Server is up and running on your machine.
 2. Also, .Net Core 3.1 SDK must be installed.
-3. Download this solution to your machine
+
+It's worth to mention that Visual Studio 2017 or later is desirable but not required
+
+Getting started
+First things first, download this solution to your machine.
 
 How to run this solution
 1. Open command prompt and go to "TheGame" web project directory.
