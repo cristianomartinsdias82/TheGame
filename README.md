@@ -122,13 +122,13 @@ Useful for creating requests when using the endpoint explained in item 1
 has been executed at least once.
 
 How to play with this solution<br/>
-1.Invoke a couple times the endpoint 1. You can use a tool like Postman or Advanced REST Client to send some requests as per explained in item 1.
+1.Invoke a couple times the endpoint 1. You can use a tool like Postman or Advanced REST Client to send some requests as per explained in item 1.<br/>
 2.In this moment, invoke the endpoint 2 to check that match data is in the cache. These are data waiting to be flushed to the database.
 From this moment on, you can keep inserting data and, after approximately 40 seconds, the database flushing service starts its job to persist all match data
 it can get from cache in that moment, without losing new posted match data.
 Everytime the background service runs, the leaderboards is automatically refreshed and its data is stored in cache for performance.
 As soon as the game match data is flushed to the database, all processed data are removed from the cache preserving the ones that weren't processed yet,
-waiting for the next service execution.
+waiting for the next service execution.<br/>
 3. Invoke the endpoint 5 for leaderboards
 
 Running the solution automated tests (both unit and integration ones)
