@@ -93,7 +93,7 @@ Open command prompt and go to "TheGame" solution directory the type the followin
 
 With this setup, the application no longer includes the Open API Swagger documentation.
 It only accepts requests from the relevant application endpoints.
-Also, neither migrations nor database load are performed.
+Also, neither migrations nor database loads are performed.
 
 Application endpoints
 1. SAVE GAME DATA ENDPOINT<br/>
