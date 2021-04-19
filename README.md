@@ -64,9 +64,9 @@ For more information about how to run in other operating systems, pelase refer t
 https://docs.microsoft.com/en-us/aspnet/core/fundamentals/environments?view=aspnetcore-5.0
 
 Prerequisites
-1. Please make sure the Sql Server is up and running on your machine.
-2. Also, .Net Core 3.1 SDK must be installed.
 
+Please make sure the Sql Server is up and running on your machine.
+Also, .Net Core 3.1 SDK must be installed.
 It's worth to mention that Visual Studio 2017 or later is desirable but not required
 
 Getting started
