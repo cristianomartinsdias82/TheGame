@@ -132,6 +132,6 @@ waiting for the next service execution.<br/>
 3. Invoke the endpoint 5 for leaderboards
 
 Running the solution automated tests (both unit and integration ones)
-1. Open command prompt and go to "TheGame" solution directory.
-2. Next, type the following:
+1. Open command prompt and go to "TheGame" solution directory<br/>
+2. Next, type the following:<br/>
    dotnet test [HIT ENTER]
