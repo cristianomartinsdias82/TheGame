@@ -1,4 +1,4 @@
-# TheGame
+# The Game
 
 (Português do Brasil)<br />
 Instruções de execução e implantação
@@ -17,7 +17,7 @@ Vale mencionar que a ferramenta Visual Studio 2017 ou posterior é desejável ma
 Iniciando<br/>
 Primeiramente, baixe esta solução para a sua máquina.
 
-Como rodar esta solução<br />
+Como executar esta solução<br />
 1. Abra uma janela de comando ("Command prompt") e navegue até o diretório do projeto Web "The Game".<br />
 2. Em seguida, digite as seguintes instruções:<br />
    set ASPNETCORE_ENVIRONMENT=Development [PRESSIONE A TECLA ENTER]<br/>
@@ -51,28 +51,27 @@ Exemplo de corpo da solicitação:<br/>
     "timestamp" : "2021-04-17T14:28:34Z"
 }
 
-2. OBTER LISTA DE JOGOS (ponto de acesso EXTRA)<br/>
-(GET) http://localhost:5000/api/v1/cache-data/game-matches -> Este ponto acesso retorna todos os dados de partidas de jogos pendentes de persistência na base de dados.
+2. OBTER DADOS DE PARTIDAS DE JOGOS (ponto de acesso EXTRA)<br/>
+(GET) http://localhost:5000/api/v1/cache-data/game-matches -> Este ponto de acesso retorna todos os dados de partidas de jogos pendentes de persistência na base de dados.
 
-3. FETCH A LIST WITH AVAILABLE GAMES IDS (EXTRA endpoint)<br/>
-(GET) http://localhost:5000/api/v1/cache-data/games -> This endpoint displays all games ids registered in the system<br/>
-Useful for creating requests when using the endpoint explained in item 1
+3. OBTER LISTA DE IDS DE JOGOS (ponto de acesso EXTRA)<br/>
+(GET) http://localhost:5000/api/v1/cache-data/games -> Este ponto de acesso retorna todos os ids de jogos registrados no sistema<br/>
+Útil para criação de solicitações utilizando o ponto de acesso explicado no item 1
 
-4. FETCH A LIST WITH AVAILABLE PLAYERS IDS (EXTRA endpoint)<br/>
-(GET) http://localhost:5000/api/v1/cache-data/players -> This endpoint displays all players ids registered in the system<br/>
-Useful for creating requests when using the endpoint explained in item 1
+4. OBTER LISTA DE IDS DE JOGADORES (ponto de acesso EXTRA)<br/>
+(GET) http://localhost:5000/api/v1/cache-data/players -> Este ponto de acesso retorna todos os ids de jogadores registrados no sistema<br/>
+Útil para criação de solicitações utilizando o ponto de acesso explicado no item 1
 
-5. LEADERBOARDS<br/>
-(GET) http://localhost:5000/api/v1/leaderboards -> This endpoint displays the leaderboards after the database flushing background service
-has been executed at least once.
+5. PLACAR DOS JOGADORES<br/>
+(GET) http://localhost:5000/api/v1/leaderboards -> Este ponto de acesso retorna o placar dos jogadores após o serviço de segundo plano de persistência de pontuações ter executado ao menos uma vez.
 
-6. API DOCUMENTATION (EXTRA endpoint)<br/>
-(GET)  http://localhost:5000/swagger -> This endpoint makes available the API endpoints live documentation via Swagger OpenAPI.
-IMPORTANT NOTE: This endpoint is available only when ASPNETCORE_ENVIRONMENT environment variable is set to Development (please refer to the beginning of topic "How to run this solution")
+6. DOCUMENTAÇÃO DA API (ponto de acesso EXTRA)<br/>
+(GET) http://localhost:5000/swagger -> Este ponto de acesso disponibiliza uma documentação atualizada dos pontos de acesso da API através da especificação Swagger OpenAPI.
+NOTA IMPORTANTE: Este ponto acesso está disponível somente quando a variável de ambiente ASPNETCORE_ENVIRONMENT contém o valor "Development" (vide início do tópico "Como executar esta solução")
 
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
-(English)
+(English)<br />
 Execution and deployment instructions
 
 The steps described below assume you are in a Windows operating system.
@@ -140,7 +139,7 @@ has been executed at least once.
 
 6. API DOCUMENTATION (EXTRA endpoint)<br/>
 (GET)  http://localhost:5000/swagger -> This endpoint makes available the API endpoints live documentation via Swagger OpenAPI.
-IMPORTANT NOTE: This endpoint is available only when ASPNETCORE_ENVIRONMENT environment variable is set to Development (please refer to the beginning of topic "How to run this solution")
+IMPORTANT NOTE: This endpoint is available only when ASPNETCORE_ENVIRONMENT environment variable is set to "Development" (please refer to the beginning of topic "How to run this solution")
 
 How to play with this solution<br/>
 1. Invoke a couple of times the endpoint 1. You can use a tool like Postman or Advanced REST Client to send some requests to it.<br/>
