@@ -31,7 +31,7 @@ http://localhost:5000/api/v1/leaderboards<br/>
 
 3. Para gerar uma versão da aplicação candidata para ambiente de produção:
 Abra uma janela de comando ("Command prompt") e navegue até o diretório da solução "The Game".<br />
-4. Em seguida, digite o seguinte comando:<br/>
+4. Em seguida, digite os seguintes comandos:<br/>
  dotnet build -c release [PRESSIONE A TECLA ENTER]<br/>
  set ASPNETCORE_ENVIRONMENT=Production [PRESSIONE A TECLA ENTER]<br/>
  dotnet run --no-launch-profile [PRESSIONE A TECLA ENTER]<br/>
@@ -69,6 +69,20 @@ Exemplo de corpo da solicitação:<br/>
 (GET) http://localhost:5000/swagger -> Este ponto de acesso disponibiliza uma documentação atualizada dos pontos de acesso da API através da especificação Swagger OpenAPI.
 NOTA IMPORTANTE: Este ponto acesso está disponível somente quando a variável de ambiente ASPNETCORE_ENVIRONMENT contém o valor "Development" (vide início do tópico "Como executar esta solução")
 
+Como brincar com esta solução<br/>
+1. Faça algumas solicitações ao ponto de acesso 1. Você pode utilizar ferramentas como Postman ou Advanced REST Client para fazê-las.<br/>
+2. Neste momento, faça solicitações ao ponto de acesso 2 para verificar que os dados das partidas estão em persistidos em cache. Estes dados eventualmente serão persistidos na base de dados.<br/>
+A partir deste momento, você pode continuar enviandos dados para o ponto de acesso 1 e, após aproximadamente 40 segundos, o serviço de segundo de peristência de dados captura os dados daquele momento, sem perder os novos dados que estão chegando.<br/>
+Toda vez que o serviço em segundo plano executa, o placar dos jogadores é atualizado e estes dados são armazenados em cache para fins de ganho de performance.
+Assim que os dados das partidas são persistidos na base de dados, todos os dados processados são removidos do cache, preservando aqueles que ainda não foram processados, esperando a próxima executação do serviço.<br/>
+3. Faça solicitações ao ponto de acesso 5 para obter o placar atualizado dos jogadores
+
+Executando os testes automatizados da solução (unitários e de integração)
+1. Open command prompt and go to "TheGame" solution directory<br/>
+1. Abra uma janela de comando ("Command prompt") e navegue até o diretório da solução "The Game".<br/>
+3. Em seguida, digite o seguinte comando:<br/>
+   dotnet test [PRESSIONE A TECLA ENTER]
+
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
 (English)<br />
@@ -90,7 +104,7 @@ First things first, download this solution to your machine.
 
 How to run this solution<br/>
 1. Open command prompt and go to "TheGame" web project directory.<br/>
-2. Next, type the following:<br/>
+2. Next, type the following command:<br/>
    set ASPNETCORE_ENVIRONMENT=Development [HIT ENTER]<br/>
    dotnet run [HIT ENTER]<br/>
 
@@ -102,7 +116,7 @@ http://localhost:5000/api/v1/leaderboards<br/>
 
 3. Now, to switch to a production environment:<br/>
 Open command prompt and go to "TheGame" solution directory.<br/>
-4. Next, type the following:<br/>
+4. Next, type the following commands:<br/>
  dotnet build -c release [HIT ENTER]<br/>
  set ASPNETCORE_ENVIRONMENT=Production [HIT ENTER]<br/>
  dotnet run --no-launch-profile [HIT ENTER]<br/>
@@ -153,5 +167,5 @@ waiting for the next service execution.<br/>
 
 Running the solution automated tests (both unit and integration ones)
 1. Open command prompt and go to "TheGame" solution directory<br/>
-2. Next, type the following:<br/>
+2. Next, type the following command:<br/>
    dotnet test [HIT ENTER]
