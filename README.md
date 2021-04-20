@@ -23,7 +23,7 @@ Como executar esta solução<br />
    set ASPNETCORE_ENVIRONMENT=Development [PRESSIONE A TECLA ENTER]<br/>
    dotnet run [PRESSIONE A TECLA ENTER]<br/>
    
-(Estes comandos irão criar a base de dados, as tabelas, relacionamentos, a visão de placar dos jogadores e, por último executar uma carga essencial de dados)<br/>
+(Estes comandos irão criar a base de dados, as tabelas, os relacionamentos, a visão de placar dos jogadores e, por último, executar uma carga essencial de dados)<br/>
 
 Aqui você já pode testar a aplicação abrindo um navegador de internet e acessando o(s) seguinte(s) endereços:<br />
 http://localhost:5000/swagger<br/>
