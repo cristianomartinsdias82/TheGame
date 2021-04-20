@@ -5,7 +5,7 @@ Instruções de execução e implantação
 
 Os passos a seguir presumem que vocÊ está utilizando o sistema operacional Windows.
 
-Para maiores informações sobre como executar a aplicação em outros sistemas operacionais, por consulte a url a seguir:<br/>
+Para maiores informações sobre como executar a aplicação em outros sistemas operacionais, consulte a url a seguir:<br/>
 https://docs.microsoft.com/pt-br/aspnet/core/fundamentals/environments?view=aspnetcore-5.0
 
 Pré-requisitos<br />
