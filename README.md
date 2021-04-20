@@ -37,8 +37,38 @@ Abra uma janela de comando ("Command prompt") e navegue até o diretório da sol
  dotnet run --no-launch-profile [PRESSIONE A TECLA ENTER]<br/>
 
 Com esta configuração. a aplicação não disponibiliza a documentação eletrônica Open Api Swagger.
-Ela aceita somente solicitações dos pontos de acessos relevantesda aplicação.
+Ela aceita somente solicitações dos pontos de acessos relevantes da aplicação.
 Também, nem migrações nem cargas de banco de dados são realizadas.
+
+Pontos de acesso da aplicação
+1. SALVAR DADOS DA PARTIDA DO JOGO<br/>
+(POST) http://localhost:5000/api/v1/match -> Este é ponto de acesso para recepção dos dados das partidas de jogos<br/>
+Exemplo de corpo da solicitação:<br/>
+{
+    "gameId" : 1,
+    "playerId" : 1,
+    "win" : 68000000,
+    "timestamp" : "2021-04-17T14:28:34Z"
+}
+
+2. OBTER LISTA DE JOGOS (ponto de acesso EXTRA)<br/>
+(GET) http://localhost:5000/api/v1/cache-data/game-matches -> Este ponto acesso retorna todos os dados de partidas de jogos pendentes de persistência na base de dados.
+
+3. FETCH A LIST WITH AVAILABLE GAMES IDS (EXTRA endpoint)<br/>
+(GET) http://localhost:5000/api/v1/cache-data/games -> This endpoint displays all games ids registered in the system<br/>
+Useful for creating requests when using the endpoint explained in item 1
+
+4. FETCH A LIST WITH AVAILABLE PLAYERS IDS (EXTRA endpoint)<br/>
+(GET) http://localhost:5000/api/v1/cache-data/players -> This endpoint displays all players ids registered in the system<br/>
+Useful for creating requests when using the endpoint explained in item 1
+
+5. LEADERBOARDS<br/>
+(GET) http://localhost:5000/api/v1/leaderboards -> This endpoint displays the leaderboards after the database flushing background service
+has been executed at least once.
+
+6. API DOCUMENTATION (EXTRA endpoint)<br/>
+(GET)  http://localhost:5000/swagger -> This endpoint makes available the API endpoints live documentation via Swagger OpenAPI.
+IMPORTANT NOTE: This endpoint is available only when ASPNETCORE_ENVIRONMENT environment variable is set to Development (please refer to the beginning of topic "How to run this solution")
 
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
