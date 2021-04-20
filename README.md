@@ -74,7 +74,7 @@ Como brincar com esta solução<br/>
 2. Neste momento, faça solicitações ao ponto de acesso 2 para verificar que os dados das partidas estão em persistidos em cache. Estes dados eventualmente serão persistidos na base de dados.<br/>
 A partir deste momento, você pode continuar enviandos dados para o ponto de acesso 1 e, após aproximadamente 40 segundos, o serviço de segundo de peristência de dados captura os dados daquele momento, sem perder os novos dados que estão chegando.<br/>
 Toda vez que o serviço em segundo plano executa, o placar dos jogadores é atualizado e estes dados são armazenados em cache para fins de ganho de performance.
-Assim que os dados das partidas são persistidos na base de dados, todos os dados processados são removidos do cache, preservando aqueles que ainda não foram processados, esperando a próxima executação do serviço.<br/>
+Assim que os dados das partidas são persistidos na base de dados, todos os dados processados são removidos do cache, preservando aqueles que ainda não foram processados, esperando a próxima execução do serviço.<br/>
 3. Faça solicitações ao ponto de acesso 5 para obter o placar atualizado dos jogadores
 
 Executando os testes automatizados da solução (unitários e de integração)
