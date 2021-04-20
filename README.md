@@ -103,7 +103,7 @@ First things first, download this solution to your machine.
 
 How to run this solution<br/>
 1. Open command prompt and go to "TheGame" web project directory.<br/>
-2. Next, type the following command:<br/>
+2. Next, type the following commands:<br/>
    set ASPNETCORE_ENVIRONMENT=Development [HIT ENTER]<br/>
    dotnet run [HIT ENTER]<br/>
 
