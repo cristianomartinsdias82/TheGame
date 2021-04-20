@@ -1,5 +1,48 @@
 # TheGame
 
+(Português do Brasil)
+Instruções de execução e implantação
+
+Os passos a seguir presumem que vocÊ está utilizando o sistema operacional Windows.
+
+Para maiores informações sobre como executar a aplicação em outros sistemas operacionais, por consulte a url a seguir:<br/>
+https://docs.microsoft.com/pt-br/aspnet/core/fundamentals/environments?view=aspnetcore-5.0
+
+Pré-requisitos<br />
+Instale o gerenciador de banco de dados Sql Server<br />
+Instale o kit de desenvolvimento de software .NET Core versão 3.1<br />
+Ferramentas como Postman ou Advanced REST Client também poderão ser úteis para realizar solicitações aos pontos de acesso da solução<br />
+Vale mencionar que a ferramenta Visual Studio 2017 ou posterior é desejável mas não é necessária<br />
+
+Iniciando<br/>
+Primeiramente, baixe esta solução para a sua máquina.
+
+Como rodar esta solução<br />
+1. Abra uma janela de comando ("Command prompt") e navegue até o diretório do projeto Web "The Game".<br />
+2. Em seguida, digite a seguinte instrução:
+   set ASPNETCORE_ENVIRONMENT=Development [PRESSIONE A TECLA ENTER]<br/>
+   dotnet run [PRESSIONE A TECLA ENTER]<br/>
+   
+(Estes comandos irão criar a base de dados, as tabelas, relacionamentos, a visão de placar dos jogadores e, por último executar uma carga essencial de dados)<br/>
+
+Aqui você já pode testar a aplicação abrindo um navegador de internet e acessando o(s) seguinte(s) endereços:<br />
+http://localhost:5000/swagger<br/>
+http://localhost:5000/api/v1/leaderboards<br/>
+
+3. Para gerar uma versão da aplicação candidata para ambiente de produção:
+Abra uma janela de comando ("Command prompt") e navegue até o diretório da solução "The Game".<br />
+4. Em seguida, digite o seguinte comando:<br/>
+ dotnet build -c release [PRESSIONE A TECLA ENTER]<br/>
+ set ASPNETCORE_ENVIRONMENT=Production [PRESSIONE A TECLA ENTER]<br/>
+ dotnet run --no-launch-profile [PRESSIONE A TECLA ENTER]<br/>
+
+Com esta configuração. a aplicação não disponibiliza a documentação eletrônica Open Api Swagger.
+Ela aceita somente solicitações dos pontos de acessos relevantesda aplicação.
+Também, nem migrações nem cargas de banco de dados são realizadas.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+(English)
 Execution and deployment instructions
 
 The steps described below assume you are in a Windows operating system.
