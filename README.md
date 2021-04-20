@@ -19,7 +19,7 @@ Primeiramente, baixe esta solução para a sua máquina.
 
 Como executar esta solução<br />
 1. Abra uma janela de comando ("Command prompt") e navegue até o diretório do projeto Web "The Game".<br />
-2. Em seguida, digite as seguintes instruções:<br />
+2. Em seguida, digite os seguintes comandos:<br />
    set ASPNETCORE_ENVIRONMENT=Development [PRESSIONE A TECLA ENTER]<br/>
    dotnet run [PRESSIONE A TECLA ENTER]<br/>
    
