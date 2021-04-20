@@ -78,9 +78,8 @@ Assim que os dados das partidas são persistidos na base de dados, todos os dado
 3. Faça solicitações ao ponto de acesso 5 para obter o placar atualizado dos jogadores
 
 Executando os testes automatizados da solução (unitários e de integração)
-1. Open command prompt and go to "TheGame" solution directory<br/>
 1. Abra uma janela de comando ("Command prompt") e navegue até o diretório da solução "The Game".<br/>
-3. Em seguida, digite o seguinte comando:<br/>
+2. Em seguida, digite o seguinte comando:<br/>
    dotnet test [PRESSIONE A TECLA ENTER]
 
 --------------------------------------------------------------------------------------------------------------------------------------------------
