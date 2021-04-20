@@ -1,6 +1,6 @@
 # TheGame
 
-(Português do Brasil)
+(Português do Brasil)<br />
 Instruções de execução e implantação
 
 Os passos a seguir presumem que vocÊ está utilizando o sistema operacional Windows.
