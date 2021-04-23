@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,10 +36,11 @@ namespace TheGame.Controllers.SaveMatchData
                 },
                 cancellationToken);
 
-            if (response.Result.Succeeded)
-                return StatusCode((int)HttpStatusCode.Created, response.Result);
+            var result = response.GetResult();
+            if (result.Succeeded)
+                return StatusCode((int)HttpStatusCode.Created, result);
 
-            return BadRequest(response.Result);
+            return BadRequest(result);
         }
     }
 }

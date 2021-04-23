@@ -29,7 +29,7 @@ namespace TheGame.Tests.UnitTests.SharedKernel
         }
 
         [Fact]
-        public void Should_throw_exception_when_passing_null_argument_when_Failure_method_is_invoked()
+        public void Should_throw_exception_when_not_passing_null_argument_to_Failure()
         {
             //Arrange
             //Act

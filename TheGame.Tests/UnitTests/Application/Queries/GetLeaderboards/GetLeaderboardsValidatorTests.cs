@@ -1,15 +1,15 @@
-﻿using System.Linq;
+﻿using FluentValidation;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using TheGame.Queries.GetLeaderboards;
-using TheGame.SharedKernel.Validation;
 using Xunit;
 
 namespace TheGame.Tests.UnitTests.Application.Queries.GetLeaderboards
 {
     public class GetLeaderboardsValidatorTests
     {
-        private readonly IDataInputValidation<GetLeaderboardsRequest> _sut;
+        private readonly AbstractValidator<GetLeaderboardsRequest> _sut;
 
         public GetLeaderboardsValidatorTests()
         {
@@ -24,13 +24,13 @@ namespace TheGame.Tests.UnitTests.Application.Queries.GetLeaderboards
             using (var cts = new CancellationTokenSource())
             {
                 //Act
-                var result = await _sut.TryValidateAsync(new GetLeaderboardsRequest { PlayersMaxQuantity = playersMaxQuantity }, cts.Token);
+                var result = await _sut.ValidateAsync(new GetLeaderboardsRequest { PlayersMaxQuantity = playersMaxQuantity }, cts.Token);
 
                 //Assert
                 Assert.NotNull(result);
-                Assert.False(result.Succeeded);
-                Assert.NotNull(result.FailureDetails);
-                Assert.True(result.FailureDetails.Count() > 0);
+                Assert.False(result.IsValid);
+                Assert.NotNull(result.Errors);
+                Assert.True(result.Errors.Any());
             }
         }
 
@@ -42,12 +42,12 @@ namespace TheGame.Tests.UnitTests.Application.Queries.GetLeaderboards
             using (var cts = new CancellationTokenSource())
             {
                 //Act
-                var result = await _sut.TryValidateAsync(new GetLeaderboardsRequest { PlayersMaxQuantity = playersMaxQuantity }, cts.Token);
+                var result = await _sut.ValidateAsync(new GetLeaderboardsRequest { PlayersMaxQuantity = playersMaxQuantity }, cts.Token);
 
                 //Assert
                 Assert.NotNull(result);
-                Assert.True(result.Succeeded);
-                Assert.Null(result.FailureDetails);
+                Assert.True(result.IsValid);
+                Assert.True(result.Errors == null || !result.Errors.Any());
             }
         }
     }

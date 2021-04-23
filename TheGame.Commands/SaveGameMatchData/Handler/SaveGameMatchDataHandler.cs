@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using TheGame.Common.Caching;
 using TheGame.Common.Dto;
 using TheGame.SharedKernel;
-using TheGame.SharedKernel.Validation;
 using static TheGame.SharedKernel.Helpers.ExceptionHelper;
 
 namespace TheGame.Commands.SaveMatchData
@@ -16,29 +15,22 @@ namespace TheGame.Commands.SaveMatchData
     {
         private readonly ITheGameCacheProvider _cacheProvider;
         private readonly ILogger<SaveGameMatchDataHandler> _logger;
-        private readonly IDataInputValidation<SaveGameMatchDataRequest> _requestValidator;
         private const string PlayerNotFound = "The informed player was not found.";
         private const string GameNotFound = "The informed game was not found.";
 
         public SaveGameMatchDataHandler(
             ITheGameCacheProvider cacheProvider,
-            ILogger<SaveGameMatchDataHandler> logger,
-            IDataInputValidation<SaveGameMatchDataRequest> requestValidator)
+            ILogger<SaveGameMatchDataHandler> logger)
         {
             _cacheProvider = cacheProvider ?? throw ArgNullEx(nameof(cacheProvider));
             _logger = logger ?? throw ArgNullEx(nameof(logger));
-            _requestValidator = requestValidator ?? throw ArgNullEx(nameof(requestValidator));
         }
 
         public async Task<SaveGameMatchDataResponse> Handle(SaveGameMatchDataRequest request, CancellationToken cancellationToken)
         {
             if (cancellationToken == CancellationToken.None)
                 return new SaveGameMatchDataResponse { Result = OperationResult.Failure(new FailureDetail("CancellationToken", "CancellationToken argument cannot be null.")) };
-
-            var validationResult = await _requestValidator.TryValidateAsync(request, cancellationToken);
-            if (!validationResult.Succeeded)
-                return new SaveGameMatchDataResponse { Result = validationResult };
-
+            
             var players = await _cacheProvider.GetPlayersListAsync(cancellationToken);
             if ((players?.Count() ?? 0) == 0 || !players.Any(p => p == request.PlayerId))
                 return new SaveGameMatchDataResponse { Result = OperationResult.Failure(PlayerNotFound) };

@@ -1,15 +1,16 @@
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using TheGame.Commands.DependencyInjection;
+using System.Reflection;
 using TheGame.Commands.SaveMatchData;
+using TheGame.Common.Behaviors;
 using TheGame.Common.DependencyInjection;
 using TheGame.Extensions.Swagger;
 using TheGame.Infrastructure.DependencyInjection;
-using TheGame.Queries.DependencyInjection;
 using TheGame.Queries.GetLeaderboards;
 
 namespace TheGame
@@ -25,12 +26,16 @@ namespace TheGame
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var queriesAssembly = typeof(GetLeaderboardsRequest).Assembly;
+            var commandsAssembly = typeof(SaveGameMatchDataRequest).Assembly;
+            var commonAssembly = typeof(DataInputLoggingPreProcessor<>).Assembly;
+
             services.AddControllers();
             services.AddSharedKernel(Configuration);
             services.AddSwaggerOpenApi(Configuration);
-            services.AddMediatR(typeof(GetLeaderboardsRequest).Assembly, typeof(SaveGameMatchDataRequest).Assembly);
-            services.AddQueries(Configuration);
-            services.AddCommands(Configuration);
+            services.AddMediatR(queriesAssembly, commandsAssembly, commonAssembly);
+            services.AddBehaviors(Configuration);
+            services.AddValidatorsFromAssemblies(new Assembly[] { queriesAssembly, commandsAssembly });
             services.AddInfrastructure(Configuration);
         }
 

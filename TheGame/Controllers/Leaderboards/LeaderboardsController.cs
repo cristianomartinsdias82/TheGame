@@ -40,10 +40,11 @@ namespace TheGame.Controllers.GetLeaderboards
                 new GetLeaderboardsRequest { PlayersMaxQuantity = playersMaxQuantity ?? _settings.TopMostRankedPlayersMaxQuantity },
                 cancellationToken);
 
-            if (response.Result.Succeeded)
-                return Ok(response.Result);
+            var responseResult = response.GetResult();
+            if (responseResult.Succeeded)
+                return Ok(responseResult);
 
-            return BadRequest(response.Result);
+            return BadRequest(responseResult);
         }
     }
 }

@@ -1,9 +1,8 @@
-﻿using TheGame.SharedKernel.Validation;
-using FluentValidation;
+﻿using FluentValidation;
 
 namespace TheGame.Commands.SaveMatchData
 {
-    internal class SaveGameMatchDataValidator : DataInputValidator<SaveGameMatchDataRequest>
+    public class SaveGameMatchDataValidator : AbstractValidator<SaveGameMatchDataRequest>
     {
         public SaveGameMatchDataValidator()
         {

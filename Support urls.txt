@@ -34,3 +34,5 @@ https://docs.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetc
 https://xunit.net/docs/shared-context
 https://andrewlock.net/how-to-set-the-hosting-environment-in-asp-net-core/
 https://docs.microsoft.com/en-us/aspnet/core/fundamentals/environments?view=aspnetcore-5.0
+https://codewithmukesh.com/blog/mediatr-pipeline-behaviour/
+https://medium.com/geekculture/auditing-with-mediator-pipelines-in-asp-net-core-be34cf3551b

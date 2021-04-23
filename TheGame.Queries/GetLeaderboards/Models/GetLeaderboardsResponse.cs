@@ -4,8 +4,7 @@ using TheGame.SharedKernel;
 
 namespace TheGame.Queries.GetLeaderboards
 {
-    public class GetLeaderboardsResponse
+    public class GetLeaderboardsResponse : ApplicationResponse<IEnumerable<PlayerBalanceDto>>
     {
-        public OperationResult<IEnumerable<PlayerBalanceDto>> Result { get; set; }
     }
 }

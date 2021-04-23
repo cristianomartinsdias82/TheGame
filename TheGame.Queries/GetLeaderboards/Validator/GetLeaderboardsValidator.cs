@@ -1,9 +1,8 @@
 ﻿using FluentValidation;
-using TheGame.SharedKernel.Validation;
 
 namespace TheGame.Queries.GetLeaderboards
 {
-    internal class GetLeaderboardsValidator : DataInputValidator<GetLeaderboardsRequest>
+    public class GetLeaderboardsValidator : AbstractValidator<GetLeaderboardsRequest>
     {
         public GetLeaderboardsValidator()
         {
