@@ -1,62 +1,90 @@
-# TheGame
+# The Game
 
-Contexto<br/>
-Você está trabalhando para uma empresa de jogos online que opera vários servidores de jogos. Cada jogo resulta em ganho ou perda de pontos
-para o jogador.
-Os dados são mantidos em memória por cada servidor e periodicamente esses dados são persistidos. Sua tarefa é implementar um serviço que
-exponha 2 endpoints:
+(Português do Brasil)<br />
+Instruções de execução e implantação
 
-Endpoint 1:
-Permite que os servidores persistam os dados do resultado de um jogo:
- GameResult: 
-   PlayerId (long) -> ID do jogador
-   GameId (long) -> ID do jogo 
-   Win (long) -> o número de pontos ganhos (positivos ou negativos)
-   Timestamp (date time) -> data de quando o jogo foi realizado (UTC)
+Os passos a seguir presumem que vocÊ está utilizando o sistema operacional Windows.
 
-Como resultado da chamada a esse endpoint o balanço dos pontos do jogador devem ser primeiramente armazenado em memória no servidor
-e após um determinado tempo deverá persistir todas as informações que estão em memória para o banco de dados de uma só vez.
-Esse tempo deverá ser facilmente configurável pelo usuário que vai implantar a solução, pois ainda não se sabe ainda qual será a 
-volumetria de informações e as especificações do servidor. Se um jogador não tem um registro do balanço dos seus pontos no banco de dados,
-ele deverá ser criado. NOTA: Um grupo de dados pode conter diversos registros de um único jogador (i.e. o jogador participou em vários
-jogos).
-Existem múltiplos servidores de jogos, realizando partidas simultâneas de jogos diferentes, então o serviço irá receber várias requisições
-concorrentes, que podem conter resultados do mesmo jogador. Inicialmente este serviço irá rodar como um piloto em um único servidor.
-Portanto, dados perdidos devido ao mal funcionamento do servidor ou do serviço não é considerado crítico, mas não deveria ocorrer dentro
-de circunstâncias normais. 
+Para maiores informações sobre como executar a aplicação em outros sistemas operacionais, consulte a url a seguir:<br/>
+https://docs.microsoft.com/pt-br/aspnet/core/fundamentals/environments?view=aspnetcore-5.0
 
-Endpoint 2: 
-Esse endpoint permite que os web sites onde o jogador inicia os jogos mostre um placar da classificação dos 100 melhores jogadores. Os
-100 melhores jogadores são ordenados pelo balanço de pontos que eles possuem em ordem descendente.
-Ele retornará os seguintes dados:
-Leaderboard:
-   PlayerId (long) -> ID do jogador
-   Balance (long) -> balanço de pontos do jogador
-   LastUpdateDate (date time) -> data em que o balanço de pontos do jogador foi atualizado pela última vez (usando o fuso horário do
-   servidor de aplicação) 
+Pré-requisitos<br />
+Instale o gerenciador de banco de dados Sql Server<br />
+Instale o kit de desenvolvimento de software .NET Core versão 3.1<br />
+Ferramentas como Postman ou Advanced REST Client também poderão ser úteis para realizar solicitações aos pontos de acesso da solução<br />
+Vale mencionar que a ferramenta Visual Studio 2017 ou posterior é desejável mas não é necessária<br />
 
-NOTA:
-Os jogadores são muito competitivos, e há vários jogadores ativos ao mesmo tempo, então o endpoint do placar de classificação será chamado
-várias vezes (milhares de requisições por minuto). Ainda não se sabe o quão valiosa essa funcionalidade será para o negócio da empresa,
-então inicialmente isso irá rodar como um piloto em um servidor dedicado que precisa lidar com toda a carga.
+Iniciando<br/>
+Primeiramente, baixe esta solução para a sua máquina.
 
-Expectativas da entrega:
-Para essa tarefa você é livre para escolher qualquer tecnologia .Net que for mais favorável para cada aspecto da implementação.
-Se você decidir usar um framework que talvez não seja o melhor candidato mas você o escolheu porque estás mais familiarizado com ele,
-não tem problema, desde que você indique o porquê da escolha (i.e. Eu escolhi o framework X, mas o framework Y seria o ideal para
-acesso ao banco de dados porque a. b. c. ...). Não é esperado que você conheça novos frameworks para essa tarefa desde que você consiga
-explicar o porquê das suas escolhas claramente.
-É esperado também que a aplicação esteja publicada no github e seja entregue funcional, então se houver qualquer condição especial para
-que ela seja configurada, como endereço de banco de dados, utilização de migration, entre outros... por favor providencie as dentro do
-arquivo README.MD dentro do repositório git criado e documentando detalhadamente o processo a ser realizado.
+Como executar esta solução<br />
+1. Abra uma janela de comando ("Command prompt") e navegue até o diretório do projeto Web "The Game".<br />
+2. Em seguida, digite os seguintes comandos:<br />
+   set ASPNETCORE_ENVIRONMENT=Development [PRESSIONE A TECLA ENTER]<br/>
+   dotnet run [PRESSIONE A TECLA ENTER]<br/>
+   
+(Estes comandos irão criar a base de dados, as tabelas, os relacionamentos, a visão de placar dos jogadores e, por último, executar uma carga essencial de dados)<br/>
 
-É esperado que o código seja de qualidade, seguindo boas práticas de desenvolvimento, patterns, clean code, estrutura de projetos do tipo
-DDD / TDD... então não o escreva como 'é só uma demo' mas como você o faria para um produto real. Você deve considerar a tarefa completa
-quando você considera o seu código 'pronto para produção/implantação'.
-Se você tiver qualquer dúvida, por favor entre em contato conosco.
+Aqui você já pode testar a aplicação abrindo um navegador de internet e acessando o(s) seguinte(s) endereços:<br />
+http://localhost:5000/swagger<br/>
+http://localhost:5000/api/v1/leaderboards<br/>
 
------------------------------------------------------------------------------------------------------
+3. Para gerar uma versão da aplicação candidata para ambiente de produção:
+Abra uma janela de comando ("Command prompt") e navegue até o diretório da solução "The Game".<br />
+4. Em seguida, digite os seguintes comandos:<br/>
+ dotnet build -c release [PRESSIONE A TECLA ENTER]<br/>
+ set ASPNETCORE_ENVIRONMENT=Production [PRESSIONE A TECLA ENTER]<br/>
+ dotnet run --no-launch-profile [PRESSIONE A TECLA ENTER]<br/>
 
+Com esta configuração. a aplicação não disponibiliza a documentação eletrônica Open Api Swagger.
+Ela aceita somente solicitações dos pontos de acessos relevantes da aplicação.
+Também, nem migrações nem cargas de banco de dados são realizadas.
+
+Pontos de acesso da aplicação
+1. SALVAR DADOS DA PARTIDA DO JOGO<br/>
+(POST) http://localhost:5000/api/v1/match -> Este é ponto de acesso para recepção dos dados das partidas de jogos<br/>
+Exemplo de corpo da solicitação:<br/>
+{
+    "gameId" : 1,
+    "playerId" : 1,
+    "win" : 68000000,
+    "timestamp" : "2021-04-17T14:28:34Z"
+}
+
+2. OBTER DADOS DE PARTIDAS DE JOGOS (ponto de acesso EXTRA)<br/>
+(GET) http://localhost:5000/api/v1/cache-data/game-matches -> Este ponto de acesso retorna todos os dados de partidas de jogos pendentes de persistência na base de dados.
+
+3. OBTER LISTA DE IDS DE JOGOS (ponto de acesso EXTRA)<br/>
+(GET) http://localhost:5000/api/v1/cache-data/games -> Este ponto de acesso retorna todos os ids de jogos registrados no sistema<br/>
+Útil para criação de solicitações utilizando o ponto de acesso explicado no item 1
+
+4. OBTER LISTA DE IDS DE JOGADORES (ponto de acesso EXTRA)<br/>
+(GET) http://localhost:5000/api/v1/cache-data/players -> Este ponto de acesso retorna todos os ids de jogadores registrados no sistema<br/>
+Útil para criação de solicitações utilizando o ponto de acesso explicado no item 1
+
+5. PLACAR DOS JOGADORES<br/>
+(GET) http://localhost:5000/api/v1/leaderboards -> Este ponto de acesso retorna o placar dos jogadores após o serviço de segundo plano de persistência de pontuações ter executado ao menos uma vez.
+
+6. DOCUMENTAÇÃO DA API (ponto de acesso EXTRA)<br/>
+(GET) http://localhost:5000/swagger -> Este ponto de acesso disponibiliza uma documentação atualizada dos pontos de acesso da API através da especificação Swagger OpenAPI.
+NOTA IMPORTANTE: Este ponto acesso está disponível somente quando a variável de ambiente ASPNETCORE_ENVIRONMENT contém o valor "Development" (vide início do tópico "Como executar esta solução")
+
+Como brincar com esta solução<br/>
+1. Faça algumas solicitações ao ponto de acesso 1. Você pode utilizar ferramentas como Postman ou Advanced REST Client para fazê-las.<br/>
+2. Neste momento, faça solicitações ao ponto de acesso 2 para verificar que os dados das partidas estão em persistidos em cache. Estes dados eventualmente serão persistidos na base de dados.<br/>
+A partir deste momento, você pode continuar enviandos dados para o ponto de acesso 1 e, após aproximadamente 40 segundos, o serviço de segundo de peristência de dados captura os dados daquele momento, sem perder os novos dados que estão chegando.<br/>
+Toda vez que o serviço em segundo plano executa, o placar dos jogadores é atualizado e estes dados são armazenados em cache para fins de ganho de performance.
+Assim que os dados das partidas são persistidos na base de dados, todos os dados processados são removidos do cache, preservando aqueles que ainda não foram processados, esperando a próxima execução do serviço.<br/>
+3. Faça solicitações ao ponto de acesso 5 para obter o placar atualizado dos jogadores
+
+Executando os testes automatizados da solução (unitários e de integração)
+1. Abra uma janela de comando ("Command prompt") e navegue até o diretório da solução "The Game".<br/>
+2. Em seguida, digite o seguinte comando:<br/>
+   dotnet test [PRESSIONE A TECLA ENTER]
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+(English)<br />
 Execution and deployment instructions
 
 The steps described below assume you are in a Windows operating system.
@@ -75,7 +103,7 @@ First things first, download this solution to your machine.
 
 How to run this solution<br/>
 1. Open command prompt and go to "TheGame" web project directory.<br/>
-2. Next, type the following:<br/>
+2. Next, type the following commands:<br/>
    set ASPNETCORE_ENVIRONMENT=Development [HIT ENTER]<br/>
    dotnet run [HIT ENTER]<br/>
 
@@ -87,7 +115,7 @@ http://localhost:5000/api/v1/leaderboards<br/>
 
 3. Now, to switch to a production environment:<br/>
 Open command prompt and go to "TheGame" solution directory.<br/>
-4. Next, type the following:<br/>
+4. Next, type the following commands:<br/>
  dotnet build -c release [HIT ENTER]<br/>
  set ASPNETCORE_ENVIRONMENT=Production [HIT ENTER]<br/>
  dotnet run --no-launch-profile [HIT ENTER]<br/>
@@ -114,13 +142,17 @@ Request body example:<br/>
 (GET)  http://localhost:5000/api/v1/cache-data/games -> This endpoint displays all games ids registered in the system<br/>
 Useful for creating requests when using the endpoint explained in item 1
 
-4. FETCH A LIST WITH AVAILABLE PLAYERS IDS  (EXTRA endpoint)<br/>
+4. FETCH A LIST WITH AVAILABLE PLAYERS IDS (EXTRA endpoint)<br/>
 (GET)  http://localhost:5000/api/v1/cache-data/players -> This endpoint displays all players ids registered in the system<br/>
 Useful for creating requests when using the endpoint explained in item 1
 
 5. LEADERBOARDS<br/>
 (GET)  http://localhost:5000/api/v1/leaderboards -> This endpoint displays the leaderboards after the database flushing background service
 has been executed at least once.
+
+6. API DOCUMENTATION (EXTRA endpoint)<br/>
+(GET)  http://localhost:5000/swagger -> This endpoint makes available the API endpoints live documentation via Swagger OpenAPI.
+IMPORTANT NOTE: This endpoint is available only when ASPNETCORE_ENVIRONMENT environment variable is set to "Development" (please refer to the beginning of topic "How to run this solution")
 
 How to play with this solution<br/>
 1. Invoke a couple of times the endpoint 1. You can use a tool like Postman or Advanced REST Client to send some requests to it.<br/>
@@ -134,5 +166,5 @@ waiting for the next service execution.<br/>
 
 Running the solution automated tests (both unit and integration ones)
 1. Open command prompt and go to "TheGame" solution directory<br/>
-2. Next, type the following:<br/>
+2. Next, type the following command:<br/>
    dotnet test [HIT ENTER]
