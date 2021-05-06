@@ -9,7 +9,7 @@ Spin up Performance Counters
 dotnet counters monitor --process-id [PROCESS ID FROM STEP 2 HERE] System.Runtime Microsoft.AspNetCore.Hosting [ENTER]
 EXAMPLE >>> dotnet counters monitor --process-id 1234 System.Runtime Microsoft.AspNetCore.Hosting [ENTER]
 For more details, watch the following YT video: https://www.youtube.com/watch?v=jn54CjePzs0
-(On 8:16, there's an interesting dockerfile that demonstrates how to run it inside a Docker container! You don't wanna miss it!)
+(On 8:16, there's an interesting dockerfile script that demonstrates how to run it inside a Docker container! You don't wanna miss it!)
 
 Approach 1: using bombardier utility tool
 1. Open a new command prompt, then type the following:
