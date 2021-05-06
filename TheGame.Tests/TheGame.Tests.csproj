@@ -26,4 +26,8 @@
     <ProjectReference Include="..\TheGame\TheGame.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="PerformanceTests\JMeterTestProfiles\Reports\" />
+  </ItemGroup>
+
 </Project>

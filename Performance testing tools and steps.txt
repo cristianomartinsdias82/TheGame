@@ -1,0 +1,30 @@
+In powershell, under adm's account:
+choco install bombardier [ENTER]
+dotnet tool install --global dotnet-counters [ENTER] (Enabling performance counters diagnostic tool)
+
+Spin up Performance Counters
+1. Run your application
+2. Find the running application Process ID via Task Manager
+3. Open a new command prompt, then type the following:
+dotnet counters monitor --process-id [PROCESS ID FROM STEP 2 HERE] System.Runtime Microsoft.AspNetCore.Hosting [ENTER]
+EXAMPLE >>> dotnet counters monitor --process-id 1234 System.Runtime Microsoft.AspNetCore.Hosting [ENTER]
+For more details, watch the following YT video: https://www.youtube.com/watch?v=jn54CjePzs0
+(On 8:16, there's an interesting dockerfile that demonstrates how to run it inside a Docker container! You don't wanna miss it!)
+
+Approach 1: using bombardier utility tool
+1. Open a new command prompt, then type the following:
+bombardier -c 128 -d 30s -l --rate 10000 http://localhost:5000/api/v1/leaderboards?playersMaxQuantity=50 [ENTER]
+bombardier -c 128 -d 30s -l --rate 10000 http://localhost:5000/api/v1/cache-data/players [ENTER]
+bombardier -c 128 -d 30s -l --rate 10000 http://localhost:5000/api/v1/cache-data/matches [ENTER]
+(https://github.com/codesenberg/bombardier)
+
+Approach 2: using JMeter IDE
+Run JMeter, then open the Profile "Basic perf test profile.jmx" - or create a new one - located at TheGame.Tests\PerformanceTests\JMeterTestProfiles folder
+(To create a new one, navigate to the url https://www.c-sharpcorner.com/article/webapi-performance-testing-using-apache-jmeter/ to get started!)
+
+As per the url above, you can generate a HTML report by following the steps:
+1. Hollow out the Reports folder first
+2. Open a new command prompt, then type the following: (ALL IN ONE SINGLE LINE)
+jmeter -n -t "E:\Codebase\_.NET Solutions\Core\3.x\TheGame\TheGame.Tests\PerformanceTests\JMeterTestProfiles\Basic perf test profile.jmx"
+-l "E:\Codebase\_.NET Solutions\Core\3.x\TheGame\TheGame.Tests\PerformanceTests\JMeterTestProfiles\LoadTestReport.csv"
+-e -o "E:\Codebase\_.NET Solutions\Core\3.x\TheGame\TheGame.Tests\PerformanceTests\JMeterTestProfiles\Reports"

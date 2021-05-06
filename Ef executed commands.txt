@@ -17,6 +17,7 @@ Whenever you wish to commit the migration, run the following command
 dotnet ef database update --project TheGame.Infrastructure -- --connectionString="Server=.;Database=TheGame;Integrated security=SSPI;MultipleActiveResultSets=true;Packet size=16384"
 
 I ran this command after I have implemented a IHost method extension that automates the migrations as well as the data seeding operations during manual migration applications(refer to MigrationManager.cs and XxxEntityConfiguration class files)
+(You can this command whenever you with to tear the database down)
 dotnet ef database drop --force --project TheGame.Infrastructure -- --connectionString="Server=.;Database=TheGame;Integrated security=SSPI;MultipleActiveResultSets=true;Packet size=16384"
 
 Whenever you wish to erase the just-created migration, run the following command

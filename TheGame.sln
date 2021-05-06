@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{ECC7DAA6-B
 		Database rollback scripts.txt = Database rollback scripts.txt
 		Ef executed commands.txt = Ef executed commands.txt
 		Execution and deployment instructions.txt = Execution and deployment instructions.txt
+		Performance testing tools and steps.txt = Performance testing tools and steps.txt
 		Referenced Nuget packages - listed by project.txt = Referenced Nuget packages - listed by project.txt
 		Support urls.txt = Support urls.txt
 	EndProjectSection
@@ -43,7 +44,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheGame.MatchDataFlushingWo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2DA3325B-2748-468F-A14A-985BAF992801}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheGame.Tests", "TheGame.Tests\TheGame.Tests.csproj", "{35482CA1-D7F4-4BE4-8A2A-E04C1FA98176}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheGame.Tests", "TheGame.Tests\TheGame.Tests.csproj", "{35482CA1-D7F4-4BE4-8A2A-E04C1FA98176}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

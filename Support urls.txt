@@ -36,3 +36,7 @@ https://andrewlock.net/how-to-set-the-hosting-environment-in-asp-net-core/
 https://docs.microsoft.com/en-us/aspnet/core/fundamentals/environments?view=aspnetcore-5.0
 https://codewithmukesh.com/blog/mediatr-pipeline-behaviour/
 https://medium.com/geekculture/auditing-with-mediator-pipelines-in-asp-net-core-be34cf3551b
+https://www.youtube.com/watch?v=jn54CjePzs0 (Asp.Net Core Series: Preformance testing techniques)
+https://github.com/codesenberg/bombardier
+https://docs.microsoft.com/en-us/dotnet/core/diagnostics/dotnet-counters
+https://www.c-sharpcorner.com/article/webapi-performance-testing-using-apache-jmeter/
