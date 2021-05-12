@@ -25,7 +25,7 @@ namespace TheGame.SharedKernel
                     var innerResult = (OperationResult)result;
 
                     return innerResult.Succeeded ?
-                        OperationResult<T>.Successful(((OperationResult<T>)result).Data) :
+                        OperationResult<T>.Successful(((OperationResult<T>)result).Data, innerResult.Message, innerResult.OperationCode) :
                         OperationResult<T>.Failure(innerResult.Message, innerResult.OperationCode, innerResult.FailureDetails.ToArray());
                 }
             }
